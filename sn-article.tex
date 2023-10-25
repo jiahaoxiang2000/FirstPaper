@@ -1,0 +1,80 @@
+\documentclass[sn-basic]{sn-jnl}% Default
+
+% \documentclass[default,lineno,sn-basic]{sn-jnl}% Default
+% \documentclass[default,iicol]{sn-jnl}% Default with double column layout
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+
+
+%% as per the requirement new theorem styles can be included as shown below
+
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\newtheorem{definition}{Definition}%
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title[Article Title]{Area–Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles}
+
+\author[1,2]{\fnm{Jiahao} \sur{Xiang}}\email{simple.xjh@qq.com}
+\author*[1,2]{\fnm{Lang} \sur{Li}}\email{lilang911@126.com}
+
+\affil*[1]{\orgdiv{College of Computer Science and Technology}, \orgname{Hengyang Normal University}, \orgaddress{\city{Hengyang}, \postcode{421002},  \country{China}}}
+
+\affil[2]{\orgdiv{Hunan Provincial Key Laboratory of Intelligent Information Processing and Application}, \orgname{Hengyang Normal University}, \orgaddress{ \city{Hengyang}, \postcode{421002}, \country{China}}}
+
+\abstract{
+    \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale. Most of the IoV devices need instant response and real-time security to ensure the safety of users. The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices. In order to better adapt to these environment, the objective of this paper is to explore opportunities to optimize area and throughput for CRAFT cipher targeted for low-resource IoV devices.
+    \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint. We propose novel unrolled structure of CRAFT cipher for the high throughput feature.
+    \textbf{Results:}The results on Artix-7 show that ...
+    \textbf{Conclusion:} Hence, our works let CRAFT cipher more suitable for IoV devices.
+}
+
+\keywords{Lightweight block cipher, Internet of Vehicles, Field-programmable gate array(FPGA), Low-area, High-throughput}
+
+
+\maketitle
+
+\section{Introduction}\label{sec1}
+
+Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{bib13}. As IoT technology continues to advance, IoV technology is also making great progress. But the same security issues that exist in IoT are also were introduced into IoV. At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
+
+Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{bib12}. It can provides security with low resource consumption and low delay in IoV environment.
+
+In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5},  respectively Round based, Serial, and Loop unrolled. This allows IoV practitioners to select the architectures that best suit their needs. The contributions of this article can be summarized as follows.
+
+The rest of this article is organized as follows. Section 2 presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
+
+% In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5},  respectively Round based, Serial, and Loop unrolled. This allows IoV practitioners to select the architectures that best suit their needs. The contributions of this article can be summarized as follows.
+% The rest of this article is organized as follows. Section 2 presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
+
+
+
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}
