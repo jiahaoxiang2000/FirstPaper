@@ -66,12 +66,98 @@ Lightweight cryptography is a subfield of cryptography that aims to provide solu
 
 In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5},  respectively Round based, Serial, and Loop unrolled. This allows IoV practitioners to select the architectures that best suit their needs. The contributions of this article can be summarized as follows.
 
-The rest of this article is organized as follows. Section 2 presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
-
-% In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5},  respectively Round based, Serial, and Loop unrolled. This allows IoV practitioners to select the architectures that best suit their needs. The contributions of this article can be summarized as follows.
-% The rest of this article is organized as follows. Section 2 presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
+The rest of this article is organized as follows. Section~\ref{sec2} presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
 
 
+
+
+\section{Specification of CRAFT}\label{sec2}
+
+All notations used in this paper are shown in Table~\ref{tab1}. CRAFT is a lightweight tweakable block cipher made out of involutory building blocks. It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext P is transformed into a 64-bit output ciphertext C using a 128-bit key K and a 64-bit tweak T. Figure~\ref{fig1} shows the structure of CRAFT.
+
+\begin{table}[h]
+    \caption{Notations used in this paper}\label{tab1}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+        \toprule
+        Notation   & Description                                 \\
+        \midrule
+        $TK$       & 64-bit tweakeys                             \\
+        $RC_i$     & 64-bit round constant in the $i^{th}$ round \\
+        $R_i,R'_i$ & Round function                              \\
+        $\oplus$   & Bit-wise sum (XOR)                          \\
+        \botrule
+    \end{tabular*}
+\end{table}
+
+\begin{figure}[h]%   
+    \caption{Structure of CRAFT}\label{fig1}
+    \centering
+    \includegraphics[width=\textwidth]{struct_of_craft.png}
+\end{figure}
+
+
+\section{CRAFT Implementation}\label{sec3}
+
+In order to achieve efficient area and throughput, we optimize the components of craft for the first time and propose three implementation architectures, respectively Round based, Serial, and Loop unrolled. Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
+
+\subsection{Round Based Architecture}\label{subsec1}
+As no FPGA implementation of the round based architecture is given in \cite{bib5}, we implement the architecture presented in \cite{bib5} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT. In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}. The larger part of the footprint is the intermediate register state and the non-linear component sbox. In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
+
+
+\begin{figure}[h]%   
+    \caption{Structure of CRAFT}\label{fig2}
+    \centering
+    \includegraphics[width=\textwidth]{round_based_design.png}
+\end{figure}
+
+\begin{table}[h]
+    \caption{Area consumption of Round based design}\label{tab2}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+        \toprule
+        &LUT&	FF&	Slice                                \\
+        \midrule
+        Key Schedule &	64&	0&	22                           \\
+        Round Constant&	2&	7&	2 \\
+        Sbox * 4&	8&	0&	4                             \\
+        Round (include  Sbox * 16)&	84&	0&	28                        \\
+        All (include control)&	182&	144&	56                     \\
+        \botrule
+    \end{tabular*}
+\end{table}
+
+\subsection{Serial Architecture}\label{subsec2}
+Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of sboxes is reduced from 16 to 1. The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}. The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results. In order to store intermediate results into State-Register bank, the design has one feedback paths. PermuteNibbles is included in State-Register bank. It is noticeable that since the execution of permute requires 64-bit, in order to reuse the State-Register block, we change the order of execution of Sub-Box and Permute. And the first round of encryption process through the control signal to avoid Permute operation, to ensure the correctness of the encryption algorithm.
+
+\begin{figure}[h]%   
+    \caption{Serial architecture of CRAFT}\label{fig3}
+    \centering
+    \includegraphics[width=\textwidth]{serial_design.png}
+\end{figure}
+
+The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{fig4}. The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule. In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column. In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and Throughing the sbox component in another four clock cycles. Permute executes in one clock cycle inside the State-Register.
+
+\begin{figure}[h]%   
+    \caption{Finite-state machine for serial architecture}\label{fig4}
+    \centering
+    \includegraphics[width=\textwidth]{serial_fsm.png}
+\end{figure}
+
+Additionally, the dynamic power consumption of the encryption is reduced by using clock gating.The clock gating is separately applied on State Register, Key Register and Mix Columns. For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase. The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{fig5}.
+
+\begin{figure}[h]%   
+    \caption{Timing diagram for serial architecture}\label{fig5}
+    \centering
+    \includegraphics[width=\textwidth]{serial_time.png}
+\end{figure}
+
+\subsubsection{Sub Box Optimization }\label{subsubsec1}
+Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. There are different methods of implementation of Sub Box. The most popular implementation is using a lookup table (LUT), such as \cite{bib17}. However it uses a lot of flip-flop, which will bring a lot of area consumption. Using sbox's equivalent logical expression for this will reduce area consumption, such as \cite{bib15}, \cite{bib16}.
+
+\subsection{Loop Unrolled Architecture}\label{subsec3}
+
+\section{Implementation Results And Analysis}\label{sec4}
+
+\section{Conclusion}\label{sec5}
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
