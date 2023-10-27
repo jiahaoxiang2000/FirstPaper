@@ -37,7 +37,7 @@
 
 \begin{document}
 
-\title[Article Title]{Area–Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles}
+\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles - v1.6.0}
 
 \author[1,2]{\fnm{Jiahao} \sur{Xiang}}\email{simple.xjh@qq.com}
 \author*[1,2]{\fnm{Lang} \sur{Li}}\email{lilang911@126.com}
@@ -67,8 +67,6 @@ Lightweight cryptography is a subfield of cryptography that aims to provide solu
 In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5},  respectively Round based, Serial, and Loop unrolled. This allows IoV practitioners to select the architectures that best suit their needs. The contributions of this article can be summarized as follows.
 
 The rest of this article is organized as follows. Section~\ref{sec2} presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; ﬁnally, the work is concluded in Section 5.
-
-
 
 
 \section{Specification of CRAFT}\label{sec2}
@@ -151,7 +149,78 @@ Additionally, the dynamic power consumption of the encryption is reduced by usin
 \end{figure}
 
 \subsubsection{Sub Box Optimization }\label{subsubsec1}
-Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. There are different methods of implementation of Sub Box. The most popular implementation is using a lookup table (LUT), such as \cite{bib17}. However it uses a lot of flip-flop, which will bring a lot of area consumption. Using sbox's equivalent logical expression for this will reduce area consumption, such as \cite{bib15}, \cite{bib16}.
+Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. There are different methods of implementation of Sub Box. The most popular implementation is using a lookup table (LUT), such as \cite{bib17}. However it uses a lot of flip-flop, which will bring a lot of area consumption. Using S-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bib15}, \cite{bib16}.
+
+SAT solvers can be used to find S-Box that satisfy certain implement, such as being resistant to software or hardware implement.
+In more detail, the S-Box implement can be encoded as Boolean constraints by representing the S-Box as a truth table and then using Boolean variables to represent the input and output bits of the S-Box.
+The constraints can then be formulated based on the desired implement of the S-Box.
+Once the S-Box implement are encoded as Boolean constraints, a SAT solver can be used to find a satisfying assignment to these constraints, which corresponds to an S-Box that satisfies the desired implement.
+
+The gate equivalent complexity(GEC) of a SAT instance is the number of logical gates required to implement the Boolean formula that represents the instance.
+GEC can be calculated by converting the Boolean formula into a circuit of logical gates, such as AND, OR, and NOT gates.
+The number of gates in the circuit corresponds to the GEC of the instance.
+
+In our design, we optimize and use GEC encoding scheme of \cite{bib16} to implement the S-Box.
+Our encoding scheme as follows in Equation~\ref{eq1}:
+
+\begin{align}
+    \forall i \in \{0,1,\ldots ,K-1\}: \nonumber                                                                  \\
+    T_i & = F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
+        & \quad + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber                                  \\
+        & \quad + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2}) \nonumber                                \\
+        & \quad + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber                                 \\
+        & \quad + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber                                               \\
+        & \quad + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max). \label{eq1}
+\end{align}
+
+where $K$ is numbers of the logical gates, $Q_{4i}-Q_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
+The value of $max$ is all one's in the binary expression, which is represented logically as an inverse.
+$BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary number. The different types of logical gate used in this encoding scheme are listed in Table~\ref{tab3}.
+
+
+\begin{table}[h]
+    \caption{Encoding of different types of logical gate}\label{tab3}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+        \toprule
+        logical expression & $BB_i$[0:7] & gate type \\
+        \midrule
+        $Q_0 \oplus Q_1$ & 0 0 0 0 0 0 1 0 & XOR \\
+        $\sim (Q_0 \oplus Q_1)$ & 0 0 0 0 0 0 1 1 & XNOR \\
+        $Q_0 \land Q_1$ & 0 0 0 0 0 1 0 0 & AND \\
+        $\sim (Q_0 \land Q_1)$ & 0 0 0 0 0 1 0 1 & NAND \\
+        $Q_0 \lor Q_1$ & 0 0 0 0 0 1 1 0 & OR \\
+        $\sim (Q_0 \lor Q_1)$ & 0 0 0 0 0 1 1 1 & NOR \\
+        $\sim Q_0$ & 0 0 0 0 1 0 0 1 & NOT \\
+        $\sim Q_1$ & 0 0 0 0 1 0 1 1 & NOT \\
+        $\sim Q_2$ & 0 0 0 1 0 0 0 1 & NOT \\
+        $Q_0 \oplus Q_1 \oplus Q_2$ & 0 0 0 1 0 0 1 0 & XOR3 \\
+        $\sim (Q_0 \oplus Q_1 \oplus Q_2)$ & 0 0 0 1 0 0 1 1 & XNOR3 \\
+        $Q_0 \land Q_1 \land Q_2$ & 0 0 1 0 0 0 0 0 & AND3 \\
+        $\sim (Q_0 \land Q_1 \land Q_2)$ & 0 0 1 0 0 0 0 1 & NAND3 \\
+        $Q_0 \lor Q_1 \lor Q_2$ & 0 1 1 1 0 1 1 0 & OR3 \\
+        $\sim (Q_0 \lor Q_1 \lor Q_2)$ & 0 1 1 1 0 1 1 1 & NOR3 \\
+        $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 0 & MAOI1 \\
+        $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1 \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
+
+The optimized architecture of S-Box is shown in Equation~\ref{eq2}, where $X_0-X_3$ is the input of the S-Box and $Y_0-Y_3$ is the output of the S-Box. The proposed architecture of S-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate. This module of the proposed S-Box reduced the area by 28.9\% with \cite{bib15} (based on gate equivalent estimation on UMC 180nm library).
+
+\begin{align}
+    T_0 &= \text{MAOI1}(X_0, X_1, X_0, X_1) \nonumber \\
+    T_1 &= \text{AND3}(X_3, X_2, X_3) \nonumber \\
+    T_2 &= \text{MAOI1}(X_1, X_2, X_0, X_3) \nonumber \\
+    T_3 &= \text{MOAI1}(X_1, X_0, X_2, X_2) \nonumber \\
+    T_4 &= \text{MOAI1}(X_3, T_0, T_3, T_3) \nonumber \\
+    T_5 &= \text{MOAI1}(T_3, T_0, X_0, T_1) \nonumber \\
+    T_6 &= \text{MAOI1}(X_0, T_0, X_3, T_0) \nonumber \\
+    T_7 &= \text{MOAI1}(X_0, T_1, T_2, T_2) \nonumber \\
+    Y_0 &= T_5 \nonumber \\
+    Y_1 &= T_7 \nonumber \\
+    Y_2 &= T_6 \nonumber \\
+    Y_3 &= T_4 \label{eq2}
+\end{align}
 
 \subsection{Loop Unrolled Architecture}\label{subsec3}
 
