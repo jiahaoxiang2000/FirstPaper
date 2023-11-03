@@ -64,15 +64,15 @@
 
 \section{Introduction}\label{sec1}
 
-Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{bib13}. 
+Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}. 
 As IoT technology continues to advance, IoV technology is also making great progress. 
 But the same security issues that exist in IoT are also were introduced into IoV. 
 At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
 
-Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{bib12}. 
+Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{mckay2016report}. 
 It can provides security with low resource consumption and low delay in IoV environment.
 
-In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{bib5}, respectively Round based, Serial, and Loop unrolled.
+In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{beierle2019craft}, respectively Round based, Serial, and Loop unrolled.
 This allows IoV practitioners to select the architectures that best suit their needs. 
 The contributions of this article can be summarized as follows.
 
@@ -113,7 +113,7 @@ In order to achieve efficient area and throughput, we optimize the components of
 Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
 
 \subsection{Round Based Architecture}\label{subsec1}
-As no FPGA implementation of the round based architecture is given in \cite{bib5}, we implement the architecture presented in \cite{bib5} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT. 
+As no FPGA implementation of the round based architecture is given in \cite{beierle2019craft}, we implement the architecture presented in \cite{beierle2019craft} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT. 
 In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}. 
 The larger part of the footprint is the intermediate register state and the non-linear component S-box. 
 In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
@@ -180,9 +180,9 @@ The timing diagram of the proposed design with the clock gating technique is sho
 \subsubsection{Sub Box Optimization }\label{subsubsec1}
 Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. 
 There are different methods of implementation of Sub Box. 
-The most popular implementation is using a lookup table (LUT), such as \cite{bib17}. 
+The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}. 
 However it uses a lot of flip-flop, which will bring a lot of area consumption. 
-Using S-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bib15}, \cite{bib16}.
+Using S-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
 SAT solvers can be used to find S-Box that satisfy certain implement, such as being resistant to software or hardware implement.
 In more detail, the S-Box implement can be encoded as Boolean constraints by representing the S-Box as a truth table and then using Boolean variables to represent the input and output bits of the S-Box.
@@ -240,7 +240,7 @@ $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary
 
 The optimized architecture of S-Box is shown in Equation~\ref{eq2}, where $X_0-X_3$ is the input of the S-Box and $Y_0-Y_3$ is the output of the S-Box.
 The proposed architecture of S-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
-This module of the proposed S-Box reduced the area by 28.9\% with \cite{bib15} (based on gate equivalent estimation on UMC 180nm library). 
+This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library). 
 
 \begin{align}
     T_0 &= \text{MAOI1}(X_0, X_1, X_0, X_1) \nonumber \\
