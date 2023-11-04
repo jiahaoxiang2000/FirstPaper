@@ -47,11 +47,11 @@
 \affil[2]{\orgdiv{Hunan Provincial Key Laboratory of Intelligent Information Processing and Application}, \orgname{Hengyang Normal University}, \orgaddress{ \city{Hengyang}, \postcode{421002}, \country{China}}}
 
 \abstract{
-    \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale. 
-    Most of the IoV devices need instant response and real-time security to ensure the safety of users. 
-    The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices. 
+    \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale.
+    Most of the IoV devices need instant response and real-time security to ensure the safety of users.
+    The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices.
     In order to better adapt to these environment, the objective of this paper is to explore opportunities to optimize area and throughput for CRAFT cipher targeted for low-resource IoV devices.
-    \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint. 
+    \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint.
     We propose novel unrolled structure of CRAFT cipher for the high throughput feature.
     \textbf{Results:}The results on Artix-7 show that ...
     \textbf{Conclusion:} Hence, our works let CRAFT cipher more suitable for IoV devices.
@@ -64,26 +64,26 @@
 
 \section{Introduction}\label{sec1}
 
-Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}. 
-As IoT technology continues to advance, IoV technology is also making great progress. 
-But the same security issues that exist in IoT are also were introduced into IoV. 
+Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}.
+As IoT technology continues to advance, IoV technology is also making great progress.
+But the same security issues that exist in IoT are also were introduced into IoV.
 At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
 
-Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{mckay2016report}. 
+Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{mckay2016report}.
 It can provides security with low resource consumption and low delay in IoV environment.
 
 In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{beierle2019craft}, respectively Round based, Serial, and Loop unrolled.
-This allows IoV practitioners to select the architectures that best suit their needs. 
+This allows IoV practitioners to select the architectures that best suit their needs.
 The contributions of this article can be summarized as follows.
 
-The rest of this article is organized as follows. 
+The rest of this article is organized as follows.
 Section~\ref{sec2} presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; finally, the work is concluded in Section 5.
 
 
 \section{Specification of CRAFT}\label{sec2}
 
-All notations used in this paper are shown in Table~\ref{tab1}. 
-CRAFT is a lightweight tweakable block cipher made out of involutory building blocks. 
+All notations used in this paper are shown in Table~\ref{tab1}.
+CRAFT is a lightweight tweakable block cipher made out of involutory building blocks.
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext P is transformed into a 64-bit output ciphertext C using a 128-bit key K and a 64-bit tweak T. Figure~\ref{fig1} shows the structure of CRAFT.
 
 \begin{table}[h]
@@ -109,13 +109,13 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \section{CRAFT Implementation}\label{sec3}
 
-In order to achieve efficient area and throughput, we optimize the components of craft for the first time and propose three implementation architectures, respectively Round based, Serial, and Loop unrolled. 
+In order to achieve efficient area and throughput, we optimize the components of craft for the first time and propose three implementation architectures, respectively Round based, Serial, and Loop unrolled.
 Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
 
 \subsection{Round Based Architecture}\label{subsec1}
-As no FPGA implementation of the round based architecture is given in \cite{beierle2019craft}, we implement the architecture presented in \cite{beierle2019craft} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT. 
-In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}. 
-The larger part of the footprint is the intermediate register state and the non-linear component S-box. 
+As no FPGA implementation of the round based architecture is given in \cite{beierle2019craft}, we implement the architecture presented in \cite{beierle2019craft} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT.
+In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}.
+The larger part of the footprint is the intermediate register state and the non-linear component S-box.
 In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
 
 
@@ -141,12 +141,12 @@ In terms of throughput, The critical path is from the control register to the in
 \end{table}
 
 \subsection{Serial Architecture}\label{subsec2}
-Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of S-box is reduced from 16 to 1. 
-The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}. 
-The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results. 
-In order to store intermediate results into State-Register bank, the design has one feedback paths. 
-PermuteNibbles is included in State-Register bank. 
-It is noticeable that since the execution of permute requires 64-bit, in order to reuse the State-Register block, we change the order of execution of Sub-Box and Permute. 
+Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of S-box is reduced from 16 to 1.
+The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}.
+The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results.
+In order to store intermediate results into State-Register bank, the design has one feedback paths.
+PermuteNibbles is included in State-Register bank.
+It is noticeable that since the execution of permute requires 64-bit, in order to reuse the State-Register block, we change the order of execution of Sub-Box and Permute.
 And the first round of encryption process through the control signal to avoid Permute operation, to ensure the correctness of the encryption algorithm.
 
 \begin{figure}[h]%   
@@ -157,10 +157,10 @@ And the first round of encryption process through the control signal to avoid Pe
 
 
 \subsubsection{Sub-Box Optimization }\label{subsubsec1}
-Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. 
-There are different methods of implementation of Sub Box. 
-The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}. 
-However it uses a lot of flip-flop, which will bring a lot of area consumption. 
+Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
+There are different methods of implementation of Sub Box.
+The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}.
+However it uses a lot of flip-flop, which will bring a lot of area consumption.
 Using S-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
 SAT solvers can be used to find S-Box that satisfy certain implement, such as being resistant to software or hardware implement.
@@ -219,29 +219,29 @@ $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary
 
 The optimized architecture of S-Box is shown in Equation~\ref{eq2}, where $X_0-X_3$ is the input of the S-Box and $Y_0-Y_3$ is the output of the S-Box.
 The proposed architecture of S-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
-This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library). 
+This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library).
 
 \begin{align}
-    T_0 &= \text{MAOI1}(X_0, X_1, X_0, X_1) \nonumber \\
-    T_1 &= \text{AND3}(X_3, X_2, X_3) \nonumber \\
-    T_2 &= \text{MAOI1}(X_1, X_2, X_0, X_3) \nonumber \\
-    T_3 &= \text{MOAI1}(X_1, X_0, X_2, X_2) \nonumber \\
-    T_4 &= \text{MOAI1}(X_3, T_0, T_3, T_3) \nonumber \\
-    T_5 &= \text{MOAI1}(T_3, T_0, X_0, T_1) \nonumber \\
-    T_6 &= \text{MAOI1}(X_0, T_0, X_3, T_0) \nonumber \\
-    T_7 &= \text{MOAI1}(X_0, T_1, T_2, T_2) \nonumber \\
-    Y_0 &= T_5 \quad Y_1 = T_7 \quad Y_2 = T_6 \quad Y_3 = T_4  
-     \label{eq2}
+    T_0 & = \text{MAOI1}(X_0, X_1, X_0, X_1) \nonumber          \\
+    T_1 & = \text{AND3}(X_3, X_2, X_3) \nonumber                \\
+    T_2 & = \text{MAOI1}(X_1, X_2, X_0, X_3) \nonumber          \\
+    T_3 & = \text{MOAI1}(X_1, X_0, X_2, X_2) \nonumber          \\
+    T_4 & = \text{MOAI1}(X_3, T_0, T_3, T_3) \nonumber          \\
+    T_5 & = \text{MOAI1}(T_3, T_0, X_0, T_1) \nonumber          \\
+    T_6 & = \text{MAOI1}(X_0, T_0, X_3, T_0) \nonumber          \\
+    T_7 & = \text{MOAI1}(X_0, T_1, T_2, T_2) \nonumber          \\
+    Y_0 & = T_5 \quad Y_1 = T_7 \quad Y_2 = T_6 \quad Y_3 = T_4
+    \label{eq2}
 \end{align}
 
 \subsubsection{Mix-Columns Optimization}\label{subsubsec2}
 
-The Mix-Columns component is a linear transformation of the input column. 
-The input column is multiplied by a constant matrix $M$ to produce the output column. 
+The Mix-Columns component is a linear transformation of the input column.
+The input column is multiplied by a constant matrix $M$ to produce the output column.
 $M$ is a involutory matrix, which means $M^2 = E$, where $E$ is the identity matrix.
 It is easy to decrypt the ciphertext by multiplying the ciphertext with $M$ again.
-The Mix-columns component is shown in Equation~\ref{eq3}. 
-where $I_{0,j}$, $I_{1,j}$, $I_{2,j}$, and $I_{3,j}$ are the input column, $I'_{0,j}$, $I'_{1,j}$, $I'_{2,j}$, and $I'_{3,j}$ are the output column, and $j$ is the column index, $j \in \{0,\dots,3\}$. 
+The Mix-columns component is shown in Equation~\ref{eq3}.
+where $I_{0,j}$, $I_{1,j}$, $I_{2,j}$, and $I_{3,j}$ are the input column, $I'_{0,j}$, $I'_{1,j}$, $I'_{2,j}$, and $I'_{3,j}$ are the output column, and $j$ is the column index, $j \in \{0,\dots,3\}$.
 
 \begin{equation}
     \begin{bmatrix}
@@ -267,44 +267,53 @@ where $I_{0,j}$, $I_{1,j}$, $I_{2,j}$, and $I_{3,j}$ are the input column, $I'_{
 \end{equation}
 
 
-In order to reduce the area of this component, we use the serial architecture of Mix-Columns, as shown in Figure~\ref{serial_mix_columns_fig}. 
+In order to reduce the area of this component, we use the serial architecture of Mix-Columns, as shown in Figure~\ref{serial_mix_columns_fig}.
 The serial architecture of Mix-Columns requires four 4-bit register, two multiplexes and three XOR gates.
 The operation of Mix-Columns involves three distinct stages: freeze, shift, and add.
 During the freeze stage, we ensure the register values remain unchanged by setting both $CM_0$ and $CM_1$ to 0.
 In the shift stage, we induce a shift in the register values from $RM_0$ to $RM_4$ by setting both $CM_0$ and $CM_1$ to 1.
 Finally, in the add stage, we execute an addition operation on the column values according to Equation~\ref{eq3}. This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
 
+The timing diagram for the serial architecture of Mix-Columns is depicted in Figure~\ref{serial_time_diagrm_mix_colunms}.
+It requires five clock cycles to compute the next columns from the previous ones, and an additional four clock cycles to transfer data from the internal register of Mix-Columns to the State-Register.
+Therefore, a complete state round requires a total of 36 clock cycles.
 
 
 \begin{figure}[h]%   
     \centering
     \includegraphics[width=\textwidth]{Mix-Columns.pdf}
-    \caption{Serial architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
+    \caption{Serial Architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
+\end{figure}
+
+\begin{figure}[h]%   
+    \centering
+    \includegraphics[width=\textwidth]{Mix-Columns-Times.pdf}
+    \caption{Timing Diagram for the Serial Architecture of Mix-Columns }\label{serial_time_diagrm_mix_colunms}
 \end{figure}
 
 \subsubsection{Control Units}\label{subsubsec3}
 
-The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}. 
-The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule. 
-In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column. 
-In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the S-box component in another four clock cycles. 
+The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}.
+The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule.
+In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column.
+In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the S-box component in another four clock cycles.
 Permute executes in one clock cycle inside the State-Register.
 
 \begin{figure}[h]%   
     \centering
     \includegraphics[width=\textwidth]{serial_fsm.png}
-    \caption{Finite-state machine for serial architecture}\label{serial_fsm_fig}
+    \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
 The dynamic power consumption of the encryption is reduced by employing clock gating, a technique discussed in \cite{shahbazi2020area}.
-The clock gating is separately applied on State Register, Key Register and Mix Columns. 
-For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase. 
+The clock gating is separately applied on State Register, Key Register and Mix Columns.
+For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase.
 The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{serial_time_diagrm}.
 
 \begin{figure}[h]%   
     \centering
     \includegraphics[width=\textwidth]{serial_time.png}
-    \caption{Timing diagram for serial architecture}\label{serial_time_diagrm}
+    \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 
 \subsection{Loop Unrolled Architecture}\label{subsec3}
