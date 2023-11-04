@@ -87,7 +87,6 @@ CRAFT is a lightweight tweakable block cipher made out of involutory building bl
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext P is transformed into a 64-bit output ciphertext C using a 128-bit key K and a 64-bit tweak T. Figure~\ref{fig1} shows the structure of CRAFT.
 
 \begin{table}[h]
-    \caption{Notations used in this paper}\label{tab1}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
         \toprule
         Notation   & Description                                 \\
@@ -98,6 +97,7 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
         $\oplus$   & Bit-wise sum (XOR)                          \\
         \botrule
     \end{tabular*}
+    \caption{Notations used in this paper}\label{tab1}%
 \end{table}
 
 \begin{figure}[h]%   
@@ -120,9 +120,9 @@ In terms of throughput, The critical path is from the control register to the in
 
 
 \begin{figure}[h]%   
-    \caption{Structure of CRAFT}\label{fig2}
     \centering
     \includegraphics[width=\textwidth]{round_based_design.png}
+    \caption{Structure of CRAFT}\label{fig2}
 \end{figure}
 
 \begin{table}[h]
@@ -150,34 +150,13 @@ It is noticeable that since the execution of permute requires 64-bit, in order t
 And the first round of encryption process through the control signal to avoid Permute operation, to ensure the correctness of the encryption algorithm.
 
 \begin{figure}[h]%   
-    \caption{Serial architecture of CRAFT}\label{fig3}
     \centering
     \includegraphics[width=\textwidth]{serial_design.png}
+    \caption{Serial architecture of CRAFT}\label{fig3}
 \end{figure}
 
-The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{fig4}. 
-The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule. 
-In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column. 
-In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the S-box component in another four clock cycles. 
-Permute executes in one clock cycle inside the State-Register.
 
-\begin{figure}[h]%   
-    \caption{Finite-state machine for serial architecture}\label{fig4}
-    \centering
-    \includegraphics[width=\textwidth]{serial_fsm.png}
-\end{figure}
-
-Additionally, the dynamic power consumption of the encryption is reduced by using clock gating.The clock gating is separately applied on State Register, Key Register and Mix Columns. 
-For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase. 
-The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{fig5}.
-
-\begin{figure}[h]%   
-    \caption{Timing diagram for serial architecture}\label{fig5}
-    \centering
-    \includegraphics[width=\textwidth]{serial_time.png}
-\end{figure}
-
-\subsubsection{Sub Box Optimization }\label{subsubsec1}
+\subsubsection{Sub-Box Optimization }\label{subsubsec1}
 Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area. 
 There are different methods of implementation of Sub Box. 
 The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}. 
@@ -254,6 +233,38 @@ This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019p
     Y_0 &= T_5 \quad Y_1 = T_7 \quad Y_2 = T_6 \quad Y_3 = T_4  
      \label{eq2}
 \end{align}
+
+\subsubsection{Mix-Columns Optimization}\label{subsubsec2}
+
+\begin{figure}[h]%   
+    \centering
+    \includegraphics[width=\textwidth]{Mix-Columns.pdf}
+    \caption{Serial architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
+\end{figure}
+
+\subsubsection{Control Units}\label{subsubsec3}
+
+The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}. 
+The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule. 
+In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column. 
+In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the S-box component in another four clock cycles. 
+Permute executes in one clock cycle inside the State-Register.
+
+\begin{figure}[h]%   
+    \centering
+    \includegraphics[width=\textwidth]{serial_fsm.png}
+    \caption{Finite-state machine for serial architecture}\label{serial_fsm_fig}
+\end{figure}
+
+Additionally, the dynamic power consumption of the encryption is reduced by using clock gating.The clock gating is separately applied on State Register, Key Register and Mix Columns. 
+For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase. 
+The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{serial_time_diagrm}.
+
+\begin{figure}[h]%   
+    \centering
+    \includegraphics[width=\textwidth]{serial_time.png}
+    \caption{Timing diagram for serial architecture}\label{serial_time_diagrm}
+\end{figure}
 
 \subsection{Loop Unrolled Architecture}\label{subsec3}
 
