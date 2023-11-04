@@ -236,6 +236,46 @@ This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019p
 
 \subsubsection{Mix-Columns Optimization}\label{subsubsec2}
 
+The Mix-Columns component is a linear transformation of the input column. 
+The input column is multiplied by a constant matrix $M$ to produce the output column. 
+$M$ is a involutory matrix, which means $M^2 = E$, where $E$ is the identity matrix.
+It is easy to decrypt the ciphertext by multiplying the ciphertext with $M$ again.
+The Mix-columns component is shown in Equation~\ref{eq3}. 
+where $I_{0,j}$, $I_{1,j}$, $I_{2,j}$, and $I_{3,j}$ are the input column, $I'_{0,j}$, $I'_{1,j}$, $I'_{2,j}$, and $I'_{3,j}$ are the output column, and $j$ is the column index, $j \in \{0,\dots,3\}$. 
+
+\begin{equation}
+    \begin{bmatrix}
+        I'_{0,j} \\
+        I'_{1,j} \\
+        I'_{2,j} \\
+        I'_{3,j}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1 & 0 & 1 & 1 \\
+        0 & 1 & 0 & 1 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        I_{0,j} \\
+        I_{1,j} \\
+        I_{2,j} \\
+        I_{3,j}
+    \end{bmatrix}
+    \label{eq3}
+\end{equation}
+
+
+In order to reduce the area of this component, we use the serial architecture of Mix-Columns, as shown in Figure~\ref{serial_mix_columns_fig}. 
+The serial architecture of Mix-Columns requires four 4-bit register, two multiplexes and three XOR gates.
+The operation of Mix-Columns involves three distinct stages: freeze, shift, and add.
+During the freeze stage, we ensure the register values remain unchanged by setting both $CM_0$ and $CM_1$ to 0.
+In the shift stage, we induce a shift in the register values from $RM_0$ to $RM_4$ by setting both $CM_0$ and $CM_1$ to 1.
+Finally, in the add stage, we execute an addition operation on the column values according to Equation~\ref{eq3}. This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
+
+
+
 \begin{figure}[h]%   
     \centering
     \includegraphics[width=\textwidth]{Mix-Columns.pdf}
@@ -256,7 +296,8 @@ Permute executes in one clock cycle inside the State-Register.
     \caption{Finite-state machine for serial architecture}\label{serial_fsm_fig}
 \end{figure}
 
-Additionally, the dynamic power consumption of the encryption is reduced by using clock gating.The clock gating is separately applied on State Register, Key Register and Mix Columns. 
+The dynamic power consumption of the encryption is reduced by employing clock gating, a technique discussed in \cite{shahbazi2020area}.
+The clock gating is separately applied on State Register, Key Register and Mix Columns. 
 For instance, the most power consumption is saved during the Key Schedule phase; the clock of State Register and Mix Columns is disabled to save power because these two blocks are not used in the Key Schedule phase. 
 The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{serial_time_diagrm}.
 
