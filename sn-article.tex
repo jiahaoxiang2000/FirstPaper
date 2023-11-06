@@ -37,7 +37,7 @@
 
 \begin{document}
 
-\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles - v1.6.1}
+\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles - v1.7.0}
 
 \author[1,2]{\fnm{Jiahao} \sur{Xiang}}\email{simple.xjh@qq.com}
 \author*[1,2]{\fnm{Lang} \sur{Li}}\email{lilang911@126.com}
@@ -113,7 +113,8 @@ In order to achieve efficient area and throughput, we optimize the components of
 Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
 
 \subsection{Round Based Architecture}\label{subsec1}
-As no FPGA implementation of the round based architecture is given in \cite{beierle2019craft}, we implement the architecture presented in \cite{beierle2019craft} for the first time. Figure~\ref{fig2} is Round-based design architecture of CRAFT.
+While no FPGA implementation of the round-based architecture is provided in \cite{beierle2019craft}, we have taken the initiative to implement the architecture presented therein for the first time.
+Figure~\ref{fig2} is Round-based design architecture of CRAFT.
 In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}.
 The larger part of the footprint is the intermediate register state and the non-linear component S-box.
 In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
