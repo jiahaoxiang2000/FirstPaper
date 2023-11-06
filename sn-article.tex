@@ -37,7 +37,7 @@
 
 \begin{document}
 
-\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles - v1.7.0}
+\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles - v1.7.1}
 
 \author[1,2]{\fnm{Jiahao} \sur{Xiang}}\email{simple.xjh@qq.com}
 \author*[1,2]{\fnm{Lang} \sur{Li}}\email{lilang911@126.com}
@@ -87,6 +87,7 @@ CRAFT is a lightweight tweakable block cipher made out of involutory building bl
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext P is transformed into a 64-bit output ciphertext C using a 128-bit key K and a 64-bit tweak T. Figure~\ref{fig1} shows the structure of CRAFT.
 
 \begin{table}[h]
+    \caption{Notations used in this paper}\label{tab1}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
         \toprule
         Notation   & Description                                 \\
@@ -97,28 +98,22 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
         $\oplus$   & Bit-wise sum (XOR)                          \\
         \botrule
     \end{tabular*}
-    \caption{Notations used in this paper}\label{tab1}%
 \end{table}
 
-\begin{figure}[h]%   
-    \caption{Structure of CRAFT}\label{fig1}
+\begin{figure}[h]%
     \centering
-    \includegraphics[width=\textwidth]{struct_of_craft.png}
+    \includegraphics[width=\textwidth]{struct_of_craft.png}   
+    \caption{Structure of CRAFT}\label{fig1}
 \end{figure}
 
 
-\section{CRAFT Implementation}\label{sec3}
+\section{Proposed Architecture}\label{sec3}
 
 In order to achieve efficient area and throughput, we optimize the components of craft for the first time and propose three implementation architectures, respectively Round based, Serial, and Loop unrolled.
-Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
 
-\subsection{Round Based Architecture}\label{subsec1}
+\subsection{Round Based Architecture(A1)}\label{subsec1}
 While no FPGA implementation of the round-based architecture is provided in \cite{beierle2019craft}, we have taken the initiative to implement the architecture presented therein for the first time.
 Figure~\ref{fig2} is Round-based design architecture of CRAFT.
-In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{tab2}.
-The larger part of the footprint is the intermediate register state and the non-linear component S-box.
-In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
-
 
 \begin{figure}[h]%   
     \centering
@@ -126,22 +121,8 @@ In terms of throughput, The critical path is from the control register to the in
     \caption{Structure of CRAFT}\label{fig2}
 \end{figure}
 
-\begin{table}[h]
-    \caption{Area consumption of Round based design}\label{tab2}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
-        \toprule
-        &LUT&	FF&	Slice                                \\
-        \midrule
-        Key Schedule &	64&	0&	22                           \\
-        Round Constant&	2&	7&	2 \\
-        S-box * 4&	8&	0&	4                             \\
-        Round (include  S-box * 16)&	84&	0&	28                        \\
-        All (include control)&	182&	144&	56                     \\
-        \botrule
-    \end{tabular*}
-\end{table}
 
-\subsection{Serial Architecture}\label{subsec2}
+\subsection{Serial Architecture(A2)}\label{subsec2}
 Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of S-box is reduced from 16 to 1.
 The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}.
 The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results.
@@ -317,10 +298,31 @@ The timing diagram of the proposed design with the clock gating technique is sho
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 
-\subsection{Loop Unrolled Architecture}\label{subsec3}
+\subsection{Loop Unrolled Architecture(A3)}\label{subsec3}
 
 \section{Implementation Results And Analysis}\label{sec4}
 
+Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
+
+
+In terms of area, the consumption of each component of the algorithm is shown in Table~\ref{area_cost_round_based}.
+The larger part of the footprint is the intermediate register state and the non-linear component S-box.
+In terms of throughput, The critical path is from the control register to the intermediate value register state, which has a delay of 5.2ns. the calculated maximum throughput rate is 382Mbit/s.
+
+\begin{table}[h]
+    \caption{Area consumption of Round based design}\label{area_cost_round_based}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+        \toprule
+        &LUT&	FF&	Slice                                \\
+        \midrule
+        Key Schedule &	64&	0&	22                           \\
+        Round Constant&	2&	7&	2 \\
+        S-box * 4&	8&	0&	4                             \\
+        Round (include  S-box * 16)&	84&	0&	28                        \\
+        All (include control)&	182&	144&	56                     \\
+        \botrule
+    \end{tabular*}
+\end{table}
 \section{Conclusion}\label{sec5}
 
 \bibliography{sn-bibliography}% common bib file
