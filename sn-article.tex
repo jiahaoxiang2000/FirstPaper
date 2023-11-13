@@ -307,8 +307,17 @@ To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area
 However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}. 
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology. 
 Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies. 
-In this paper, we use the number of slices to evaluate the area consumption of the design. 
-We implemented the proposed architectures on a Xilinx FPGA board using Vivado v2023.2 and ISE 14.7.
+In order to ensure a fair comparison, we evaluate the area consumption of the proposed designs using FPGA implementations, a method also utilized in \cite{mohajerani2020fpga}.
+
+\subsection{Platform}\label{subsec4}
+We implemented the proposed architectures on a Xilinx FPGA board using the ISE Design Suite 14.7 and Vivado v2023.2. We analyzed four different FPGA platforms: Spartan-3 (xc3s200-5ft256), Spartan-6 (xc6slx16-3csg324), Virtex-4 (xc4vlx25-12ff668), and Virtex-5 (xc5vlx50t-3ff1136) using the ISE Design Suite 14.7, a methodology also employed by \cite{lara2017lightweight}. For benchmarking on the latest FPGA, we used the Artix-7 (xc7a100tcsg324-1) platform with Vivado v2023.2, as done by \cite{mohajerani2020fpga}.
+
+
+\subsection{Area}\label{subsec5}
+We use the Area metric to evaluate the area consumption of the proposed designs, which includes components like flip-flops, LUTs, and slices. Given the different types of LUTs, such as LUT-4 and LUT-6, we use Spartan-3 and Virtex-4 for LUT-4, Spartan-6 and Virtex-5 for LUT-6, and Artix-7 for LUT-6. To ensure a fair comparison, we decided not to use the FPGA's embedded memory blocks by disabling the corresponding flags in the VHDL, as suggested in \cite{xilinx2022ultrafast}.
+
+\subsection{Throughput}\label{subsec6}
+
 
 \section{Results}\label{sec5}
 
