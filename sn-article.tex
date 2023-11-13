@@ -300,7 +300,17 @@ The timing diagram of the proposed design with the clock gating technique is sho
 
 \subsection{Loop Unrolled Architecture(A3)}\label{subsec3}
 
-\section{Implementation Results And Analysis}\label{sec4}
+\section{Experimental Evaluation}\label{sec4}
+In ASIC implementations, the gate equivalent (GE) is often used to evaluate the area consumption of a design. 
+A single GE is equivalent to a two-input NAND gate. 
+To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area of a two-input NAND gate (also in $\mu m^2$). 
+However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}. 
+For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology. 
+Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies. 
+In this paper, we use the number of slices to evaluate the area consumption of the design. 
+We implemented the proposed architectures on a Xilinx FPGA board using Vivado v2023.2 and ISE 14.7.
+
+\section{Results}\label{sec5}
 
 Proposed architectures are implemented on the Xilinx FPGA board using the Vivado v2023.1. FPGA platforms - Artix-7 (xc7a100tcsg324-1) are used to get a clear idea about implementation and performance of the proposed designs.
 
@@ -323,7 +333,8 @@ In terms of throughput, The critical path is from the control register to the in
         \botrule
     \end{tabular*}
 \end{table}
-\section{Conclusion}\label{sec5}
+
+\section{Conclusion}\label{sec6}
 
 \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
