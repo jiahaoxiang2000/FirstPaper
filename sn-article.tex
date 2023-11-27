@@ -102,7 +102,7 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=\textwidth]{struct_of_craft.png}   
+    \includegraphics[width=\textwidth]{struct_of_craft.png}
     \caption{Structure of CRAFT}\label{fig1}
 \end{figure}
 
@@ -287,53 +287,73 @@ The timing diagram of the proposed design with the clock gating technique is sho
     \includegraphics[width=\textwidth]{serial_time.png}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
-\subsection{Loop Unrolled Architecture(A2)}\label{subsec3}
+\subsection{Unrolled Architecture(A2)}\label{subsec3}
+
+The unrolled architecture, derived from the iterative architecture delineated in \cite{beierle2019craft}, necessitates a mere 16 cycles for the completion of the encryption process. This is in stark contrast to the 32 cycles required by its iterative counterpart. It should be noted that, within this context, a single cycle is defined as encompassing two round functions of CRAFT. Despite the potential for increased area usage, this methodology yields a superior throughput at an equivalent frequency.
+
 
 \section{Experimental Evaluation}\label{sec4}
 
-In ASIC implementations, the gate equivalent (GE) is often used to evaluate the area consumption of a design. 
-A single GE is equivalent to a two-input NAND gate. 
-To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area of a two-input NAND gate (also in $\mu m^2$). 
-However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}. 
-For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology. 
-Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies. 
+In ASIC implementations, the gate equivalent (GE) is often used to evaluate the area consumption of a design.
+A single GE is equivalent to a two-input NAND gate.
+To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area of a two-input NAND gate (also in $\mu m^2$).
+However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}.
+For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
+Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies.
 In order to ensure a fair comparison, we evaluate the area consumption of the proposed designs using FPGA implementations, a method also utilized in \cite{mohajerani2020fpga}.
 
 \subsection{Platform}\label{subsec4}
 
-We implemented the proposed architectures on a Xilinx FPGA board using the ISE Design Suite 14.7 and Vivado v2023.2. 
-We analyzed four different FPGA platforms: Spartan-3 (xc3s200-5ft256), Spartan-6 (xc6slx16-3csg324), Virtex-4 (xc4vlx25-12ff668), and Virtex-5 (xc5vlx50t-3ff1136) using the ISE Design Suite 14.7, a methodology also employed by \cite{lara2017lightweight}. 
+We implemented the proposed architectures on a Xilinx FPGA board using the ISE Design Suite 14.7 and Vivado v2023.2.
+We analyzed four different FPGA platforms: Spartan-3 (xc3s200-5ft256), Spartan-6 (xc6slx16-3csg324), Virtex-4 (xc4vlx25-12ff668), and Virtex-5 (xc5vlx50t-3ff1136) using the ISE Design Suite 14.7, a methodology also employed by \cite{lara2017lightweight}.
 For benchmarking on the latest FPGA, we used the Artix-7 (xc7a100tcsg324-1) platform with Vivado v2023.2, as done by \cite{mohajerani2020fpga}.
 
 
 \subsection{Area}\label{subsec5}
 
-We use the Area metric to evaluate the area consumption of the proposed designs, which includes components like flip-flops, LUTs, and slices. 
-Given the different types of LUTs, such as LUT-4 and LUT-6, we use Spartan-3 and Virtex-4 for LUT-4, Spartan-6 and Virtex-5 for LUT-6, and Artix-7 for LUT-6. 
+We use the Area metric to evaluate the area consumption of the proposed designs, which includes components like flip-flops, LUTs, and slices.
+Given the different types of LUTs, such as LUT-4 and LUT-6, we use Spartan-3 and Virtex-4 for LUT-4, Spartan-6 and Virtex-5 for LUT-6, and Artix-7 for LUT-6.
 To ensure a fair comparison, we decided not to use the FPGA's embedded memory blocks by disabling the corresponding flags in the VHDL, as suggested in \cite{xilinx2022ultrafast}.
 
 \subsection{Throughput}\label{subsec6}
-We evaluate the performance of our proposed designs using the Throughput metric. 
-This metric is assessed using three parameters: the maximum throughput rate, the throughput rate at 200MHz (following the method used by \cite{ghosh2017lightweight}), and the throughput rate per slice. 
-The maximum throughput rate, calculated using Equation ~\ref{eq4}, represents the highest rate our designs can achieve. 
-The throughput rate at 200MHz, calculated using Equation ~\ref{eq5}, shows the rate achievable when the clock frequency is set to 200MHz. 
-Finally, the throughput rate per slice, calculated by dividing the throughput rate by the number of slices (Equation ~\ref{eq6}), provides a measure of efficiency. 
+We evaluate the performance of our proposed designs using the Throughput metric.
+This metric is assessed using three parameters: the maximum throughput rate, the throughput rate at 200MHz (following the method used by \cite{ghosh2017lightweight}), and the throughput rate per slice.
+The maximum throughput rate, calculated using Equation ~\ref{eq4}, represents the highest rate our designs can achieve.
+The throughput rate at 200MHz, calculated using Equation ~\ref{eq5}, shows the rate achievable when the clock frequency is set to 200MHz.
+Finally, the throughput rate per slice, calculated by dividing the throughput rate by the number of slices (Equation ~\ref{eq6}), provides a measure of efficiency.
 In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of slices used by the design.
 
 \begin{equation}
-    Maximum Throughput(Thr) = \frac{Maximum Frequency \times Plaintext Size}{Latency} 
+    Maximum Throughput(Thr) = \frac{Maximum Frequency \times Plaintext Size}{Latency}
     \label{eq4}
 \end{equation}
 
 \begin{equation}
-    Throughput_{@200MHz}(Thr^*) = \frac{200MHz \times Plaintext Size}{Latency} 
+    Throughput_{@200MHz}(Thr^*) = \frac{200MHz \times Plaintext Size}{Latency}
     \label{eq5}
 \end{equation}
 
 \begin{equation}
-    ThroughputPerSlice = \frac{Throughput_{@200MHz}(Thr^*)}{Slices} 
+    ThroughputPerSlice = \frac{Throughput_{@200MHz}(Thr^*)}{Slices}
     \label{eq6}
 \end{equation}
+
+\subsection{Power and Energy}\label{power_energy}
+
+The Power metric, which encapsulates both dynamic and static power consumption, serves as the evaluative measure for the power consumption of the proposed designs, as delineated in Equation~\ref{eq7}.
+Conversely, the Energy metric is employed to gauge the energy consumption of the designs. This is computed by the multiplication of power consumption and the duration required to encrypt a singular block. This duration is ascertained by the division of latency by the frequency, as explicated in Equation~\ref{enery_eqation}.
+
+\begin{equation}
+    Total Power = Dynamic  Power + Static Power
+    \label{eq7}
+\end{equation}
+\begin{equation}
+    Energy = \frac{Total Power \times Latency }{Frequency}
+    \label{enery_eqation}
+\end{equation}
+
+
+
 
 \section{Results}\label{sec5}
 
