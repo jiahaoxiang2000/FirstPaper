@@ -109,7 +109,7 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \section{Proposed Architecture}\label{sec3}
 
-\textcolor{blue}{To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Loop Unrolled.}
+To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Loop Unrolled.
 
 
 \subsection{Serial Architecture(A1)}\label{subsec2}
@@ -289,7 +289,16 @@ The timing diagram of the proposed design with the clock gating technique is sho
 \end{figure}
 \subsection{Unrolled Architecture(A2)}\label{subsec3}
 
-The unrolled architecture, derived from the iterative architecture delineated in \cite{beierle2019craft}, necessitates a mere 16 cycles for the completion of the encryption process. This is in stark contrast to the 32 cycles required by its iterative counterpart. It should be noted that, within this context, a single cycle is defined as encompassing two round functions of CRAFT. Despite the potential for increased area usage, this methodology yields a superior throughput at an equivalent frequency.
+The architecture under consideration, as illustrated in Figure~\ref{fig4}, incorporates two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and a single feedback path. This architecture is engineered to execute a 30-round encryption process within a span of 15 cycles. It is noteworthy that only the Mix-Columns and Add-Key operations are executed in the final cycle, leading to the culmination of the encryption process in a total of 16 cycles.
+
+The unrolled architecture, an offshoot of the iterative architecture expounded in \cite{beierle2019craft}, necessitates a mere 16 cycles for the completion of the encryption process. This stands in stark contrast to the 32 cycles necessitated by its iterative counterpart. In this context, a single cycle is defined as encompassing two round functions of CRAFT. Despite the potential for increased area usage, this methodology yields superior throughput at an equivalent frequency.
+
+
+\begin{figure}[h]%   
+    \centering
+    \includegraphics[width=\textwidth]{unrolled-archticture.pdf}
+    \caption{Unrolled architecture of CRAFT}\label{fig4}
+\end{figure}
 
 
 \section{Experimental Evaluation}\label{sec4}
@@ -318,9 +327,9 @@ To ensure a fair comparison, we decided not to use the FPGA's embedded memory bl
 \subsection{Throughput}\label{subsec6}
 We evaluate the performance of our proposed designs using the Throughput metric.
 This metric is assessed using three parameters: the maximum throughput rate, the throughput rate at 200MHz (following the method used by \cite{ghosh2017lightweight}), and the throughput rate per slice.
-The maximum throughput rate, calculated using Equation ~\ref{eq4}, represents the highest rate our designs can achieve.
-The throughput rate at 200MHz, calculated using Equation ~\ref{eq5}, shows the rate achievable when the clock frequency is set to 200MHz.
-Finally, the throughput rate per slice, calculated by dividing the throughput rate by the number of slices (Equation ~\ref{eq6}), provides a measure of efficiency.
+The maximum throughput rate, calculated using Equation~\ref{eq4}, represents the highest rate our designs can achieve.
+The throughput rate at 200MHz, calculated using Equation~\ref{eq5}, shows the rate achievable when the clock frequency is set to 200MHz.
+Finally, the throughput rate per slice, calculated by dividing the throughput rate by the number of slices (Equation~\ref{eq6}), provides a measure of efficiency.
 In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of slices used by the design.
 
 \begin{equation}
