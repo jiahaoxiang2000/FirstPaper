@@ -109,11 +109,11 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \section{Proposed Architecture}\label{sec3}
 
-To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Loop Unrolled.
+To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Unrolled.
 
 
 \subsection{Serial Architecture(A1)}\label{subsec2}
-Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of S-box is reduced from 16 to 1.
+Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of Sub-Box is reduced from 16 to 1.
 The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}.
 The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results.
 In order to store intermediate results into State-Register bank, the design has one feedback paths.
@@ -129,22 +129,22 @@ And the first round of encryption process through the control signal to avoid Pe
 
 
 \subsubsection{Sub-Box Optimization }\label{subsubsec1}
-Sub Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
-There are different methods of implementation of Sub Box.
+Sub-Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
+There are different methods of implementation of Sub-Box.
 The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}.
 However it uses a lot of flip-flop, which will bring a lot of area consumption.
-Using S-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
+Using Sub-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
-SAT solvers can be used to find S-Box that satisfy certain implement, such as being resistant to software or hardware implement.
-In more detail, the S-Box implement can be encoded as Boolean constraints by representing the S-Box as a truth table and then using Boolean variables to represent the input and output bits of the S-Box.
-The constraints can then be formulated based on the desired implement of the S-Box.
-Once the S-Box implement are encoded as Boolean constraints, a SAT solver can be used to find a satisfying assignment to these constraints, which corresponds to an S-Box that satisfies the desired implement.
+SAT solvers can be used to find Sub-Box that satisfy certain implement, such as being resistant to software or hardware implement.
+In more detail, the Sub-Box implement can be encoded as Boolean constraints by representing the Sub-Box as a truth table and then using Boolean variables to represent the input and output bits of the Sub-Box.
+The constraints can then be formulated based on the desired implement of the Sub-Box.
+Once the Sub-Box implement are encoded as Boolean constraints, a SAT solver can be used to find a satisfying assignment to these constraints, which corresponds to an Sub-Box that satisfies the desired implement.
 
 The gate equivalent complexity(GEC) of a SAT instance is the number of logical gates required to implement the Boolean formula that represents the instance.
 GEC can be calculated by converting the Boolean formula into a circuit of logical gates, such as AND, OR, and NOT gates.
 The number of gates in the circuit corresponds to the GEC of the instance.
 
-In our design, we optimize and use GEC encoding scheme of \cite{bib16} to implement the S-Box.
+In our design, we optimize and use GEC encoding scheme of \cite{bib16} to implement the Sub-Box.
 Our encoding scheme as follows in Equation~\ref{eq1}:
 
 \begin{align}
@@ -189,9 +189,9 @@ $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary
     \end{tabular*}
 \end{table}
 
-The optimized architecture of S-Box is shown in Equation~\ref{eq2}, where $X_0-X_3$ is the input of the S-Box and $Y_0-Y_3$ is the output of the S-Box.
-The proposed architecture of S-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
-This module of the proposed S-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library).
+The optimized architecture of Sub-Box is shown in Equation~\ref{eq2}, where $X_0-X_3$ is the input of the Sub-Box and $Y_0-Y_3$ is the output of the Sub-Box.
+The proposed architecture of Sub-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
+This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library).
 
 \begin{align}
     T_0 & = \text{MAOI1}(X_0, X_1, X_0, X_1) \nonumber          \\
@@ -268,7 +268,7 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}.
 The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key Schedule.
 In Mix Columns, one column of State-Register stores in the Mix Columns registers that take four clock cycles for execution Mix-Columns over one column.
-In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the S-box component in another four clock cycles.
+In Add Key, the stored data in Mix Columns's registers are sent back to State-Register followed by XORing with keys and through the Sub-Box component in another four clock cycles.
 Permute executes in one clock cycle inside the State-Register.
 
 \begin{figure}[h]%   
