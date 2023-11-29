@@ -266,23 +266,27 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 \end{figure}
 
 \subsubsection{Control Units}\label{subsubsec3}
-\textcolor{red}{
-    The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}.
-    The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key-Schedule.
-    In Mix-Columns, one column of State-Register stores in the Mix-Columns registers that take four clock cycles for execution Mix-Columns over one column.
-    In Add Key, the stored data in Mix-Columns's registers are sent back to State-Register followed by XORing with keys and through the Sub-Box component in another four clock cycles.
-    Permute executes in one clock cycle inside the State-Register.
-}
+
+The finite-state machine (FSM) of the serial architecture is depicted in Figure~\ref{serial_fsm_fig}.
+When not in use, the state remains idle.
+The encryption process starts by simultaneously storing the initial key and plaintext in the Key-Register and State-Register.
+The key is then expanded in the Key-Schedule phase, during which the clocks of the Mix-Columns and State-Register are turned off.
+In the Mix-Columns phase, one column of the State-Register is stored in the Mix-Columns registers, and it takes five clock cycles to execute Mix-Columns on one column.
+At the end of this phase, the clocks of the State-Register and Key-Register are turned off.
+The data stored in the Mix-Columns registers are then sent back to the State-Register and XORed with the keys in the Sub-Box phase, which takes another four clock cycles.
+This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
+The process concludes with the execution of the Permute operation in one clock cycle inside the State-Register.
+
 \begin{figure}[h]%   
     \centering
     \includegraphics[width=0.75\textwidth]{serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
-The dynamic power consumption of the encryption is reduced by employing clock gating, a technique discussed in \cite{shahbazi2020area}.
-The clock gating is separately applied on State-Register, Key-Register and Mix-Columns.
-For instance, the most power consumption is saved during the Key-Schedule phase; the clock of State-Register and Mix-Columns is disabled to save power because these two blocks are not used in the Key-Schedule phase.
-The timing diagram of the proposed design with the clock gating technique is shown in Figure~\ref{serial_time_diagrm}.
+The dynamic power consumption of the encryption can be reduced by employing clock gating, a technique discussed in \cite{shahbazi2020area}.
+Clock gating is separately applied to the State-Register, Key-Register, and Mix-Columns.
+For instance, during the Key-Schedule phase, significant power consumption can be saved by disabling the clock of the State-Register and Mix-Columns, as these two blocks are not utilized in this phase.
+The timing diagram of a design employing the clock gating technique is depicted in Figure~\ref{serial_time_diagrm}.
 
 \begin{figure}[h]%   
     \centering
@@ -315,7 +319,7 @@ In order to ensure a fair comparison, we evaluate the area consumption of the pr
 
 \subsection{Platform}\label{subsec4}
 
-The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7, Spartan-7, Kintex-7, and Virtex-7. 
+The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7, Spartan-7, Kintex-7, and Virtex-7.
 Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions. Virtex-7 is used in a variety of applications, including 10G to 100G networking, portable radar, and ASIC Prototyping.
 
 
