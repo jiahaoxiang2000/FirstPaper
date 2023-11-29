@@ -86,6 +86,7 @@ All notations used in this paper are shown in Table~\ref{tab1}.
 CRAFT is a lightweight tweakable block cipher made out of involutory building blocks.
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext $P$ is transformed into a 64-bit output ciphertext $C$ using a 128-bit key $K$ and a 64-bit tweak $T$. Figure~\ref{fig1} shows the structure of CRAFT.
 
+
 \begin{table}[h]
     \caption{Notations used in this paper}\label{tab1}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
@@ -107,12 +108,12 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 \end{figure}
 
 
-\section{Proposed Architecture}\label{sec3}
+\section{Implementations}\label{sec3}
 
 To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Unrolled.
 
 
-\subsection{Serial Architecture(A1)}\label{subsec2}
+\subsection{Serial Architecture (A1)}\label{subsec2}
 Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of Sub-Box is reduced from 16 to 1.
 The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}.
 The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results.
@@ -283,9 +284,9 @@ The process concludes with the execution of the Permute operation in one clock c
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
-Clock gating, a technique discussed in \cite{shahbazi2020area}, can help reduce the dynamic power consumption of the encryption. 
-This technique is applied separately to the State-Register, Key-Register, and Mix-Columns. 
-For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed. 
+Clock gating, a technique discussed in \cite{shahbazi2020area}, can help reduce the dynamic power consumption of the encryption.
+This technique is applied separately to the State-Register, Key-Register, and Mix-Columns.
+For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed.
 This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
 
 \begin{figure}[h]%   
@@ -293,7 +294,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
     \includegraphics[width=\textwidth]{serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
-\subsection{Unrolled Architecture(A2)}\label{subsec3}
+\subsection{Unrolled Architecture (A2)}\label{subsec3}
 
 The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
@@ -306,6 +307,25 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
     \caption{Unrolled architecture of CRAFT}\label{fig4}
 \end{figure}
 
+\subsection{Iterative Architecture (A3)}\label{iterative_architecture}
+
+The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} is based on rounds. It uses a single round function to encrypt a block, which includes a Sub-Box, a Permute, and an Add-Key operation. This round function is repeated 32 times to encrypt a single block. 
+Figure~\ref{fig5} illustrates this architecture. 
+Table~\ref{tab2} provides a comparison of different architectures.
+
+
+\begin{table}[h]
+    \caption{Different Architectures Description}\label{tab2}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+        \toprule
+        Architecture & Cipher & Block Size & Key Size & Reference & Description  \\
+        \midrule
+        A1  & CRAFT      & 64           & 128            & This work              & Serial               \\
+        A2  & CRAFT       & 64           & 128            & This work              & Unrolled                \\
+        A3  & PRESENT       & 64           & 128            &   \cite{DBLP:conf/isvlsi/HanleyO12}           & Iterative              \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
 
 \section{Experimental Evaluation}\label{sec4}
 
