@@ -283,10 +283,10 @@ The process concludes with the execution of the Permute operation in one clock c
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
-The dynamic power consumption of the encryption can be reduced by employing clock gating, a technique discussed in \cite{shahbazi2020area}.
-Clock gating is separately applied to the State-Register, Key-Register, and Mix-Columns.
-For instance, during the Key-Schedule phase, significant power consumption can be saved by disabling the clock of the State-Register and Mix-Columns, as these two blocks are not utilized in this phase.
-The timing diagram of a design employing the clock gating technique is depicted in Figure~\ref{serial_time_diagrm}.
+Clock gating, a technique discussed in \cite{shahbazi2020area}, can help reduce the dynamic power consumption of the encryption. 
+This technique is applied separately to the State-Register, Key-Register, and Mix-Columns. 
+For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed. 
+This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
 
 \begin{figure}[h]%   
     \centering
