@@ -267,11 +267,11 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \subsubsection{Control Units}\label{subsubsec3}
 \textcolor{red}{
-The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}.
-The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key-Schedule.
-In Mix-Columns, one column of State-Register stores in the Mix-Columns registers that take four clock cycles for execution Mix-Columns over one column.
-In Add Key, the stored data in Mix-Columns's registers are sent back to State-Register followed by XORing with keys and through the Sub-Box component in another four clock cycles.
-Permute executes in one clock cycle inside the State-Register.
+    The finite-state machine (FSM) of serial architecture is shown in Figure~\ref{serial_fsm_fig}.
+    The initial key and plaintext are stored in Key-Register and State-Register at the same time. After the Store, the key is expanded in Key-Schedule.
+    In Mix-Columns, one column of State-Register stores in the Mix-Columns registers that take four clock cycles for execution Mix-Columns over one column.
+    In Add Key, the stored data in Mix-Columns's registers are sent back to State-Register followed by XORing with keys and through the Sub-Box component in another four clock cycles.
+    Permute executes in one clock cycle inside the State-Register.
 }
 \begin{figure}[h]%   
     \centering
@@ -291,9 +291,9 @@ The timing diagram of the proposed design with the clock gating technique is sho
 \end{figure}
 \subsection{Unrolled Architecture(A2)}\label{subsec3}
 
-The architecture under consideration, as illustrated in Figure~\ref{fig4}, incorporates two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and a single feedback path. This architecture is engineered to execute a 30-round encryption process within a span of 15 cycles. It is noteworthy that only the Mix-Columns and Add-Key operations are executed in the final cycle, leading to the culmination of the encryption process in a total of 16 cycles.
+The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
-The unrolled architecture, an offshoot of the iterative architecture expounded in \cite{beierle2019craft}, necessitates a mere 16 cycles for the completion of the encryption process. This stands in stark contrast to the 32 cycles necessitated by its iterative counterpart. In this context, a single cycle is defined as encompassing two round functions of CRAFT. Despite the potential for increased area usage, this methodology yields superior throughput at an equivalent frequency.
+The unrolled architecture, based on the iterative architecture from \cite{beierle2019craft}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
 
 
 \begin{figure}[h]%   
@@ -315,23 +315,21 @@ In order to ensure a fair comparison, we evaluate the area consumption of the pr
 
 \subsection{Platform}\label{subsec4}
 
-We implemented the proposed architectures on a Xilinx FPGA board using the ISE Design Suite 14.7 and Vivado v2023.2.
-We analyzed four different FPGA platforms: Spartan-3 (xc3s200-5ft256), Spartan-6 (xc6slx16-3csg324), Virtex-4 (xc4vlx25-12ff668), and Virtex-5 (xc5vlx50t-3ff1136) using the ISE Design Suite 14.7, a methodology also employed by \cite{lara2017lightweight}.
-For benchmarking on the latest FPGA, we used the Artix-7 (xc7a100tcsg324-1) platform with Vivado v2023.2, as done by \cite{mohajerani2020fpga}.
+The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7, Spartan-7, Kintex-7, and Virtex-7. 
+Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions. Virtex-7 is used in a variety of applications, including 10G to 100G networking, portable radar, and ASIC Prototyping.
 
 
 \subsection{Area}\label{subsec5}
 
-The Area metric, encompassing components such as flip-flops, LUTs, and slices, is employed to gauge the area consumption of the proposed designs. 
-To ensure an equitable comparison, the utilization of the FPGA's embedded memory blocks was eschewed by disabling the corresponding flags in the VHDL, as recommended in \cite{xilinx2022ultrafast}. 
+The Area metric, encompassing components such as flip-flops, LUTs, and slices, is employed to gauge the area consumption of the proposed designs.
+To ensure an equitable comparison, the utilization of the FPGA's embedded memory blocks was eschewed by disabling the corresponding flags in the VHDL, as recommended in \cite{xilinx2022ultrafast}.
 Furthermore, all design Synthesis and Implementation were executed with identical settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
-We evaluate the performance of our proposed designs using the Throughput metric.
-This metric is assessed using three parameters: the maximum throughput rate, the throughput rate at 200MHz (following the method used by \cite{ghosh2017lightweight}), and the throughput rate per slice.
-The maximum throughput rate, calculated using Equation~\ref{eq4}, represents the highest rate our designs can achieve.
-The throughput rate at 200MHz, calculated using Equation~\ref{eq5}, shows the rate achievable when the clock frequency is set to 200MHz.
-Finally, the throughput rate per slice, calculated by dividing the throughput rate by the number of slices (Equation~\ref{eq6}), provides a measure of efficiency.
+The performance of the proposed designs is evaluated using the Throughput metric. This metric uses three parameters: the maximum throughput rate, the throughput rate at 200MHz, and the throughput rate per slice.
+The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\ref{eq4}.
+The throughput rate at 200MHz shows the rate achievable when the clock frequency is set to 200MHz, calculated using Equation~\ref{eq5}.
+The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of slices (Equation~\ref{eq6}).
 In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of slices used by the design.
 
 \begin{equation}
@@ -351,8 +349,8 @@ In these calculations, the Plaintext Size is 64-bit, Latency refers to the numbe
 
 \subsection{Power and Energy}\label{power_energy}
 
-The Power metric, which encapsulates both dynamic and static power consumption, serves as the evaluative measure for the power consumption of the proposed designs, as delineated in Equation~\ref{eq7}.
-Conversely, the Energy metric is employed to gauge the energy consumption of the designs. This is computed by the multiplication of power consumption and the duration required to encrypt a singular block. This duration is ascertained by the division of latency by the frequency, as explicated in Equation~\ref{enery_eqation}.
+The Power metric, which includes both dynamic and static power consumption, is used to evaluate the power consumption of the proposed designs, as defined in Equation~\ref{eq7}.
+On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~\ref{enery_eqation}.
 
 \begin{equation}
     Total Power = Dynamic  Power + Static Power
