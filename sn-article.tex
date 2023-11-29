@@ -325,16 +325,14 @@ Artix-7 offers high performance in resource-limited situations. Spartan-7 is des
 
 \subsection{Area}\label{subsec5}
 
-The Area metric, encompassing components such as flip-flops, LUTs, and slices, is employed to gauge the area consumption of the proposed designs.
-To ensure an equitable comparison, the utilization of the FPGA's embedded memory blocks was eschewed by disabling the corresponding flags in the VHDL, as recommended in \cite{xilinx2022ultrafast}.
-Furthermore, all design Synthesis and Implementation were executed with identical settings, specifically, the default settings of Vivado Synthesis and Implementation.
+The Area metric, which includes components like Flip-Flops, LUTs, and Slices, is used to measure the area used by the proposed designs. To make a fair comparison, the FPGA's embedded memory blocks were not used. This was done by turning off the related settings in the VHDL, as suggested in \cite{xilinx2022ultrafast}. Also, all designs were synthesized and implemented using the same settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
 The performance of the proposed designs is evaluated using the Throughput metric. This metric uses three parameters: the maximum throughput rate, the throughput rate at 200MHz, and the throughput rate per slice.
 The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\ref{eq4}.
 The throughput rate at 200MHz shows the rate achievable when the clock frequency is set to 200MHz, calculated using Equation~\ref{eq5}.
-The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of slices (Equation~\ref{eq6}).
-In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of slices used by the design.
+The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices (Equation~\ref{eq6}).
+In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of Slices used by the design.
 
 \begin{equation}
     Maximum Throughput(Thr) = \frac{Maximum Frequency \times Plaintext Size}{Latency}
