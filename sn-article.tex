@@ -261,7 +261,7 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{Mix-Columns-Times.pdf}
+    \includegraphics[width=0.75\textwidth]{Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }\label{serial_time_diagrm_mix_colunms}
 \end{figure}
 
@@ -275,7 +275,7 @@ Permute executes in one clock cycle inside the State-Register.
 }
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{serial-fsm.pdf}
+    \includegraphics[width=0.75\textwidth]{serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -286,7 +286,7 @@ The timing diagram of the proposed design with the clock gating technique is sho
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{serial_time.png}
+    \includegraphics[width=\textwidth]{serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 \subsection{Unrolled Architecture(A2)}\label{subsec3}
@@ -322,9 +322,9 @@ For benchmarking on the latest FPGA, we used the Artix-7 (xc7a100tcsg324-1) plat
 
 \subsection{Area}\label{subsec5}
 
-We use the Area metric to evaluate the area consumption of the proposed designs, which includes components like flip-flops, LUTs, and slices.
-Given the different types of LUTs, such as LUT-4 and LUT-6, we use Spartan-3 and Virtex-4 for LUT-4, Spartan-6 and Virtex-5 for LUT-6, and Artix-7 for LUT-6.
-To ensure a fair comparison, we decided not to use the FPGA's embedded memory blocks by disabling the corresponding flags in the VHDL, as suggested in \cite{xilinx2022ultrafast}.
+The Area metric, encompassing components such as flip-flops, LUTs, and slices, is employed to gauge the area consumption of the proposed designs. 
+To ensure an equitable comparison, the utilization of the FPGA's embedded memory blocks was eschewed by disabling the corresponding flags in the VHDL, as recommended in \cite{xilinx2022ultrafast}. 
+Furthermore, all design Synthesis and Implementation were executed with identical settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
 We evaluate the performance of our proposed designs using the Throughput metric.
