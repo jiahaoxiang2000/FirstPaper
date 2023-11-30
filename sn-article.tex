@@ -309,9 +309,17 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} is based on rounds. It uses a single round function to encrypt a block, which includes a Sub-Box, a Permute, and an Add-Key operation. This round function is repeated 32 times to encrypt a single block. 
-Figure~\ref{fig5} illustrates this architecture. 
-Table~\ref{tab2} provides a comparison of different architectures.
+The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based system. 
+It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation. 
+This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function. 
+This architecture is depicted in Figure~\ref{fig5}. 
+For comparison, different architectures are listed in Table~\ref{tab2}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{iteration-present.pdf}
+    \caption{Iterative architecture of PRESENT}\label{fig5}
+\end{figure}
 
 
 \begin{table}[h]
