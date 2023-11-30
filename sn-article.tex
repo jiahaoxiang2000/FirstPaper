@@ -103,7 +103,7 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=\textwidth]{struct-craft.pdf}
+    \includegraphics[width=0.8\textwidth]{struct-craft.pdf}
     \caption{Structure of CRAFT}\label{fig1}
 \end{figure}
 
@@ -152,10 +152,10 @@ Our encoding scheme as follows in Equations~\ref{eq1}:
     \forall i \in \{0,1,\ldots ,K-1\}: \nonumber                                                                  \\
     T_i & = F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
         & \quad + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber                                  \\
-        & \quad + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2}) \nonumber                                \\
+        & \quad + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1}                             \\
         & \quad + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber                                 \\
         & \quad + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber                                               \\
-        & \quad + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max). \label{eq1}
+        & \quad + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max)  \nonumber
 \end{align}
 
 where $K$ is numbers of the logical gates, $Q_{4i}-Q_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
@@ -174,12 +174,12 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
     T_1 & = \text{AND3}(X_3, X_2, X_3) \nonumber                \\
     T_2 & = \text{MAOI1}(X_1, X_2, X_0, X_3) \nonumber          \\
     T_3 & = \text{MOAI1}(X_1, X_0, X_2, X_2) \nonumber          \\
-    T_4 & = \text{MOAI1}(X_3, T_0, T_3, T_3) \nonumber          \\
+    T_4 & = \text{MOAI1}(X_3, T_0, T_3, T_3) \label{eq2}        \\
     T_5 & = \text{MOAI1}(T_3, T_0, X_0, T_1) \nonumber          \\
     T_6 & = \text{MAOI1}(X_0, T_0, X_3, T_0) \nonumber          \\
     T_7 & = \text{MOAI1}(X_0, T_1, T_2, T_2) \nonumber          \\
     Y_0 & = T_5 \quad Y_1 = T_7 \quad Y_2 = T_6 \quad Y_3 = T_4
-    \label{eq2}
+    \nonumber
 \end{align}
 
 \begin{table}[h]
@@ -268,19 +268,18 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \subsubsection{Control Units}\label{subsubsec3}
 
-The finite-state machine (FSM) of the serial architecture is depicted in Figure~\ref{serial_fsm_fig}.
-When not in use, the state remains idle.
-The encryption process starts by simultaneously storing the initial key and plaintext in the Key-Register and State-Register.
-The key is then expanded in the Key-Schedule phase, during which the clocks of the Mix-Columns and State-Register are turned off.
-In the Mix-Columns phase, one column of the State-Register is stored in the Mix-Columns registers, and it takes five clock cycles to execute Mix-Columns on one column.
-At the end of this phase, the clocks of the State-Register and Key-Register are turned off.
-The data stored in the Mix-Columns registers are then sent back to the State-Register and XORed with the keys in the Sub-Box phase, which takes another four clock cycles.
-This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
-The process concludes with the execution of the Permute operation in one clock cycle inside the State-Register.
+The finite-state machine (FSM) of the serial architecture, as shown in Figure~\ref{serial_fsm_fig}, begins its encryption process by storing the initial key and plaintext in the Key-Register and State-Register, respectively. 
+The key undergoes expansion in the Key-Schedule phase, during which the clocks of the Mix-Columns and State-Register are disabled. 
+The Mix-Columns phase follows, storing one column of the State-Register in the Mix-Columns registers and taking five clock cycles to execute Mix-Columns on one column. 
+Upon completion of this phase, the clocks of the State-Register and Key-Register are disabled. 
+The Sub-Box phase then takes over, sending the data stored in the Mix-Columns registers back to the State-Register and XORing it with the keys, a process that takes another four clock cycles. 
+This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register. 
+The Permute operation is then executed in one clock cycle inside the State-Register. 
+The encryption process concludes when the Round counter reaches 31, at which point the ciphertext is stored in the State-Register.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.5\textwidth]{serial-fsm.pdf}
+    \includegraphics[width=0.75\textwidth]{serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -309,10 +308,10 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based system. 
-It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation. 
-This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function. 
-This architecture is depicted in Figure~\ref{fig5}. 
+The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based system.
+It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
+This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function.
+This architecture is depicted in Figure~\ref{fig5}.
 For comparison, different architectures are listed in Table~\ref{tab2}.
 
 \begin{figure}
@@ -323,7 +322,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 
 
 \begin{table}[h]
-    \caption{Different Architectures Description}\label{tab2}%
+    \caption{Different architectures description}\label{tab2}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
         \toprule
         Architecture & Cipher & Block Size & Key Size & Reference & Description  \\
