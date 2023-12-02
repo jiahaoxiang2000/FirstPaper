@@ -136,7 +136,7 @@ The most popular implementation is using a lookup table (LUT), such as \cite{lar
 However it uses a lot of flip-flop, which will bring a lot of area consumption.
 Using Sub-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
-SAT solvers can be used to find Sub-Box that satisfy certain implement, such as being resistant to software or hardware implement.
+Boolean satisfiability (SAT) solvers can be used to find Sub-Box that satisfy certain implement, such as being resistant to software or hardware implement.
 In more detail, the Sub-Box implement can be encoded as Boolean constraints by representing the Sub-Box as a truth table and then using Boolean variables to represent the input and output bits of the Sub-Box.
 The constraints can then be formulated based on the desired implement of the Sub-Box.
 Once the Sub-Box implement are encoded as Boolean constraints, a SAT solver can be used to find a satisfying assignment to these constraints, which corresponds to an Sub-Box that satisfies the desired implement.
@@ -308,7 +308,7 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based system.
+The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based architecture.
 It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
 This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function.
 This architecture is depicted in Figure~\ref{fig5}.
@@ -346,7 +346,7 @@ In order to ensure a fair comparison, we evaluate the area consumption of the pr
 
 \subsection{Platform}\label{subsec4}
 
-The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7(xc7a100tcsg324-1), Spartan-7(xc7s100fgga484-1), and Kintex-7(xc7k70tfbg484-1).
+The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, three different FPGA platforms were used for benchmarking: Artix-7(xc7a100tcsg324-1), Spartan-7(xc7s100fgga484-1), and Kintex-7(xc7k70tfbg484-1).
 Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions.
 
 
