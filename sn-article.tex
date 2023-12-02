@@ -268,13 +268,13 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \subsubsection{Control Units}\label{subsubsec3}
 
-The finite-state machine (FSM) of the serial architecture, as shown in Figure~\ref{serial_fsm_fig}, begins its encryption process by storing the initial key and plaintext in the Key-Register and State-Register, respectively. 
-The key undergoes expansion in the Key-Schedule phase, during which the clocks of the Mix-Columns and State-Register are disabled. 
-The Mix-Columns phase follows, storing one column of the State-Register in the Mix-Columns registers and taking five clock cycles to execute Mix-Columns on one column. 
-Upon completion of this phase, the clocks of the State-Register and Key-Register are disabled. 
-The Sub-Box phase then takes over, sending the data stored in the Mix-Columns registers back to the State-Register and XORing it with the keys, a process that takes another four clock cycles. 
-This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register. 
-The Permute operation is then executed in one clock cycle inside the State-Register. 
+The finite-state machine (FSM) of the serial architecture, as shown in Figure~\ref{serial_fsm_fig}, begins its encryption process by storing the initial key and plaintext in the Key-Register and State-Register, respectively.
+The key undergoes expansion in the Key-Schedule phase, during which the clocks of the Mix-Columns and State-Register are disabled.
+The Mix-Columns phase follows, storing one column of the State-Register in the Mix-Columns registers and taking five clock cycles to execute Mix-Columns on one column.
+Upon completion of this phase, the clocks of the State-Register and Key-Register are disabled.
+The Sub-Box phase then takes over, sending the data stored in the Mix-Columns registers back to the State-Register and XORing it with the keys, a process that takes another four clock cycles.
+This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
+The Permute operation is then executed in one clock cycle inside the State-Register.
 The encryption process concludes when the Round counter reaches 31, at which point the ciphertext is stored in the State-Register.
 
 \begin{figure}[h]%   
@@ -355,9 +355,9 @@ Artix-7 offers high performance in resource-limited situations. Spartan-7 is des
 The Area metric, which includes components like Flip-Flops, LUTs, and Slices, is used to measure the area used by the proposed designs. To make a fair comparison, the FPGA's embedded memory blocks were not used. This was done by turning off the related settings in the VHDL, as suggested in \cite{xilinx2022ultrafast}. Also, all designs were synthesized and implemented using the same settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
-The performance of the proposed designs is evaluated using the Throughput metric. This metric uses three parameters: the maximum throughput rate, the throughput rate at 200MHz, and the throughput rate per slice.
+The performance of the proposed designs is evaluated using the Throughput metric. This metric uses three parameters: the maximum throughput rate, the throughput rate at 100MHz, and the throughput rate per slice.
 The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\ref{eq4}.
-The throughput rate at 200MHz shows the rate achievable when the clock frequency is set to 200MHz, calculated using Equation~\ref{eq5}.
+The throughput rate at 100MHz shows the rate achievable when the clock frequency is set to 100MHz, calculated using Equation~\ref{eq5}.
 The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices (Equation~\ref{eq6}).
 In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of Slices used by the design.
 
@@ -367,12 +367,12 @@ In these calculations, the Plaintext Size is 64-bit, Latency refers to the numbe
 \end{equation}
 
 \begin{equation}
-    Throughput_{@200MHz}(Thr^*) = \frac{200MHz \times Plaintext Size}{Latency}
+    Throughput_{@100MHz}(Thr^*) = \frac{100MHz \times Plaintext Size}{Latency}
     \label{eq5}
 \end{equation}
 
 \begin{equation}
-    ThroughputPerSlice = \frac{Throughput_{@200MHz}(Thr^*)}{Slices}
+    ThroughputPerSlice = \frac{Thr}{Slices}
     \label{eq6}
 \end{equation}
 
@@ -382,19 +382,90 @@ The Power metric, which includes both dynamic and static power consumption, is u
 On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~\ref{enery_eqation}.
 
 \begin{equation}
-    Total Power = Dynamic  Power + Static Power
+    Total Power(TP) = Dynamic  Power(DP) + Static Power(SP)
     \label{eq7}
 \end{equation}
 \begin{equation}
-    Energy = \frac{Total Power \times Latency }{Frequency}
+    Energy(E) = \frac{TP \times Latency }{Frequency}
     \label{enery_eqation}
 \end{equation}
 
 
-
-
 \section{Results}\label{sec5}
+\begin{table}[h]
+    \caption{Area used for the three Architectures}\label{area_compare}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
+        \toprule
+        Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
+        \midrule
+        \multirow{3}{*}{Artix-7}  & A1 & 64 & 128 & 144 & 177 & 59 \\
+        & A2 & 64 & 128 & - & - & - \\
+        & A3 & 64 & 128 & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & - & - & - \\
+        & A2 & 64 & 128 & - & - & - \\
+        & A3 & 64 & 128 & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & - & - & - \\
+        & A2 & 64 & 128 & - & - & - \\
+        & A3 & 64 & 128 & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Virtex-7} & A1 & 64 & 128 & - & - & - \\
+        & A2 & 64 & 128 & - & - & - \\
+        & A3 & 64 & 128 & - & - & - \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
 
+\begin{table}[h]
+    \caption{Throughput results for the three Architectures}\label{throughput_compare}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
+        \toprule
+        Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$ & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
+        \midrule
+        \multirow{3}{*}{Artix-7}  & A1 & 1215 & 123.76 & 6.52 & 5.27 & 110.49 \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Spartan-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Kintex-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Virtex-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
+
+\begin{table}
+    \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccccc}
+        \toprule
+        Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
+        \midrule
+        \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Spartan-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Kintex-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \midrule
+        \multirow{3}{*}{Virtex-7} & A1 & - & - & - & - & - \\
+        & A2 & - & - & - & - & - \\
+        & A3 & - & - & - & - & - \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
 
 \section{Conclusion}\label{sec6}
 
