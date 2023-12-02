@@ -346,8 +346,8 @@ In order to ensure a fair comparison, we evaluate the area consumption of the pr
 
 \subsection{Platform}\label{subsec4}
 
-The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7, Spartan-7, Kintex-7, and Virtex-7.
-Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions. Virtex-7 is used in a variety of applications, including 10G to 100G networking, portable radar, and ASIC Prototyping.
+The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, four different FPGA platforms were used for benchmarking: Artix-7(xc7a100tcsg324-1), Spartan-7(xc7s100fgga484-1), and Kintex-7(xc7k70tfbg484-1).
+Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions.
 
 
 \subsection{Area}\label{subsec5}
@@ -402,15 +402,11 @@ On the other hand, the Energy metric measures the energy consumption of the desi
         & A2 & 64 & 128 & - & - & - \\
         & A3 & 64 & 128 & - & - & - \\
         \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & - & - & - \\
+        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & 144 & 177 & 57 \\
         & A2 & 64 & 128 & - & - & - \\
         & A3 & 64 & 128 & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & - & - & - \\
-        & A2 & 64 & 128 & - & - & - \\
-        & A3 & 64 & 128 & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Virtex-7} & A1 & 64 & 128 & - & - & - \\
+        \midrule		
+        \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & 144 & 178 & 58 \\
         & A2 & 64 & 128 & - & - & - \\
         & A3 & 64 & 128 & - & - & - \\
         \bottomrule
@@ -426,16 +422,12 @@ On the other hand, the Energy metric measures the energy consumption of the desi
         \multirow{3}{*}{Artix-7}  & A1 & 1215 & 123.76 & 6.52 & 5.27 & 110.49 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & - & - & - & - & - \\
+        \midrule			
+        \multirow{3}{*}{Spartan-7} & A1 & 1215 & 123.93 & 6.53 & 5.27 & 114.53 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Kintex-7} & A1 & - & - & - & - & - \\
-        & A2 & - & - & - & - & - \\
-        & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Virtex-7} & A1 & - & - & - & - & - \\
+        \midrule 				
+        \multirow{3}{*}{Kintex-7} & A1 & 1251 & 113.28 & 5.80 & 5.12 & 99.92 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
         \bottomrule
@@ -451,16 +443,12 @@ On the other hand, the Energy metric measures the energy consumption of the desi
         \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & - & - & - & - & - \\
+        \midrule 				
+        \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Kintex-7} & A1 & - & - & - & - & - \\
-        & A2 & - & - & - & - & - \\
-        & A3 & - & - & - & - & - \\
-        \midrule
-        \multirow{3}{*}{Virtex-7} & A1 & - & - & - & - & - \\
+        \midrule 			 	
+        \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.84 & 28.73 \\
         & A2 & - & - & - & - & - \\
         & A3 & - & - & - & - & - \\
         \bottomrule
