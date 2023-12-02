@@ -132,7 +132,7 @@ And the first round of encryption process through the control signal to avoid Pe
 \subsubsection{Sub-Box Optimization }\label{subsubsec1}
 Sub-Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
 There are different methods of implementation of Sub-Box.
-The most popular implementation is using a lookup table (LUT), such as \cite{lara2017lightweight}.
+The most popular implementation is using a lookup table (LUT), such as \cite{DBLP:journals/tcas/Lara-NinoDM17}.
 However it uses a lot of flip-flop, which will bring a lot of area consumption.
 Using Sub-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
@@ -308,7 +308,7 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{DBLP:conf/isvlsi/HanleyO12} operates on a round-based architecture.
+The architecture from \cite{DBLP:journals/tcas/Lara-NinoDM17} operates on a round-based architecture.
 It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
 This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function.
 This architecture is depicted in Figure~\ref{fig5}.
@@ -329,7 +329,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
         \midrule
         A1  & CRAFT      & 64           & 128            & This work              & Serial               \\
         A2  & CRAFT       & 64           & 128            & This work              & Unrolled                \\
-        A3  & PRESENT       & 64           & 128            &   \cite{DBLP:conf/isvlsi/HanleyO12}           & Iterative              \\
+        A3  & PRESENT       & 64           & 128            &   \cite{DBLP:journals/tcas/Lara-NinoDM17}           & Iterative              \\
         \bottomrule
     \end{tabular*}
 \end{table}
