@@ -1,7 +1,12 @@
-\documentclass[sn-basic]{sn-jnl}% Default
 
-% \documentclass[default,lineno,sn-basic]{sn-jnl}% Default
-% \documentclass[default,iicol]{sn-jnl}% Default with double column layout
+% \documentclass[final,5p,times]{elsarticle}
+\documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
 
 \usepackage{graphicx}%
 \usepackage{multirow}%
@@ -18,49 +23,71 @@
 \usepackage{algpseudocode}%
 \usepackage{listings}%
 
+%% The amsthm package provides extended theorem environments
+% \usepackage{amsthm}
 
-%% as per the requirement new theorem styles can be included as shown below
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
 
-\newtheorem{theorem}{Theorem}%  meant for continuous numbers
-%%\newtheorem{theorem}{Theorem}[section]% meant for section wise numbers
-%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
-\newtheorem{proposition}[theorem]{Proposition}% 
-%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
-
-\newtheorem{example}{Example}%
-\newtheorem{remark}{Remark}%
-
-\newtheorem{definition}{Definition}%
-
-\raggedbottom
-%%\unnumbered% uncomment this for unnumbered level heads
+\journal{Journal of \LaTeX\ Templates}
 
 \begin{document}
 
-\title[Article Title]{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles}
+\begin{frontmatter}
 
-\author[1,2]{\fnm{Jiahao} \sur{Xiang}}\email{simple.xjh@qq.com}
-\author*[1,2]{\fnm{Lang} \sur{Li}}\email{lilang911@126.com}
+    \title{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles}
 
-\affil*[1]{\orgdiv{College of Computer Science and Technology}, \orgname{Hengyang Normal University}, \orgaddress{\city{Hengyang}, \postcode{421002},  \country{China}}}
+    \author[a,b]{Jiahao Xiang}
+    \author[a,b]{Lang Li\corref{cor1}}
 
-\affil[2]{\orgdiv{Hunan Provincial Key Laboratory of Intelligent Information Processing and Application}, \orgname{Hengyang Normal University}, \orgaddress{ \city{Hengyang}, \postcode{421002}, \country{China}}}
+    \ead{lilang911@126.com}
 
-\abstract{
-    \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale.
-    Most of the IoV devices need instant response and real-time security to ensure the safety of users.
-    The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices.
-    In order to better adapt to these environment, the objective of this paper is to explore opportunities to optimize area and throughput for CRAFT cipher targeted for low-resource IoV devices.
-    \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint.
-    We propose novel unrolled structure of CRAFT cipher for the high throughput feature.
-    \textbf{Results:}The results on Artix-7 show that ...
-    \textbf{Conclusion:} Hence, our works let CRAFT cipher more suitable for IoV devices.
-}
+    \cortext[cor1]{Corresponding author}
 
-\keywords{Lightweight block cipher, Internet of Vehicles, Field-programmable gate array(FPGA), Low-area, High-throughput}
+    \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
+
+    \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
 
 
-\maketitle
+    \begin{abstract}
+        %% Text of abstract
+        \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale.
+        Most of the IoV devices need instant response and real-time security to ensure the safety of users.
+        The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices.
+        In order to better adapt to these environment, the objective of this paper is to explore opportunities to optimize area and throughput for CRAFT cipher targeted for low-resource IoV devices.
+        \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint.
+        We propose novel unrolled structure of CRAFT cipher for the high throughput feature.
+        \textbf{Results:}The results on Artix-7 show that ...
+        \textbf{Conclusion:} Hence, our works let CRAFT cipher more suitable for IoV devices.
+    \end{abstract}
+
+    \begin{keyword}
+        %% keywords here, in the form: keyword \sep keyword
+        Lightweight block cipher \sep Internet of Vehicles \sep Field-programmable gate array(FPGA)\sep  Low-area, High-throughput
+        %% PACS codes here, in the form: \PACS code \sep code
+
+        %% MSC codes here, in the form: \MSC code \sep code
+        %% or \MSC[2008] code \sep code (2000 is the default)
+    \end{keyword}
+
+\end{frontmatter}
+
+%% \linenumbers
+
+%% main text
+
 
 \section{Introduction}\label{sec1}
 
@@ -79,7 +106,6 @@ The contributions of this article can be summarized as follows.
 The rest of this article is organized as follows.
 Section~\ref{sec2} presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; finally, the work is concluded in Section 5.
 
-
 \section{Specification of CRAFT}\label{sec2}
 
 All notations used in this paper are shown in Table~\ref{tab1}.
@@ -87,26 +113,23 @@ CRAFT is a lightweight tweakable block cipher made out of involutory building bl
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext $P$ is transformed into a 64-bit output ciphertext $C$ using a 128-bit key $K$ and a 64-bit tweak $T$. Figure~\ref{fig1} shows the structure of CRAFT.
 
 
-\begin{table}[h]
+\begin{table*}[h]
     \caption{Notations used in this paper}\label{tab1}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcc}
         \toprule
         Notation   & Description                                 \\
         \midrule
         $TK$       & 64-bit tweakeys                             \\
         $RC_i$     & 64-bit round constant in the $i^{th}$ round \\
-        $R_i,R'_i$ & Round function                              \\
-        $\oplus$   & Bit-wise sum (XOR)                          \\
-        \botrule
+        \bottomrule
     \end{tabular*}
-\end{table}
+\end{table*}
 
-\begin{figure}[h]%
+\begin{figure*}[h]%
     \centering
-    \includegraphics[width=0.8\textwidth]{struct-craft.pdf}
+    \includegraphics[width=0.6\textwidth]{struct-craft.pdf}
     \caption{Structure of CRAFT}\label{fig1}
-\end{figure}
-
+\end{figure*}
 
 \section{Implementations}\label{sec3}
 
@@ -122,14 +145,16 @@ PermuteNibbles is included in State-Register bank.
 It is noticeable that since the execution of permute requires 64-bit, in order to reuse the State-Register block, we change the order of execution of Sub-Box and Permute.
 And the first round of encryption process through the control signal to avoid Permute operation, to ensure the correctness of the encryption algorithm.
 
-\begin{figure}[h]%   
+\begin{figure*}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{serial-archticture.pdf}
+    \includegraphics[width=0.7\textwidth]{serial-archticture.pdf}
     \caption{Serial architecture of CRAFT}\label{fig3}
-\end{figure}
+\end{figure*}
 
 
 \subsubsection{Sub-Box Optimization }\label{subsubsec1}
+
+
 Sub-Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
 There are different methods of implementation of Sub-Box.
 The most popular implementation is using a lookup table (LUT), such as \cite{DBLP:journals/tcas/Lara-NinoDM17}.
@@ -148,21 +173,25 @@ The number of gates in the circuit corresponds to the GEC of the instance.
 In our design, we optimize and use GEC encoding scheme of \cite{bib16} to implement the Sub-Box.
 Our encoding scheme as follows in Equations~\ref{eq1}:
 
-\begin{align}
-    \forall i \in \{0,1,\ldots ,K-1\}: \nonumber                                                                  \\
-    T_i & = F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
-        & \quad + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber                                  \\
-        & \quad + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1}                             \\
-        & \quad + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber                                 \\
-        & \quad + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber                                               \\
-        & \quad + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max)  \nonumber
-\end{align}
+
+
+% \begin{align*}
+% \begin{split}
+
+\begin{flalign}
+    \forall i \in & \{0,1,\ldots ,K-1\}: \nonumber \\
+    T_i = &  F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
+&          + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber \\
+&          + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1} \\
+&          + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber \\
+&          + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber \\
+&          + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max(a, b)) \nonumber
+\end{flalign}
+
 
 where $K$ is numbers of the logical gates, $Q_{4i}-Q_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
 The value of $max$ is all one's in the binary expression, which is represented logically as an inverse.
 $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary number. The different types of logical gate used in this encoding scheme are listed in Table~\ref{tab3}.
-
-
 
 
 The optimized architecture of Sub-Box is shown in Equations~\ref{eq2}, where $X_0-X_3$ is the input of the Sub-Box and $Y_0-Y_3$ is the output of the Sub-Box.
@@ -182,9 +211,10 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
     \nonumber
 \end{align}
 
+
 \begin{table}[h]
     \caption{Encoding of different types of logical gate}\label{tab3}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+    \begin{tabular}{lcccccc}
         \toprule
         logical expression & $BB_i$[0:7] & gate type \\
         \midrule
@@ -206,7 +236,7 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
         $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 0 & MAOI1 \\
         $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1 \\
         \bottomrule
-    \end{tabular*}
+    \end{tabular}
 \end{table}
 
 \subsubsection{Mix-Columns Optimization}\label{subsubsec2}
@@ -256,13 +286,13 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.75\textwidth]{Mix-Columns.pdf}
+    \includegraphics[width=0.5\textwidth]{Mix-Columns.pdf}
     \caption{Serial Architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
 \end{figure}
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.75\textwidth]{Mix-Columns-Times.pdf}
+    \includegraphics[width=0.5\textwidth]{Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }\label{serial_time_diagrm_mix_colunms}
 \end{figure}
 
@@ -279,7 +309,7 @@ The encryption process concludes when the Round counter reaches 31, at which poi
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.75\textwidth]{serial-fsm.pdf}
+    \includegraphics[width=0.5\textwidth]{serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -288,11 +318,11 @@ This technique is applied separately to the State-Register, Key-Register, and Mi
 For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed.
 This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
 
-\begin{figure}[h]%   
+\begin{figure*}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{serial-time.pdf}
+    \includegraphics[width=0.7\textwidth]{serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
-\end{figure}
+\end{figure*}
 \subsection{Unrolled Architecture (A2)}\label{subsec3}
 
 The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
@@ -300,11 +330,11 @@ The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Colu
 The unrolled architecture, based on the iterative architecture from \cite{beierle2019craft}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
 
 
-\begin{figure}[h]%   
+\begin{figure*}[h]%   
     \centering
-    \includegraphics[width=\textwidth]{unrolled-archticture.pdf}
+    \includegraphics[width=0.7\textwidth]{unrolled-archticture.pdf}
     \caption{Unrolled architecture of CRAFT}\label{fig4}
-\end{figure}
+\end{figure*}
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
@@ -314,14 +344,14 @@ This round function is executed 32 times to encrypt a single block. Concurrently
 This architecture is depicted in Figure~\ref{fig5}.
 For comparison, different architectures are listed in Table~\ref{tab2}.
 
-\begin{figure}
+\begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{iteration-present.pdf}
+    \includegraphics[width=0.75\textwidth]{iteration-present.pdf}
     \caption{Iterative architecture of PRESENT}\label{fig5}
-\end{figure}
+\end{figure*}
 
 
-\begin{table}[h]
+\begin{table*}[h]
     \caption{Different architectures description}\label{tab2}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
         \toprule
@@ -332,7 +362,8 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
         A3  & PRESENT       & 64           & 128            &   \cite{DBLP:journals/tcas/Lara-NinoDM17}           & Iterative              \\
         \bottomrule
     \end{tabular*}
-\end{table}
+\end{table*}
+
 
 \section{Experimental Evaluation}\label{sec4}
 
@@ -362,7 +393,7 @@ The throughput rate per slice is a measure of efficiency, calculated by dividing
 In these calculations, the Plaintext Size is 64-bit, Latency refers to the number of clock cycles required to encrypt a single block, and Slices refers to the number of Slices used by the design.
 
 \begin{equation}
-    Maximum Throughput(Thr) = \frac{Maximum Frequency \times Plaintext Size}{Latency}
+    MaxThroughput(Thr) = \frac{MaxFrequency \times Plaintext Size}{Latency}
     \label{eq4}
 \end{equation}
 
@@ -381,10 +412,11 @@ In these calculations, the Plaintext Size is 64-bit, Latency refers to the numbe
 The Power metric, which includes both dynamic and static power consumption, is used to evaluate the power consumption of the proposed designs, as defined in Equation~\ref{eq7}.
 On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~\ref{enery_eqation}.
 
-\begin{equation}
-    Total Power(TP) = Dynamic  Power(DP) + Static Power(SP)
+\begin{align}
+    \text{Total Power} (TP) &= \text{Dynamic Power} (DP) \nonumber \\
+    &+ \text{Static Power} (SP)
     \label{eq7}
-\end{equation}
+\end{align}
 \begin{equation}
     Energy(E) = \frac{TP \times Latency }{Frequency}
     \label{enery_eqation}
@@ -392,7 +424,7 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 
 
 \section{Results}\label{sec5}
-\begin{table}[h]
+\begin{table*}[h]
     \caption{Area used for the three Architectures}\label{area_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
         \toprule
@@ -411,9 +443,9 @@ On the other hand, the Energy metric measures the energy consumption of the desi
         & A3 & 64 & 128 & 201 & 244 & 68 \\
         \bottomrule
     \end{tabular*}
-\end{table}
+\end{table*}
 
-\begin{table}[h]
+\begin{table*}[h]
     \caption{Throughput results for the three Architectures}\label{throughput_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
         \toprule
@@ -433,9 +465,9 @@ On the other hand, the Energy metric measures the energy consumption of the desi
         \bottomrule
     \end{tabular*}
     \footnotetext[1]{Throughput rate at 100MHz}
-\end{table}
+\end{table*}
 
-\begin{table}
+\begin{table*}
     \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccccc}
         \toprule
@@ -459,12 +491,29 @@ On the other hand, the Energy metric measures the energy consumption of the desi
             DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
         \end{tabular}
     }
-\end{table}
+\end{table*}
 
 \section{Conclusion}\label{sec6}
 
-\bibliography{sn-bibliography}% common bib file
-%% if required, the content of .bbl file can be included here once bbl is generated
-%%\input sn-article.bbl
 
+%% If you have bibdatabase file and want bibtex to generate the
+%% bibitems, please use
+%%
+\bibliographystyle{elsarticle-num}
+\bibliography{bibliography}
+
+%% else use the following coding to input the bibitems directly in the
+%% TeX file.
+
+% \begin{thebibliography}{00}
+
+%     %% \bibitem{label}
+%     %% Text of bibliographic item
+
+%     \bibitem{}
+
+% \end{thebibliography}
 \end{document}
+\endinput
+%%
+%% End of file `elsarticle-template-num.tex'.
