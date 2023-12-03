@@ -185,7 +185,7 @@ Our encoding scheme as follows in Equations~\ref{eq1}:
 &          + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1} \\
 &          + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber \\
 &          + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber \\
-&          + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], \max(a, b)) \nonumber
+&          + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], max) \nonumber
 \end{flalign}
 
 
@@ -194,8 +194,8 @@ The value of $max$ is all one's in the binary expression, which is represented l
 $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary number. The different types of logical gate used in this encoding scheme are listed in Table~\ref{tab3}.
 
 
-The optimized architecture of Sub-Box is shown in Equations~\ref{eq2}, where $X_0-X_3$ is the input of the Sub-Box and $Y_0-Y_3$ is the output of the Sub-Box.
-The proposed architecture of Sub-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
+The optimized scheme of Sub-Box is shown in Equations~\ref{eq2}, where $X_0-X_3$ is the input of the Sub-Box and $Y_0-Y_3$ is the output of the Sub-Box.
+The proposed scheme of Sub-Box is implemented by four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
 This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao2019peigen} (based on gate equivalent estimation on UMC 180nm library).
 
 \begin{align}
