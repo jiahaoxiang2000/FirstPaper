@@ -397,15 +397,15 @@ On the other hand, the Energy metric measures the energy consumption of the desi
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
         \toprule
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
-        \midrule 		  		
+        \midrule
         \multirow{3}{*}{Artix-7}  & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
         & A2 & 64 & 128 & 157 & 378 & 111 \\
         & A3 & 64 & 128 & 201 & 243 & 70 \\
-        \midrule		
+        \midrule
         \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
         & A2 & 64 & 128 & 157 & 381 & 118 \\
         & A3 & 64 & 128 & 201 & 244 & 70 \\
-        \midrule	
+        \midrule
         \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
         & A2 & 64 & 128 & 157 & 377 & 115 \\
         & A3 & 64 & 128 & 201 & 244 & 68 \\
@@ -417,42 +417,48 @@ On the other hand, the Energy metric measures the energy consumption of the desi
     \caption{Throughput results for the three Architectures}\label{throughput_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
         \toprule
-        Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$ & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
-        \midrule 								
-        \multirow{3}{*}{Artix-7}  & A1 & 1215 & 557.41 & 29.36 & 5.27 & 497.65 \\
+        Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\footnotemark[1] & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
+        \midrule
+        \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
         & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
         & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
-        \midrule								
-        \multirow{3}{*}{Spartan-7} & A1 & 1215 & 525.76 & 27.69 & 5.27 & 485.87 \\
+        \midrule
+        \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
         & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
         & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
-        \midrule 								
-        \multirow{3}{*}{Kintex-7} & A1 & 1215 & 853.97 & 44.98 & 5.27 & 775.57 \\
+        \midrule
+        \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
         & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
         & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
         \bottomrule
     \end{tabular*}
+    \footnotetext[1]{Throughput rate at 100MHz}
 \end{table}
 
 \begin{table}
     \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccccc}
         \toprule
-        Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
+        Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$  & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
         \midrule
         \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
-        & A2 & 7.00 & 139.00 & 146.00 & 0.02 & 0.37 \\
+        & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
         & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
-        \midrule 				
+        \midrule
         \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
-        & A2 & 7.00 & 140.00 & 147.00 & 0.02 & 0.37 \\
+        & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
         & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-        \midrule 			 	
+        \midrule
         \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
-        & A2 & 8.00 & 145.00 & 153.00 & 0.02 & 0.38 \\
+        & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
         & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
         \bottomrule
     \end{tabular*}
+    \footnotetext{
+        \begin{tabular}{llll}
+            DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
+        \end{tabular}
+    }
 \end{table}
 
 \section{Conclusion}\label{sec6}
