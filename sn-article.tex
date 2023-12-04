@@ -2,11 +2,6 @@
 % \documentclass[final,5p,times]{elsarticle}
 \documentclass[final,5p,times,twocolumn]{elsarticle}
 
-%% For including figures, graphicx.sty has been loaded in
-%% elsarticle.cls. If you prefer to use the old commands
-%% please give \usepackage{epsfig}
-
-%% The amssymb package provides various useful mathematical symbols
 
 \usepackage{graphicx}%
 \usepackage{multirow}%
@@ -22,6 +17,7 @@
 \usepackage{algorithmicx}%
 \usepackage{algpseudocode}%
 \usepackage{listings}%
+\usepackage{threeparttable}%
 
 %% The amsthm package provides extended theorem environments
 % \usepackage{amsthm}
@@ -272,12 +268,12 @@ where $I_{0,j}$, $I_{1,j}$, $I_{2,j}$, and $I_{3,j}$ are the input column, $I'_{
 \end{equation}
 
 
-In order to reduce the area of this component, we use the serial architecture of Mix-Columns, as shown in Figure~\ref{serial_mix_columns_fig}.
-The serial architecture of Mix-Columns requires four 4-bit register, two multiplexes and three XOR gates.
+In order to reduce the area of this component, the serial architecture of Mix-Columns is utilized, as shown in Figure~\ref{serial_mix_columns_fig}.
+The serial architecture of Mix-Columns requires four 4-bit registers, two multiplexers, and three XOR gates.
 The operation of Mix-Columns involves three distinct stages: freeze, shift, and add.
-During the freeze stage, we ensure the register values remain unchanged by setting both $CM_0$ and $CM_1$ to 0.
-In the shift stage, we induce a shift in the register values from $RM_0$ to $RM_4$ by setting both $CM_0$ and $CM_1$ to 1.
-Finally, in the add stage, we execute an addition operation on the column values according to Equation~\ref{eq3}. This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
+During the freeze stage, the register values are kept unchanged by setting both $CM_0$ and $CM_1$ to 0.
+In the shift stage, a shift in the register values from $RM_0$ to $RM_4$ is induced by setting both $CM_0$ and $CM_1$ to 1.
+Finally, in the add stage, an addition operation on the column values is executed according to Equation~\ref{eq3}. This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
 
 The timing diagram for the serial architecture of Mix-Columns is depicted in Figure~\ref{serial_time_diagrm_mix_colunms}.
 It requires five clock cycles to compute the next columns from the previous ones, and an additional four clock cycles to transfer data from the internal register of Mix-Columns to the State-Register.
@@ -292,7 +288,7 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.5\textwidth]{Mix-Columns-Times.pdf}
+    \includegraphics[width=0.45\textwidth]{Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }\label{serial_time_diagrm_mix_colunms}
 \end{figure}
 
@@ -309,7 +305,7 @@ The encryption process concludes when the Round counter reaches 31, at which poi
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.5\textwidth]{serial-fsm.pdf}
+    \includegraphics[width=0.45\textwidth]{serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -318,11 +314,11 @@ This technique is applied separately to the State-Register, Key-Register, and Mi
 For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed.
 This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
 
-\begin{figure*}[h]%   
+\begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{serial-time.pdf}
+    \includegraphics[width=0.45\textwidth]{serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
-\end{figure*}
+\end{figure}
 \subsection{Unrolled Architecture (A2)}\label{subsec3}
 
 The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
@@ -445,52 +441,56 @@ On the other hand, the Energy metric measures the energy consumption of the desi
     \end{tabular*}
 \end{table*}
 
-\begin{table*}[h]
-    \caption{Throughput results for the three Architectures}\label{throughput_compare}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
-        \toprule
-        Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\footnotemark[1] & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
-        \midrule
-        \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
-        & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
-        & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
-        \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
-        & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
-        & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
-        \midrule
-        \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
-        & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
-        & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
-        \bottomrule
-    \end{tabular*}
-    \footnotetext[1]{Throughput rate at 100MHz}
+\begin{table*}
+    \begin{threeparttable}
+        \caption{Throughput results for the three Architectures}\label{throughput_compare}%
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
+            \toprule
+            Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
+            \midrule
+            \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
+            & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
+            & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
+            \midrule
+            \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
+            & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
+            & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
+            \midrule
+            \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
+            & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
+            & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
+            \bottomrule
+        \end{tabular*}
+        \begin{tablenotes}
+            \item[a] Throughput rate at 100MHz
+        \end{tablenotes}
+    \end{threeparttable}
 \end{table*}
 
 \begin{table*}
-    \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccccc}
-        \toprule
-        Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$  & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
-        \midrule
-        \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
-        & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
-        & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
-        \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
-        & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
-        & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-        \midrule
-        \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
-        & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
-        & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
-        \bottomrule
-    \end{tabular*}
-    \footnotetext{
+    \begin{threeparttable}
+        \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
+            \toprule
+            Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
+            \midrule
+            \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
+            & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
+            & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
+            \midrule
+            \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
+            & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
+            & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
+            \midrule
+            \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
+            & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
+            & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
+            \bottomrule
+        \end{tabular*}
         \begin{tabular}{llll}
-            DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
+            DP: Dynamic Power &  SP: Static Power & TP: Total Power &  E: Energy
         \end{tabular}
-    }
+    \end{threeparttable}
 \end{table*}
 
 \section{Conclusion}\label{sec6}
