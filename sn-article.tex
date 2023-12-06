@@ -175,13 +175,13 @@ Our encoding scheme as follows in Equations~\ref{eq1}:
 % \begin{split}
 
 \begin{flalign}
-    \forall i \in & \{0,1,\ldots ,K-1\}: \nonumber \\
-    T_i = &  F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
-&          + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber \\
-&          + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1} \\
-&          + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber \\
-&          + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber \\
-&          + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], max) \nonumber
+    \forall i \in & \{0,1,\ldots ,K-1\}: \nonumber                                                                        \\
+    T_i =         & F_{if} (BB_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
+                  & + F_{if} (BB_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber                                      \\
+                  & + F_{if} (BB_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1}                                 \\
+                  & + F_{if} (BB_i[3], Q_{4i+2}) + F_{if} (BB_i[4], Q_{4i}) \nonumber                                     \\
+                  & + F_{if} (BB_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber                                                   \\
+                  & + F_{if} (BB_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (BB_i[7], max) \nonumber
 \end{flalign}
 
 
@@ -212,25 +212,25 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
     \caption{Encoding of different types of logical gate}\label{tab3}%
     \begin{tabular}{lcccccc}
         \toprule
-        logical expression & $BB_i$[0:7] & gate type \\
+        logical expression                                   & $BB_i$[0:7]     & gate type \\
         \midrule
-        $Q_0 \oplus Q_1$ & 0 0 0 0 0 0 1 0 & XOR \\
-        $\sim (Q_0 \oplus Q_1)$ & 0 0 0 0 0 0 1 1 & XNOR \\
-        $Q_0 \land Q_1$ & 0 0 0 0 0 1 0 0 & AND \\
-        $\sim (Q_0 \land Q_1)$ & 0 0 0 0 0 1 0 1 & NAND \\
-        $Q_0 \lor Q_1$ & 0 0 0 0 0 1 1 0 & OR \\
-        $\sim (Q_0 \lor Q_1)$ & 0 0 0 0 0 1 1 1 & NOR \\
-        $\sim Q_0$ & 0 0 0 0 1 0 0 1 & NOT \\
-        $\sim Q_1$ & 0 0 0 0 1 0 1 1 & NOT \\
-        $\sim Q_2$ & 0 0 0 1 0 0 0 1 & NOT \\
-        $Q_0 \oplus Q_1 \oplus Q_2$ & 0 0 0 1 0 0 1 0 & XOR3 \\
-        $\sim (Q_0 \oplus Q_1 \oplus Q_2)$ & 0 0 0 1 0 0 1 1 & XNOR3 \\
-        $Q_0 \land Q_1 \land Q_2$ & 0 0 1 0 0 0 0 0 & AND3 \\
-        $\sim (Q_0 \land Q_1 \land Q_2)$ & 0 0 1 0 0 0 0 1 & NAND3 \\
-        $Q_0 \lor Q_1 \lor Q_2$ & 0 1 1 1 0 1 1 0 & OR3 \\
-        $\sim (Q_0 \lor Q_1 \lor Q_2)$ & 0 1 1 1 0 1 1 1 & NOR3 \\
-        $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 0 & MAOI1 \\
-        $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1 \\
+        $Q_0 \oplus Q_1$                                     & 0 0 0 0 0 0 1 0 & XOR       \\
+        $\sim (Q_0 \oplus Q_1)$                              & 0 0 0 0 0 0 1 1 & XNOR      \\
+        $Q_0 \land Q_1$                                      & 0 0 0 0 0 1 0 0 & AND       \\
+        $\sim (Q_0 \land Q_1)$                               & 0 0 0 0 0 1 0 1 & NAND      \\
+        $Q_0 \lor Q_1$                                       & 0 0 0 0 0 1 1 0 & OR        \\
+        $\sim (Q_0 \lor Q_1)$                                & 0 0 0 0 0 1 1 1 & NOR       \\
+        $\sim Q_0$                                           & 0 0 0 0 1 0 0 1 & NOT       \\
+        $\sim Q_1$                                           & 0 0 0 0 1 0 1 1 & NOT       \\
+        $\sim Q_2$                                           & 0 0 0 1 0 0 0 1 & NOT       \\
+        $Q_0 \oplus Q_1 \oplus Q_2$                          & 0 0 0 1 0 0 1 0 & XOR3      \\
+        $\sim (Q_0 \oplus Q_1 \oplus Q_2)$                   & 0 0 0 1 0 0 1 1 & XNOR3     \\
+        $Q_0 \land Q_1 \land Q_2$                            & 0 0 1 0 0 0 0 0 & AND3      \\
+        $\sim (Q_0 \land Q_1 \land Q_2)$                     & 0 0 1 0 0 0 0 1 & NAND3     \\
+        $Q_0 \lor Q_1 \lor Q_2$                              & 0 1 1 1 0 1 1 0 & OR3       \\
+        $\sim (Q_0 \lor Q_1 \lor Q_2)$                       & 0 1 1 1 0 1 1 1 & NOR3      \\
+        $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$  & 1 0 1 1 0 0 0 0 & MAOI1     \\
+        $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1     \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -347,18 +347,19 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 \end{figure*}
 
 
-\begin{table*}[h]
+\begin{table}[h]
+    \centering
     \caption{Different architectures description}\label{tab2}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+    \begin{tabular}{lccc}
         \toprule
-        Architecture & Cipher & Block Size & Key Size & Reference & Description  \\
+        Architecture & Cipher & Reference & Description  \\
         \midrule
-        A1  & CRAFT      & 64           & 128            & This work              & Serial               \\
-        A2  & CRAFT       & 64           & 128            & This work              & Unrolled                \\
-        A3  & PRESENT       & 64           & 128            &   \cite{DBLP:journals/tcas/Lara-NinoDM17}           & Iterative              \\
+        A1  & CRAFT & This work & Serial \\
+        A2  & CRAFT & This work & Unrolled \\
+        A3  & PRESENT & \cite{DBLP:journals/tcas/Lara-NinoDM17} & Iterative \\
         \bottomrule
-    \end{tabular*}
-\end{table*}
+    \end{tabular}
+\end{table}
 
 
 \section{Experimental Evaluation}\label{sec4}
@@ -409,8 +410,8 @@ The Power metric, which includes both dynamic and static power consumption, is u
 On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~\ref{enery_eqation}.
 
 \begin{align}
-    \text{Total Power} (TP) &= \text{Dynamic Power} (DP) \nonumber \\
-    &+ \text{Static Power} (SP)
+    \text{Total Power} (TP) & = \text{Dynamic Power} (DP) \nonumber \\
+                            & + \text{Static Power} (SP)
     \label{eq7}
 \end{align}
 \begin{equation}
@@ -420,6 +421,10 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 
 
 \section{Results}\label{sec5}
+
+This section presents the results of the proposed designs, divided into three categories: area, throughput, and power and energy. The results are demonstrated across three different FPGA platforms: Artix-7, Spartan-7, and Kintex-7. The area consumption of the designs is displayed in Table~\ref{area_compare}, the throughput results are illustrated in Table~\ref{throughput_compare}, and the details of power and energy consumption are provided in Table~\ref{power_energy_compare}.
+
+
 \begin{table*}[h]
     \caption{Area used for the three Architectures}\label{area_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
@@ -488,31 +493,37 @@ On the other hand, the Energy metric measures the energy consumption of the desi
             \bottomrule
         \end{tabular*}
         \begin{tabular}{llll}
-            DP: Dynamic Power &  SP: Static Power & TP: Total Power &  E: Energy
+            DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
         \end{tabular}
     \end{threeparttable}
 \end{table*}
 
+The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture (A3) of PRESENT, as described in \cite{DBLP:journals/tcas/Lara-NinoDM17}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
+
+Regarding the Flip-Flops (FF), the key schedule of the craft cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the craft cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{compare-ff.pdf}
+    \caption{Comparison of Flip-Flop in Architectures A1, A2, and A3}\label{compare_ff}
+\end{figure}
+
+When it comes to Look-Up Tables (LUT), the proposed designs (A1) require fewer LUTs than the iterative architecture (A3) of PRESENT. This is attributed to the fact that the proposed designs utilize a single Sub-Box, in contrast to the 16 Sub-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 Sub-Boxes, compared to just one in the proposed designs. A detailed comparison of LUT counts is illustrated in Figure~\ref{compare_lut}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{compare-lut.pdf}
+    \caption{Comparison of Look-Up Tables in Architectures A1, A2, and A3}\label{compare_lut}
+\end{figure}
+
+
+
 \section{Conclusion}\label{sec6}
 
 
-%% If you have bibdatabase file and want bibtex to generate the
-%% bibitems, please use
-%%
 \bibliographystyle{elsarticle-num}
 \bibliography{bibliography}
 
-%% else use the following coding to input the bibitems directly in the
-%% TeX file.
-
-% \begin{thebibliography}{00}
-
-%     %% \bibitem{label}
-%     %% Text of bibliographic item
-
-%     \bibitem{}
-
-% \end{thebibliography}
 \end{document}
 \endinput
 %%
