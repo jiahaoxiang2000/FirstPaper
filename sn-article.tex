@@ -346,17 +346,16 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
     \caption{Iterative architecture of PRESENT}\label{fig5}
 \end{figure*}
 
-
 \begin{table}[h]
     \centering
     \caption{Different architectures description}\label{tab2}%
-    \begin{tabular}{lccc}
+    \begin{tabular}{lclc}
         \toprule
-        Architecture & Cipher & Reference & Description  \\
+        Architecture & Cipher & Description & Reference  \\
         \midrule
-        A1  & CRAFT & This work & Serial \\
-        A2  & CRAFT & This work & Unrolled \\
-        A3  & PRESENT & \cite{DBLP:journals/tcas/Lara-NinoDM17} & Iterative \\
+        A1  & CRAFT & Serial & This work \\
+        A2  & CRAFT & Unrolled & This work \\
+        A3  & PRESENT & Iterative & \cite{DBLP:journals/tcas/Lara-NinoDM17} \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -374,7 +373,7 @@ In order to ensure a fair comparison, we evaluate the area consumption of the pr
 
 \subsection{Platform}\label{subsec4}
 
-The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, three different FPGA platforms were used for benchmarking: Artix-7(xc7a100tcsg324-1), Spartan-7(xc7s100fgga484-1), and Kintex-7(xc7k70tfbg484-1).
+The proposed architectures were implemented on a Xilinx FPGA board using Vivado v2023.2. To test in various environments, three different FPGA platforms were used for benchmarking: Artix-7(xc7a100tcsg324-1), Kintex-7(xc7k70tfbg484-1), and Spartan-7(xc7s100fgga484-1).
 Artix-7 offers high performance in resource-limited situations. Spartan-7 is designed for high-restriction environments. Kintex-7 is ideal for applications like 3G and 4G wireless, flat panel displays, and video over IP solutions.
 
 
@@ -422,7 +421,7 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 
 \section{Results}\label{sec5}
 
-This section presents the results of the proposed designs, divided into three categories: area, throughput, and power and energy. The results are demonstrated across three different FPGA platforms: Artix-7, Spartan-7, and Kintex-7. The area consumption of the designs is displayed in Table~\ref{area_compare}, the throughput results are illustrated in Table~\ref{throughput_compare}, and the details of power and energy consumption are provided in Table~\ref{power_energy_compare}.
+This section presents the results of the proposed designs, divided into three categories: area, throughput, and power and energy. The results are demonstrated across three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The area consumption of the designs is displayed in Table~\ref{area_compare}, the throughput results are illustrated in Table~\ref{throughput_compare}, and the details of power and energy consumption are provided in Table~\ref{power_energy_compare}.
 
 
 \begin{table*}[h]
@@ -435,13 +434,13 @@ This section presents the results of the proposed designs, divided into three ca
         & A2 & 64 & 128 & 157 & 378 & 111 \\
         & A3 & 64 & 128 & 201 & 243 & 70 \\
         \midrule
-        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
-        & A2 & 64 & 128 & 157 & 381 & 118 \\
-        & A3 & 64 & 128 & 201 & 244 & 70 \\
-        \midrule
         \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
         & A2 & 64 & 128 & 157 & 377 & 115 \\
         & A3 & 64 & 128 & 201 & 244 & 68 \\
+        \midrule
+        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
+        & A2 & 64 & 128 & 157 & 381 & 118 \\
+        & A3 & 64 & 128 & 201 & 244 & 70 \\
         \bottomrule
     \end{tabular*}
 \end{table*}
@@ -451,19 +450,19 @@ This section presents the results of the proposed designs, divided into three ca
         \caption{Throughput results for the three Architectures}\label{throughput_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
             \toprule
-            Platform & Design & $Latency$ & $FMAX(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
+            Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
             \midrule
             \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
             & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
             & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
             \midrule
-            \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
-            & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
-            & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
-            \midrule
             \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
             & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
             & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
+            \midrule
+            \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
+            & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
+            & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
             \bottomrule
         \end{tabular*}
         \begin{tablenotes}
@@ -483,13 +482,13 @@ This section presents the results of the proposed designs, divided into three ca
             & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
             & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
             \midrule
-            \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
-            & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
-            & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-            \midrule
             \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
             & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
             & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
+            \midrule
+            \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
+            & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
+            & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
             \bottomrule
         \end{tabular*}
         \begin{tabular}{llll}
@@ -498,28 +497,56 @@ This section presents the results of the proposed designs, divided into three ca
     \end{threeparttable}
 \end{table*}
 
-The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture (A3) of PRESENT, as described in \cite{DBLP:journals/tcas/Lara-NinoDM17}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
+The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{DBLP:journals/tcas/Lara-NinoDM17}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
 
 Regarding the Flip-Flops (FF), the key schedule of the craft cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the craft cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{compare-ff.pdf}
-    \caption{Comparison of Flip-Flop in Architectures A1, A2, and A3}\label{compare_ff}
+    \caption{Comparison of Flip-Flop in three Architectures}\label{compare_ff}
 \end{figure}
 
-When it comes to Look-Up Tables (LUT), the proposed designs (A1) require fewer LUTs than the iterative architecture (A3) of PRESENT. This is attributed to the fact that the proposed designs utilize a single Sub-Box, in contrast to the 16 Sub-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 Sub-Boxes, compared to just one in the proposed designs. A detailed comparison of LUT counts is illustrated in Figure~\ref{compare_lut}.
+As illustrated in Figure~\ref{compare_lut}, when it comes to Look-Up Tables (LUT), the proposed designs (A1) require fewer LUTs than the iterative architecture of PRESENT (A3). This is attributed to the fact that the proposed designs utilize a single Sub-Box, in contrast to the 16 Sub-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 Sub-Boxes, compared to just one in the proposed designs.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{compare-lut.pdf}
-    \caption{Comparison of Look-Up Tables in Architectures A1, A2, and A3}\label{compare_lut}
+    \caption{Comparison of Look-Up Tables in three Architectures}\label{compare_lut}
 \end{figure}
 
+The serial architecture (A1) has a lower Slices cost compared to the iterative architecture of PRESENT (A3), thanks to the reduction in FF and LUT usage. Among the platforms, Spartan-7 is the most efficient in terms of Slices, followed by Artix-7 and Kintex-7. These results are illustrated in Figure~\ref{compare-slices}. However, the lower Max Frequency of Spartan-7 will be considered in the Throughput comparison.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{compare-slices.pdf}
+    \caption{Comparison of Slices in three Architectures}\label{compare-slices}
+\end{figure}
+
+Figure~\ref{compare-maxF} illustrates that the proposed designs (A1) have a higher Max Frequency than the iterative architecture of PRESENT (A3). This improvement is due to two key factors. First, the Sub-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture (A2) reduces the latency to 16, which doubles the Throughput rate at 100MHz compared to the iterative architecture of PRESENT (A3). This data is presented in Table~\ref{throughput_compare}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{compare-maxf.pdf}
+    \caption{Comparison of Max Frequency in three Architectures}\label{compare-maxF}
+\end{figure}
+
+The serial architecture (A1) has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture (A2) has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of PRESENT (A3) falls between that of the serial architecture (A1) and the unrolled architecture (A2). Compared to the iterative architecture of PRESENT (A3), the unrolled architecture (A2) reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{compare-energy.pdf}
+    \caption{Comparison of Energy per bit in three Architectures}\label{compare-energy}
+\end{figure}
 
 
 \section{Conclusion}\label{sec6}
 
+The Internet of Things (IoT) has brought about a revolution in the interaction with devices and data, enabling unprecedented levels of connectivity and automation. However, the resource-constrained environments in which IoT devices often operate pose challenges for the implementation of robust security measures. Lightweight cryptographic algorithms, such as the CRAFT cipher, are crucial for ensuring these devices' security without overtaxing their limited resources.
+
+This paper presents two architectures for the CRAFT cipher: Serial and Unrolled. The Serial architecture reduces the area consumption by 15.72\% compared to the iterative architecture of PRESENT. The Unrolled architecture, on the other hand, reduces the latency to 16, effectively doubling the throughput rate at 100MHz compared to the iterative architecture of PRESENT. Additionally, the Unrolled architecture reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT. These proposed architectures are well-suited for resource-constrained environments, such as those found in IoT devices.
+
+Future work could involve investigating the application of these proposed architectures in real-world IoT devices and measuring their performance. Additionally, implementing these architectures on ASICs could further reduce area consumption.
 
 \bibliographystyle{elsarticle-num}
 \bibliography{bibliography}
