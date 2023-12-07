@@ -33,7 +33,7 @@
 
 \begin{frontmatter}
 
-    \title{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Vehicles}
+    \title{Area-Throughput Efficient Implementations of CRAFT Cipher For Internet of Things }
 
     \author[a,b]{Jiahao Xiang}
     \author[a,b]{Lang Li\corref{cor1}}
@@ -57,21 +57,17 @@
         country={China}}
 
 
+
     \begin{abstract}
-        %% Text of abstract
-        \textbf{Purpose:} With extraordinary growth in the Internet of Vehicles (IoV), the amount of data exchanged between IoV devices is growing at an unprecedented scale.
-        Most of the IoV devices need instant response and real-time security to ensure the safety of users.
-        The CRAFT cipher that is a lightweight block cipher for low-area can be used in IoV devices.
-        In order to better adapt to these environment, the objective of this paper is to explore opportunities to optimize area and throughput for CRAFT cipher targeted for low-resource IoV devices.
-        \textbf{Methods:} A novel compact CRAFT implementation is proposed in serialized fashion to achieve a small hardware footprint.
-        We propose novel unrolled structure of CRAFT cipher for the high throughput feature.
-        \textbf{Results:}The results on Artix-7 show that ...
-        \textbf{Conclusion:} Hence, our works let CRAFT cipher more suitable for IoV devices.
+    The Internet of Things (IoT) has brought about a revolution in the interaction with devices and data, enabling unprecedented levels of connectivity and automation. However, the resource-constrained environments in which IoT devices often operate pose challenges for the implementation of robust security measures. Lightweight cryptographic algorithms, such as the CRAFT cipher, are crucial for ensuring these devices' security without overtaxing their limited resources.
+    This paper presents an exploration of two optimized architectures for the CRAFT lightweight block cipher: Serial and Unrolled. These architectures are designed with a focus on reducing area consumption and increasing throughput, making them suitable for resource-constrained environments such as those found in IoT devices. The Serial architecture achieves a 15.72\% reduction in area consumption compared to the iterative architecture of PRESENT, while the Unrolled architecture doubles the throughput rate at 100MHz. The Unrolled architecture also reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT. 
+    The proposed architectures were implemented and tested on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The findings suggest that these architectures could be beneficial for enhancing the security and efficiency of IoT devices.
     \end{abstract}
+
 
     \begin{keyword}
         %% keywords here, in the form: keyword \sep keyword
-        Lightweight block cipher \sep Internet of Vehicles \sep Field-programmable gate array(FPGA)\sep  Low-area, High-throughput
+        Lightweight block cipher \sep Internet of Things  \sep Field-programmable gate array(FPGA)\sep  Low-area, High-throughput
         %% PACS codes here, in the form: \PACS code \sep code
 
         %% MSC codes here, in the form: \MSC code \sep code
@@ -87,7 +83,7 @@
 
 \section{Introduction}\label{sec1}
 
-Internet of Vehicles (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}.
+Internet of Things  (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}.
 As IoT technology continues to advance, IoV technology is also making great progress.
 But the same security issues that exist in IoT are also were introduced into IoV.
 At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
@@ -109,37 +105,36 @@ CRAFT is a lightweight tweakable block cipher made out of involutory building bl
 It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext $P$ is transformed into a 64-bit output ciphertext $C$ using a 128-bit key $K$ and a 64-bit tweak $T$. Figure~\ref{fig1} shows the structure of CRAFT.
 
 
-\begin{table*}[h]
-    \caption{Notations used in this paper}\label{tab1}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcc}
-        \toprule
-        Notation   & Description                                 \\
-        \midrule
-        $TK$       & 64-bit tweakeys                             \\
-        $RC_i$     & 64-bit round constant in the $i^{th}$ round \\
-        \bottomrule
-    \end{tabular*}
-\end{table*}
-
-\begin{figure*}[h]%
+\begin{table}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{struct-craft.pdf}
+    \caption{Notations used in this paper}\label{tab1}%
+    \begin{tabular}{lcc}
+        \toprule
+        Notation & Description                                 \\
+        \midrule
+        $TK$     & 64-bit tweakeys                             \\
+        $RC_i$   & 64-bit round constant in the $i^{th}$ round \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[h]%
+    \centering
+    \includegraphics[width=0.45\textwidth]{struct-craft.pdf}
     \caption{Structure of CRAFT}\label{fig1}
-\end{figure*}
+\end{figure}
 
 \section{Implementations}\label{sec3}
 
-To achieve efficient area and throughput, we have, for the first time, optimized the components of CRAFT and proposed two implementation architectures: Serial and Unrolled.
+For the first time, the components of CRAFT have been optimized to achieve efficient area and throughput, resulting in two proposed implementation architectures: Serial and Unrolled.
 
 
 \subsection{Serial Architecture (A1)}\label{subsec2}
-Compared to round-based architecture, serial architecture are able to reuse components and significantly reduce area usage, e.g., the number of Sub-Box is reduced from 16 to 1.
-The clock gating technique is also used to enable each component and reduce the energy consumption of encryption. Our proposed architecture is presented in Figure~\ref{fig3}.
-The design includes one Sub-Box, one 4-bit Mix-columns, two register banks for storing keys (called Key-Register) and plaintext (called State-Register), which also act as temporary registers for storing the intermediate results.
-In order to store intermediate results into State-Register bank, the design has one feedback paths.
-PermuteNibbles is included in State-Register bank.
-It is noticeable that since the execution of permute requires 64-bit, in order to reuse the State-Register block, we change the order of execution of Sub-Box and Permute.
-And the first round of encryption process through the control signal to avoid Permute operation, to ensure the correctness of the encryption algorithm.
+Compared to round-based architectures, serial architectures can significantly reduce area usage by reusing components. For instance, the number of Sub-Boxes is reduced from 16 to 1. The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption. The proposed architecture is presented in Figure~\ref{fig3}.
+
+The design includes one Sub-Box, one 4-bit Mix-columns, and two register banks for storing keys (referred to as Key-Register) and plaintext (referred to as State-Register). These also act as temporary registers for storing intermediate results. To store intermediate results into the State-Register bank, the design includes one feedback path. The PermuteNibbles is incorporated into the State-Register bank.
+
+It's worth noting that the execution of permute requires 64-bit. To reuse the State-Register block, the order of execution of Sub-Box and Permute is altered. Additionally, the first round of the encryption process avoids the Permute operation through the control signal, ensuring the correctness of the encryption algorithm.
 
 \begin{figure*}[h]%   
     \centering
@@ -351,11 +346,11 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
     \caption{Different architectures description}\label{tab2}%
     \begin{tabular}{lclc}
         \toprule
-        Architecture & Cipher & Description & Reference  \\
+        Architecture & Cipher  & Description & Reference                               \\
         \midrule
-        A1  & CRAFT & Serial & This work \\
-        A2  & CRAFT & Unrolled & This work \\
-        A3  & PRESENT & Iterative & \cite{DBLP:journals/tcas/Lara-NinoDM17} \\
+        A1           & CRAFT   & Serial      & This work                               \\
+        A2           & CRAFT   & Unrolled    & This work                               \\
+        A3           & PRESENT & Iterative   & \cite{DBLP:journals/tcas/Lara-NinoDM17} \\
         \bottomrule
     \end{tabular}
 \end{table}
