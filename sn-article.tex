@@ -108,13 +108,13 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 \begin{table}[h]
     \centering
     \caption{Notations used in this paper}\label{tab1}%
-    \begin{tabular}{lcc}
-        \toprule
+    \begin{tabular}{|c|c|}
+        \hline
         Notation & Description                                 \\
-        \midrule
+        \hline
         $TK$     & 64-bit tweakeys                             \\
         $RC_i$   & 64-bit round constant in the $i^{th}$ round \\
-        \bottomrule
+        \hline
     \end{tabular}
 \end{table}
 
@@ -180,6 +180,7 @@ Our encoding scheme as follows in Equations~\ref{eq1}:
 \end{flalign}
 
 
+
 where $K$ is numbers of the logical gates, $Q_{4i}-Q_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
 The value of $max$ is all one's in the binary expression, which is represented logically as an inverse.
 $BB_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary number. The different types of logical gate used in this encoding scheme are listed in Table~\ref{tab3}.
@@ -205,10 +206,10 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
 
 \begin{table}[h]
     \caption{Encoding of different types of logical gate}\label{tab3}%
-    \begin{tabular}{lcccccc}
-        \toprule
+    \begin{tabular}{|c|c|c|}
+        \hline
         logical expression                                   & $BB_i$[0:7]     & gate type \\
-        \midrule
+        \hline
         $Q_0 \oplus Q_1$                                     & 0 0 0 0 0 0 1 0 & XOR       \\
         $\sim (Q_0 \oplus Q_1)$                              & 0 0 0 0 0 0 1 1 & XNOR      \\
         $Q_0 \land Q_1$                                      & 0 0 0 0 0 1 0 0 & AND       \\
@@ -226,7 +227,7 @@ This module of the proposed Sub-Box reduced the area by 28.9\% with \cite{bao201
         $\sim (Q_0 \lor Q_1 \lor Q_2)$                       & 0 1 1 1 0 1 1 1 & NOR3      \\
         $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$  & 1 0 1 1 0 0 0 0 & MAOI1     \\
         $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1     \\
-        \bottomrule
+        \hline
     \end{tabular}
 \end{table}
 
@@ -344,14 +345,14 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 \begin{table}[h]
     \centering
     \caption{Different architectures description}\label{tab2}%
-    \begin{tabular}{lclc}
-        \toprule
+    \begin{tabular}{|c|c|c|c|}
+        \hline
         Architecture & Cipher  & Description & Reference                               \\
-        \midrule
+        \hline
         A1           & CRAFT   & Serial      & This work                               \\
         A2           & CRAFT   & Unrolled    & This work                               \\
         A3           & PRESENT & Iterative   & \cite{DBLP:journals/tcas/Lara-NinoDM17} \\
-        \bottomrule
+        \hline
     \end{tabular}
 \end{table}
 
@@ -421,44 +422,44 @@ This section presents the results of the proposed designs, divided into three ca
 
 \begin{table*}[h]
     \caption{Area used for the three Architectures}\label{area_compare}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
-        \toprule
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
+        \hline
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
-        \midrule
+        \hline
         \multirow{3}{*}{Artix-7}  & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
         & A2 & 64 & 128 & 157 & 378 & 111 \\
         & A3 & 64 & 128 & 201 & 243 & 70 \\
-        \midrule
+        \hline
         \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
         & A2 & 64 & 128 & 157 & 377 & 115 \\
         & A3 & 64 & 128 & 201 & 244 & 68 \\
-        \midrule
+        \hline
         \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
         & A2 & 64 & 128 & 157 & 381 & 118 \\
         & A3 & 64 & 128 & 201 & 244 & 70 \\
-        \bottomrule
+        \hline
     \end{tabular*}
 \end{table*}
 
 \begin{table*}
     \begin{threeparttable}
         \caption{Throughput results for the three Architectures}\label{throughput_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccccc}
-            \toprule
-            Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $\frac{Thr}{Slices}$($\frac{Kbps}{Slices}$) \\
-            \midrule
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
+            \hline
+            Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
+            \hline
             \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
             & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
             & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
-            \midrule
+            \hline
             \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
             & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
             & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
-            \midrule
+            \hline
             \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
             & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
             & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
-            \bottomrule
+            \hline
         \end{tabular*}
         \begin{tablenotes}
             \item[a] Throughput rate at 100MHz
@@ -469,22 +470,22 @@ This section presents the results of the proposed designs, divided into three ca
 \begin{table*}
     \begin{threeparttable}
         \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccccccc}
-            \toprule
-            Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $\frac{E}{bit}(\frac{nJ}{bit})$ \\
-            \midrule
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
+            \hline
+            Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $E/bit(nJ/bit)$ \\
+            \hline
             \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
             & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
             & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
-            \midrule
+            \hline
             \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
             & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
             & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
-            \midrule
+            \hline
             \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
             & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
             & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-            \bottomrule
+            \hline
         \end{tabular*}
         \begin{tabular}{llll}
             DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
