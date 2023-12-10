@@ -495,7 +495,7 @@ This section presents the results of the proposed designs, divided into three ca
 
 The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{DBLP:journals/tcas/Lara-NinoDM17}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
 
-Regarding the Flip-Flops (FF), the key schedule of the craft cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the craft cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
+Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
 \begin{figure}
     \centering
