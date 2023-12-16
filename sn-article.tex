@@ -60,7 +60,7 @@
 
     \begin{abstract}
         The Internet of Things (IoT) has revolutionized device and data interactions, enabling unparalleled connectivity and automation. However, the resource limitations of many IoT devices create challenges for implementing robust security measures. Lightweight cryptography, a cryptography subset, offers solutions tailored for these resource-constrained devices.
-        This paper presents two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design reduces the data width and the number of components, thereby enhancing efficiency. In contrast, the Unrolled design aims to decrease latency, ensuring quicker processing. Boolean satisfiability (SAT) solvers are used to determine the optimal implementation of the Sub-Box.
+        This paper presents two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design reduces the datapath and the number of components, thereby enhancing efficiency. In contrast, the Unrolled design aims to decrease latency, ensuring quicker processing. Boolean satisfiability (SAT) solvers are used to determine the optimal implementation of the Sub-Box.
         The proposed designs were evaluated on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results show that the Serial design significantly reduces area usage compared to the PRESENT cipher. On the other hand, the Unrolled design substantially improves the throughput rate. Additionally, the Unrolled design markedly reduces energy consumption per bit compared to the PRESENT cipher.
         These results suggest that the proposed designs could potentially improve the security and efficiency of IoT devices.
     \end{abstract}
@@ -68,7 +68,7 @@
 
     \begin{keyword}
         %% keywords here, in the form: keyword \sep keyword
-        Lightweight block cipher \sep Internet of Things  \sep Field-programmable gate array(FPGA)\sep  Low-area, High-throughput
+        Internet of Things  \sep Lightweight block cipher \sep Field-programmable gate array(FPGA)\sep  Low-area, High-throughput
         %% PACS codes here, in the form: \PACS code \sep code
 
         %% MSC codes here, in the form: \MSC code \sep code
@@ -88,16 +88,20 @@ The Internet of Things (IoT) is making rapid strides into various sectors such a
 
 However, the resource constraints of many IoT devices pose challenges for the implementation of robust security measures. These devices often have limited memory, processing power, and energy. Therefore, the security measures need to be lightweight to ensure they do not overburden the resources. Lightweight cryptography, a subset of cryptography, provides solutions specifically designed for these resource-limited devices, as discussed in \cite{Mohajerani2020}.
 
-The lightweight cryptography have been widely studied in recent years, such as PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022},IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023} and LELBC \cite{Song2024}. more cipher can be found in \cite{Zakaria2023}.
+Lightweight cryptography has been extensively studied in recent years. Examples of this include PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022}, IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023}, and LELBC \cite{Song2024}. More ciphers can be found in \cite{Zakaria2023}. The implementation of lightweight ciphers for various applications has also been widely studied.
 
-ISO/IEC 29192-2, a standard for lightweight cryptography, offers a set of algorithms that are suitable for these resource-constrained environments. Yet, the PRESENT algorithm, included in this standard, was break by differential fault analysis (DFA). This has led to a demand for a new lightweight block cipher to replace PRESENT. The CRAFT cipher was designed to resist DFA and was published in Fast Software Encryption (FSE).
+Efficient implementation allows lightweight ciphers to be used in various settings. A hardware implementation can enhance the performance of these ciphers in resource-limited environments. For instance, a 16-bit datapath architecture for the PRESENT cipher, which reduces both the area and power consumption, is presented in the work of Lara-Nino et al. \cite{LaraNino2017}. Additionally, an optimized key schedule of PRESENT, resulting in a smaller area, is proposed by Pandey et al. \cite{Pandey2019}. Shahbazi et al. \cite{Shahbazi2021} propose an 8-bit serial architecture for AES, which also reduces the area and power consumption. Li et al. \cite{Li2021} present unrolled architectures and a low-cost architecture for PRINCE, separately optimizing the throughput and area. Bharathi et al. \cite{Bharathi2022} enhance the performance of the PRESENT cipher by expanding the key length. Finally, Yang et al. \cite{Yang2023} share components in the cipher process for LILLIPUT, resulting in a smaller area.
 
-In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{Beierle2019}, respectively Round based, Serial, and Loop unrolled.
-This allows IoV practitioners to select the architectures that best suit their needs.
-The contributions of this article can be summarized as follows.
 
-The rest of this article is organized as follows.
-Section~\ref{sec2} presents specification of CRAFT; the proposed the three architectures of FPGA implementations for the CRAFT are present in Section 3; Section 4 presents the implementation results, analysis, and comparison with other similar works; finally, the work is concluded in Section 5.
+This work presents the first implementation of CRAFT on FPGA platforms. Two architectures for CRAFT, Serial and Unrolled, are proposed. The Serial architecture reduces the datapath from 64-bit to 4-bit, meaning it only uses one Sub-Box, which significantly reduces the area usage. The Unrolled architecture reduces the latency of the encryption process, thereby improving the throughput rate. A SAT solver is used to find the optimal implementation of the Sub-Box, which further reduces the area of the Sub-Box. The experiments are conducted on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The contributions of this article can be summarized as follows.
+\begin{itemize}
+    \item Two architectures for CRAFT, Serial and Unrolled, are proposed. These are optimized for area and throughput, respectively. The Serial architecture reduces the area usage by 15.72\% compared to the work of Bharathi et al. \cite{Bharathi2022}. The Unrolled architecture doubles the throughput rate compared to the same work.
+    \item A SAT solver is used to find the optimal implementation of the Sub-Box, which further reduces the area of the Sub-Box. The proposed Sub-Box reduces the area by 28.9\% compared to the work of Bao et al. \cite{bao2019peigen}.
+    \item All architectures are implemented on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results suggest that the proposed designs could potentially enhance the security and efficiency of IoT devices.
+\end{itemize}
+
+
+The remainder of this article is structured as follows: Section~\ref{sec2} provides the specifications of CRAFT. The two proposed architectures for CRAFT are discussed in Section~\ref{sec3}. Section~\ref{sec4} outlines the experimental evaluation metrics and environment. Section~\ref{sec5} presents the results of all the architectures. Finally, Section~\ref{sec6} concludes the work.
 
 \section{Specification of CRAFT}\label{sec2}
 
@@ -149,7 +153,7 @@ It's worth noting that the execution of permute requires 64-bit. To reuse the St
 
 Sub-Box provides a confusing characteristic for the entire encryption algorithm, however it requires a large amount of area.
 There are different methods of implementation of Sub-Box.
-The most popular implementation is using a lookup table (LUT), such as \cite{DBLP:journals/tcas/Lara-NinoDM17}.
+The most popular implementation is using a lookup table (LUT), such as \cite{LaraNino2017}.
 However it uses a lot of flip-flop, which will bring a lot of area consumption.
 Using Sub-Box's equivalent logical expression for this will reduce area consumption, such as \cite{bao2019peigen}, \cite{bib16}.
 
@@ -306,7 +310,7 @@ The encryption process concludes when the Round counter reaches 31, at which poi
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
-Clock gating, a technique discussed in \cite{shahbazi2020area}, can help reduce the dynamic power consumption of the encryption.
+Clock gating, a technique discussed in \cite{Shahbazi2021}, can help reduce the dynamic power consumption of the encryption.
 This technique is applied separately to the State-Register, Key-Register, and Mix-Columns.
 For example, during the Key-Schedule phase, the clock of the State-Register and Mix-Columns is turned off because these two blocks are not needed.
 This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
