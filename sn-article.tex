@@ -330,7 +330,7 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{DBLP:journals/tcas/Lara-NinoDM17} operates on a round-based architecture.
+The architecture from \cite{bharathi2022light} operates on a round-based architecture.
 It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
 This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function.
 This architecture is depicted in Figure~\ref{fig5}.
@@ -351,7 +351,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
         \hline
         A1           & CRAFT   & Serial      & This work                               \\
         A2           & CRAFT   & Unrolled    & This work                               \\
-        A3           & PRESENT & Iterative   & \cite{DBLP:journals/tcas/Lara-NinoDM17} \\
+        A3           & PRESENT & Iterative   & \cite{bharathi2022light} \\
         \hline
     \end{tabular}
 \end{table}
@@ -365,7 +365,7 @@ To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area
 However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}.
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
 Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies.
-In order to ensure a fair comparison, we evaluate the area consumption of the proposed designs using FPGA implementations, a method also utilized in \cite{mohajerani2020fpga}.
+In order to ensure a fair comparison, we evaluate the area consumption of the proposed designs using FPGA implementations, a method also utilized in \cite{Mohajerani2020}.
 
 \subsection{Platform}\label{subsec4}
 
@@ -493,7 +493,7 @@ This section presents the results of the proposed designs, divided into three ca
     \end{threeparttable}
 \end{table*}
 
-The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{DBLP:journals/tcas/Lara-NinoDM17}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
+The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{bharathi2022light}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
 
 Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
