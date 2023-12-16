@@ -120,7 +120,7 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=0.45\textwidth]{struct-craft.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/struct-craft.pdf}
     \caption{Structure of CRAFT}\label{fig1}
 \end{figure}
 
@@ -138,7 +138,7 @@ It's worth noting that the execution of permute requires 64-bit. To reuse the St
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{serial-archticture.pdf}
+    \includegraphics[width=0.7\textwidth]{./fig/serial-archticture.pdf}
     \caption{Serial architecture of CRAFT}\label{fig3}
 \end{figure*}
 
@@ -278,13 +278,13 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.5\textwidth]{Mix-Columns.pdf}
+    \includegraphics[width=0.5\textwidth]{./fig/Mix-Columns.pdf}
     \caption{Serial Architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
 \end{figure}
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{Mix-Columns-Times.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }\label{serial_time_diagrm_mix_colunms}
 \end{figure}
 
@@ -301,7 +301,7 @@ The encryption process concludes when the Round counter reaches 31, at which poi
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{serial-fsm.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -312,7 +312,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{serial-time.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 \subsection{Unrolled Architecture (A2)}\label{subsec3}
@@ -324,7 +324,7 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{unrolled-archticture.pdf}
+    \includegraphics[width=0.7\textwidth]{./fig/unrolled-archticture.pdf}
     \caption{Unrolled architecture of CRAFT}\label{fig4}
 \end{figure*}
 
@@ -338,7 +338,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 
 \begin{figure*}
     \centering
-    \includegraphics[width=0.75\textwidth]{iteration-present.pdf}
+    \includegraphics[width=0.75\textwidth]{./fig/iteration-present.pdf}
     \caption{Iterative architecture of PRESENT}\label{fig5}
 \end{figure*}
 
@@ -499,7 +499,7 @@ Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implement
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{compare-ff.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/compare-ff.pdf}
     \caption{Comparison of Flip-Flop in three Architectures}\label{compare_ff}
 \end{figure}
 
@@ -507,7 +507,7 @@ As illustrated in Figure~\ref{compare_lut}, when it comes to Look-Up Tables (LUT
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{compare-lut.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/compare-lut.pdf}
     \caption{Comparison of Look-Up Tables in three Architectures}\label{compare_lut}
 \end{figure}
 
@@ -515,7 +515,7 @@ The serial architecture (A1) has a lower Slices cost compared to the iterative a
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{compare-slices.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/compare-slices.pdf}
     \caption{Comparison of Slices in three Architectures}\label{compare-slices}
 \end{figure}
 
@@ -523,7 +523,7 @@ Figure~\ref{compare-maxF} illustrates that the proposed designs (A1) have a high
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{compare-maxf.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/compare-maxf.pdf}
     \caption{Comparison of Max Frequency in three Architectures}\label{compare-maxF}
 \end{figure}
 
@@ -531,7 +531,7 @@ The serial architecture (A1) has the highest energy per bit due to its higher la
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{compare-energy.pdf}
+    \includegraphics[width=0.45\textwidth]{./fig/compare-energy.pdf}
     \caption{Comparison of Energy per bit in three Architectures}\label{compare-energy}
 \end{figure}
 
