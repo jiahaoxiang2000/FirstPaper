@@ -88,7 +88,7 @@ As IoT technology continues to advance, IoV technology is also making great prog
 But the same security issues that exist in IoT are also were introduced into IoV.
 At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
 
-Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{mckay2016report}.
+Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{Turan}.
 It can provides security with low resource consumption and low delay in IoV environment.
 
 In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{beierle2019craft}, respectively Round based, Serial, and Loop unrolled.
@@ -362,7 +362,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 In ASIC implementations, the gate equivalent (GE) is often used to evaluate the area consumption of a design.
 A single GE is equivalent to a two-input NAND gate.
 To calculate the area in GE, we divide the total area (in $\mu m^2$) by the area of a two-input NAND gate (also in $\mu m^2$).
-However, the number of GEs can vary based on the specific technology used, as discussed in \cite{mckay2016report}.
+However, the number of GEs can vary based on the specific technology used, as discussed in \cite{Turan}.
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
 Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies.
 In order to ensure a fair comparison, we evaluate the area consumption of the proposed designs using FPGA implementations, a method also utilized in \cite{Mohajerani2020}.
