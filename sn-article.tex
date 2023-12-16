@@ -60,7 +60,7 @@
 
     \begin{abstract}
         The Internet of Things (IoT) has revolutionized device and data interactions, enabling unparalleled connectivity and automation. However, the resource limitations of many IoT devices create challenges for implementing robust security measures. Lightweight cryptography, a cryptography subset, offers solutions tailored for these resource-constrained devices.
-        This paper presents two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design reduces the data width and the number of components, thereby enhancing efficiency. In contrast, the Unrolled design aims to decrease latency, ensuring quicker processing. Boolean satisfiability (SAT) solvers are used to determine the optimal implementation of the Sub-Box. 
+        This paper presents two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design reduces the data width and the number of components, thereby enhancing efficiency. In contrast, the Unrolled design aims to decrease latency, ensuring quicker processing. Boolean satisfiability (SAT) solvers are used to determine the optimal implementation of the Sub-Box.
         The proposed designs were evaluated on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results show that the Serial design significantly reduces area usage compared to the PRESENT cipher. On the other hand, the Unrolled design substantially improves the throughput rate. Additionally, the Unrolled design markedly reduces energy consumption per bit compared to the PRESENT cipher.
         These results suggest that the proposed designs could potentially improve the security and efficiency of IoT devices.
     \end{abstract}
@@ -84,18 +84,15 @@
 
 \section{Introduction}\label{sec1}
 
+The Internet of Things (IoT) is making rapid strides into various sectors such as personal health care, environmental monitoring, home automation, smart mobility, and Industry 4.0. As security concerns continue to surface, they are thoroughly discussed in \cite{Meneghello2019a}. The most effective way to ensure data protection is by employing the cryptography techniques outlined in \cite{Swessi2022}.
+
+However, the resource constraints of many IoT devices pose challenges for the implementation of robust security measures. These devices often have limited memory, processing power, and energy. Therefore, the security measures need to be lightweight to ensure they do not overburden the resources. Lightweight cryptography, a subset of cryptography, provides solutions specifically designed for these resource-limited devices, as discussed in \cite{Mohajerani2020}.
+
+The lightweight cryptography have been widely studied in recent years, such as PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022},IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023} and LELBC \cite{Song2024}. more cipher can be found in \cite{Zakaria2023}.
 
 ISO/IEC 29192-2, a standard for lightweight cryptography, offers a set of algorithms that are suitable for these resource-constrained environments. Yet, the PRESENT algorithm, included in this standard, was break by differential fault analysis (DFA). This has led to a demand for a new lightweight block cipher to replace PRESENT. The CRAFT cipher was designed to resist DFA and was published in Fast Software Encryption (FSE).
 
-Internet of Things  (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}.
-As IoT technology continues to advance, IoV technology is also making great progress.
-But the same security issues that exist in IoT are also were introduced into IoV.
-At the some time, IoV involves a huge amount of dynamic real-time critical data so its security is a major concern.
-
-Lightweight cryptography is a subfield of cryptography that aims to provide solutions tailored for resource-constrained devices \cite{Turan}.
-It can provides security with low resource consumption and low delay in IoV environment.
-
-In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{beierle2019craft}, respectively Round based, Serial, and Loop unrolled.
+In this work, we propose the three architectures of FPGA implementations for the CRAFT \cite{Beierle2019}, respectively Round based, Serial, and Loop unrolled.
 This allows IoV practitioners to select the architectures that best suit their needs.
 The contributions of this article can be summarized as follows.
 
@@ -323,7 +320,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
 
 The architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
-The unrolled architecture, based on the iterative architecture from \cite{beierle2019craft}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
+The unrolled architecture, based on the iterative architecture from \cite{Beierle2019}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
 
 
 \begin{figure*}[h]%   
@@ -334,7 +331,7 @@ The unrolled architecture, based on the iterative architecture from \cite{beierl
 
 \subsection{Iterative Architecture (A3)}\label{iterative_architecture}
 
-The architecture from \cite{bharathi2022light} operates on a round-based architecture.
+The architecture from \cite{Bharathi2022} operates on a round-based architecture.
 It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
 This round function is executed 32 times to encrypt a single block. Concurrently, the Key Schedule runs alongside the round function.
 This architecture is depicted in Figure~\ref{fig5}.
@@ -351,11 +348,11 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
     \caption{Different architectures description}\label{tab2}%
     \begin{tabular}{|c|c|c|c|}
         \hline
-        Architecture & Cipher  & Description & Reference                \\
+        Architecture & Cipher  & Description & Reference           \\
         \hline
-        A1           & CRAFT   & Serial      & This work                \\
-        A2           & CRAFT   & Unrolled    & This work                \\
-        A3           & PRESENT & Iterative   & \cite{bharathi2022light} \\
+        A1           & CRAFT   & Serial      & This work           \\
+        A2           & CRAFT   & Unrolled    & This work           \\
+        A3           & PRESENT & Iterative   & \cite{Bharathi2022} \\
         \hline
     \end{tabular}
 \end{table}
@@ -497,9 +494,9 @@ This section presents the results of the proposed designs, divided into three ca
     \end{threeparttable}
 \end{table*}
 
-The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{bharathi2022light}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
+The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{Bharathi2022}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
 
-Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{beierle2019craft}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
+Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
 \begin{figure}
     \centering
