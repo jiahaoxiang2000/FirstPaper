@@ -59,9 +59,10 @@
 
 
     \begin{abstract}
-    The Internet of Things (IoT) has brought about a revolution in the interaction with devices and data, enabling unprecedented levels of connectivity and automation. However, the resource-constrained environments in which IoT devices often operate pose challenges for the implementation of robust security measures. Lightweight cryptographic algorithms, such as the CRAFT cipher, are crucial for ensuring these devices' security without overtaxing their limited resources.
-    This paper presents an exploration of two optimized architectures for the CRAFT lightweight block cipher: Serial and Unrolled. These architectures are designed with a focus on reducing area consumption and increasing throughput, making them suitable for resource-constrained environments such as those found in IoT devices. The Serial architecture achieves a 15.72\% reduction in area consumption compared to the iterative architecture of PRESENT, while the Unrolled architecture doubles the throughput rate at 100MHz. The Unrolled architecture also reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT. 
-    The proposed architectures were implemented and tested on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The findings suggest that these architectures could be beneficial for enhancing the security and efficiency of IoT devices.
+        The Internet of Things (IoT) has transformed interactions with devices and data, enabling unprecedented levels of connectivity and automation. However, the resource constraints of many IoT devices present challenges for implementing robust security measures. Lightweight cryptography, a subset of cryptography, provides solutions specifically designed for these resource-limited devices.
+        This paper introduces two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design minimizes the data width and the number of components, enhancing efficiency. Conversely, the Unrolled design is focused on reducing latency, ensuring faster processing. Concurrently, Boolean satisfiability (SAT) solvers are utilized to identify the optimal implementation of the Sub-Box.
+        The proposed structures were tested on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results indicate that the Serial structure significantly reduces area usage compared to the iterative structure of PRESENT. In contrast, the Unrolled structure substantially improves the throughput rate. Moreover, the Unrolled structure markedly reduces energy consumption per bit compared to the iterative structure of PRESENT.
+        These findings imply that the proposed structures could potentially enhance the security and efficiency of IoT devices.
     \end{abstract}
 
 
@@ -82,6 +83,9 @@
 
 
 \section{Introduction}\label{sec1}
+
+
+ISO/IEC 29192-2, a standard for lightweight cryptography, offers a set of algorithms that are suitable for these resource-constrained environments. Yet, the PRESENT algorithm, included in this standard, was break by differential fault analysis (DFA). This has led to a demand for a new lightweight block cipher to replace PRESENT. The CRAFT cipher was designed to resist DFA and was published in Fast Software Encryption (FSE).
 
 Internet of Things  (IoV) is an emerging concept in intelligent transportation systems (ITS) to enhance the existing capabilities of VANETs by integrating with the Internet of Things (IoT) \cite{sharma2019survey}.
 As IoT technology continues to advance, IoV technology is also making great progress.
@@ -347,10 +351,10 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
     \caption{Different architectures description}\label{tab2}%
     \begin{tabular}{|c|c|c|c|}
         \hline
-        Architecture & Cipher  & Description & Reference                               \\
+        Architecture & Cipher  & Description & Reference                \\
         \hline
-        A1           & CRAFT   & Serial      & This work                               \\
-        A2           & CRAFT   & Unrolled    & This work                               \\
+        A1           & CRAFT   & Serial      & This work                \\
+        A2           & CRAFT   & Unrolled    & This work                \\
         A3           & PRESENT & Iterative   & \cite{bharathi2022light} \\
         \hline
     \end{tabular}
