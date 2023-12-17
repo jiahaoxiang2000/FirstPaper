@@ -105,20 +105,26 @@ The remainder of this article is structured as follows: Section~\ref{sec2} provi
 
 \section{Specification of CRAFT}\label{sec2}
 
-All notations used in this paper are shown in Table~\ref{tab1}.
-CRAFT is a lightweight tweakable block cipher made out of involutory building blocks.
-It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher, a 64-bit input plaintext $P$ is transformed into a 64-bit output ciphertext $C$ using a 128-bit key $K$ and a 64-bit tweak $T$. Figure~\ref{fig1} shows the structure of CRAFT.
+The key notations used in this paper are outlined in Table~\ref{tab1}.
+CRAFT, a lightweight tweakable block cipher, is built from involutory building blocks. It operates on a 64-bit block and utilizes a 128-bit key, along with a 64-bit tweak. In this cipher, a 64-bit input plaintext is transformed into a 64-bit output ciphertext  using a 128-bit key . The key $K$ is split into $K_0$ and $K_1$. A 64-bit tweak  is also used in the process. The structure of CRAFT is illustrated in Figure~\ref{fig1}. The CRAFT encryption process is described in Algorithm~\ref{alg1}. The decryption process is the same as the encryption process, except that the round keys are used in reverse order.
 
 
 \begin{table}[h]
     \centering
-    \caption{Notations used in this paper}\label{tab1}%
-    \begin{tabular}{|c|c|}
+    \caption{Key Notations Used in This Paper}\label{tab1}%
+    \begin{tabular}{|c|l|}
         \hline
-        Notation & Description                                 \\
+        Notation & Description                                  \\
         \hline
-        $TK$     & 64-bit tweakeys                             \\
-        $RC_i$   & 64-bit round constant in the $i^{th}$ round \\
+        $TK_i$   & 64-bit tweakeys used in the $i^{th}$ round   \\
+        $RC_i$   & 64-bit round constant for the $i^{th}$ round \\
+        $R_i$    & Function for the $i^{th}$ round              \\
+        $SB$     & Sub-Box operation                            \\
+        $MC$     & Mix-Columns operation                        \\
+        $PN$     & PermuteNibbles operation                     \\
+        $Q$      & Permutation used in key schedule             \\
+        $\oplus$ & XOR operation                                \\
+        $||$     & Concatenation operation                      \\
         \hline
     \end{tabular}
 \end{table}
@@ -128,6 +134,85 @@ It consists of a 64-bit block, a 128-bit key, and a 64-bit tweak. In this cipher
     \includegraphics[width=0.45\textwidth]{./fig/struct-craft.pdf}
     \caption{Structure of CRAFT}\label{fig1}
 \end{figure}
+
+\begin{algorithm}[h]
+    \caption{CRAFT Encryption Process}\label{alg1}
+    \textbf{Input:} Plaintext $X$, Key $K_0||K_1$, Tweak $T$ \\
+    \textbf{Output:} Ciphertext $Y$
+    \begin{algorithmic}[1]
+        \State $TK_0 \gets K_0\oplus T$
+        \State $TK_1 \gets K_1\oplus T$
+        \State $TK_2 \gets K_0\oplus Q(T)$
+        \State $TK_3 \gets K_1\oplus Q(T)$
+        \State $Y \gets X$
+        \For{$i \gets 0$ to $31$}
+        \State $Y \gets MC(Y)$
+        \State $Y_{4,5} \gets Y_{4,5}\oplus RC_i$
+        \State $Y \gets Y \oplus TK_{i\mod 4}$
+        \If{$i \neq 31$}
+        \State $Y \gets PN(Y)$
+        \State $Y \gets SB(Y)$
+        \EndIf
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+The round function, denoted as $R$, consists of three operations: Mix-Columns, PermuteNibbles, and Sub-Box. The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~\ref{mix_molumns_eq}.
+
+
+\begin{equation}
+    M =
+    \begin{bmatrix}
+        1 & 0 & 1 & 1 \\
+        0 & 1 & 0 & 1 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    \label{mix_molumns_eq}
+\end{equation}
+
+The PermuteNibbles operation, an involutory permutation, operates on 4-bit nibbles. This operation triggers additional Sub-Boxes, thereby bolstering the cipher's security. The illustration of the PermuteNibbles operation is provided in Equation~\ref{permute_nibb_eq}. The permutation $Q$ is utilized in the key schedule, as depicted in Equation~\ref{key_schedule_eq}.
+
+\begin{equation}
+    PN=[15,12,13,14,10,9,8,11,6,5,4,7,1,2,3,0]
+    \label{permute_nibb_eq}
+\end{equation}
+
+\begin{equation}
+    Q=[12,10,15,5,14,8,9,2,11,3,7,4,6,0,1,13]
+    \label{key_schedule_eq}
+\end{equation}
+
+The Sub-Box operation, a nonlinear transformation, introduces confusion into the cipher. This operation is carried out using a 4-bit S-Box, depicted in Table~\ref{tab4}, with values represented in hexadecimal notation.
+
+\begin{table}[h]
+    \centering
+    \caption{Sub-Box of CRAFT}\label{tab4}%
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Input & Output & Input & Output \\
+        \hline
+        0x0   & 0xC    & 0x8   & 0x8    \\
+        0x1   & 0xA    & 0x9   & 0x9    \\
+        0x2   & 0xD    & 0xA   & 0x1    \\
+        0x3   & 0x3    & 0xB   & 0x5    \\
+        0x4   & 0xE    & 0xC   & 0x0    \\
+        0x5   & 0xB    & 0xD   & 0x2    \\
+        0x6   & 0xF    & 0xE   & 0x4    \\
+        0x7   & 0x7    & 0xF   & 0x6    \\
+        \hline
+    \end{tabular}
+\end{table}
+
+The round constants, denoted as $RC$, are defined as $RC=a_3||a_2||a_1||a_0||0||b_2||b_1||b_0$. The initial round constant, $RC_0$, is set to 0x11. The process for updating the round constants is depicted in Equations~\ref{round_constant_eq}.
+
+\begin{equation}
+    \begin{split}
+        (a_3,a_2,a_1,a_0) & \gets (a_1 \oplus a_0,a_3,a_2,a_1)                    \\
+        (b_2,b_1,b_0) & \gets (b_1\oplus b_0,b_2,b_1)   \\
+    \end{split}
+    \label{round_constant_eq}
+\end{equation}
 
 \section{Implementations}\label{sec3}
 
