@@ -59,10 +59,9 @@
 
 
     \begin{abstract}
-        The Internet of Things (IoT) has revolutionized device and data interactions, enabling unparalleled connectivity and automation. However, the resource limitations of many IoT devices create challenges for implementing robust security measures. Lightweight cryptography, a cryptography subset, offers solutions tailored for these resource-constrained devices.
-        This paper presents two optimized designs for the CRAFT lightweight block cipher: Serial and Unrolled. The Serial design reduces the datapath and the number of components, thereby enhancing efficiency. In contrast, the Unrolled design aims to decrease latency, ensuring quicker processing. Boolean satisfiability (SAT) solvers are used to determine the optimal implementation of the Sub-Box.
-        The proposed designs were evaluated on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results show that the Serial design significantly reduces area usage compared to the PRESENT cipher. On the other hand, the Unrolled design substantially improves the throughput rate. Additionally, the Unrolled design markedly reduces energy consumption per bit compared to the PRESENT cipher.
-        These results suggest that the proposed designs could potentially improve the security and efficiency of IoT devices.
+        The advent of the Internet of Things (IoT) has revolutionized device and data interactions, enabling unprecedented connectivity and automation. However, achieving specific targets of low area usage and high throughput on these devices presents a significant challenge. 
+        This paper introduces two innovative designs for the CRAFT lightweight block cipher, each targeting a different aspect: low area usage and high throughput. The design for low area usage employs a serial architecture, reducing the datapath from 64-bit to 4-bit, which significantly decreases the area. Additionally, Boolean satisfiability (SAT) solvers are utilized to identify a lower-cost area implementation of the cipher's confusion component. Conversely, the design for high throughput leverages an unrolled architecture, minimizing latency from 32 to 16 and enhancing throughput.
+        The proposed designs were evaluated on three distinct FPGA platforms: Artix-7, Kintex-7, and Spartan-7. The results indicate that the low area design reduces area usage by 15.82\% compared to the PRESENT cipher. Conversely, the unrolled design doubles the throughput rate at 100MHz. Moreover, the unrolled design significantly reduces energy consumption per bit by 47.89\% compared to the PRESENT cipher. These findings suggest that the introduced designs have the potential to enhance both the security and efficiency of IoT devices.
     \end{abstract}
 
 
