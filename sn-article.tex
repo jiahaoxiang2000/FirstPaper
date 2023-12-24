@@ -18,6 +18,10 @@
 \usepackage{algpseudocode}%
 \usepackage{listings}%
 \usepackage{threeparttable}%
+\usepackage{caption}
+\usepackage{url}
+
+\captionsetup{font=normalsize}
 
 %% The amsthm package provides extended theorem environments
 % \usepackage{amsthm}
@@ -35,26 +39,28 @@
 
     \title{Efficient Implementations of CRAFT Cipher For Internet of Things }
 
-    \author[a,b]{Jiahao Xiang}
-    \author[a,b]{Lang Li\corref{cor1}}
+    \author[]{Jiahao Xiang}
+    \author[]{Lang Li\corref{cor1}}
+    % \author[a,b]{Jiahao Xiang}
+    % \author[a,b]{Lang Li\corref{cor1}}
 
     \ead{lilang911@126.com}
 
     \cortext[cor1]{Corresponding author}
 
-    \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
-        addressline={Hengyang Normal University},
-        city={Hengyang},
-        postcode={421002},
-        state={},
-        country={China}}
+    % \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
+    %     addressline={Hengyang Normal University},
+    %     city={Hengyang},
+    %     postcode={421002},
+    %     state={},
+    %     country={China}}
 
-    \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
-        addressline={Hengyang Normal University},
-        city={Hengyang},
-        postcode={421002},
-        state={},
-        country={China}}
+    % \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
+    %     addressline={Hengyang Normal University},
+    %     city={Hengyang},
+    %     postcode={421002},
+    %     state={},
+    %     country={China}}
 
 
 
@@ -116,6 +122,7 @@ Two architectures for CRAFT, Serial and Unrolled, are proposed. The Serial archi
 The Unrolled architecture reduces the latency of the encryption process, thereby improving the throughput rate.
 The optimal implementation of the S-Box, aimed at further area reduction, is determined using a SAT solver in conjunction with the GEC encoding scheme.
 The experiments are conducted on three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
+The source code for the proposed designs is available online.\footnote{\url{https://github.com/xjh2000/craft_implementation}}
 The main contributions of this article are as follows.
 \begin{itemize}
     \item Two architectures for CRAFT, Serial and Unrolled, are proposed. These are optimized for area and throughput, respectively.
@@ -150,9 +157,9 @@ The decryption process mirrors the encryption process, with the only difference 
         $TK_i$   & tweakeys used in the $i^{th}$ round   \\
         $RC_i$   & round constant for the $i^{th}$ round \\
         $R_i$    & Function for the $i^{th}$ round       \\
-        $SB$     & S-Box operation                       \\
-        $MC$     & Mix-Columns operation                 \\
-        $PN$     & PermuteNibbles operation              \\
+        $SB$     & S-Box                                 \\
+        $MC$     & Mix-Columns                           \\
+        $PN$     & PermuteNibbles                        \\
         $PK$     & Permutation used in key schedule      \\
         $\oplus$ & XOR operation                         \\
         $||$     & Concatenation operation               \\
@@ -191,7 +198,8 @@ The decryption process mirrors the encryption process, with the only difference 
     \end{algorithmic}
 \end{algorithm}
 
-The round function, denoted as $R$, consists of three operations: Mix-Columns, PermuteNibbles, and S-Box. The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~\ref{mix_molumns_eq}.
+The round function is composed of three distinct operations: Mix-Columns, PermuteNibbles, and S-Box.
+The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~\ref{mix_molumns_eq}.
 
 
 \begin{equation}
@@ -239,20 +247,20 @@ This operation is performed using a 4-bit S-Box, as shown in Table~\ref{tab4}, w
     \end{tabular}
 \end{table}
 
-Two Linear Shift Feedback Registers (LSFRs), $a$ and $b$, are used to concatenate the round constants, denoted as $RC$.
-The $RC$ is defined as $RC=(a_3,a_2,a_1,a_0,0,b_2,b_1,b_0)$. The initial round constant, $RC_0$, is set to 0x11.
+Two Linear Shift Feedback Registers (LSFRs), $a$ and $b$, are used to concatenate the round constants.
+The round constants is defined as $RC=(a_3,a_2,a_1,a_0,0,b_2,b_1,b_0)$. The initial round constant, $RC_0$, is set to 0x11.
 
 \section{Implementations}\label{sec3}
 
 For the first time, the components of CRAFT have been optimized to achieve efficient area and throughput, resulting in two proposed implementation architectures: Serial and Unrolled.
 
 
-\subsection{Serial Architecture (A1)}\label{subsec2}
+\subsection{Serial Architecture (SA)}\label{subsec2}
 Compared to round-based architectures, serial architectures can significantly reduce area usage by reusing components.
 For example, the quantity of S-Boxes is diminished from 16 to 1.
 The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption.
 
-The architecture, as shown in Figure~\ref{fig3}, includes a single S-Box, a 4-bit Mix-columns, and two register banks.
+The architecture, depicted in Figure~\ref{fig3}, comprises a single S-Box, a 4-bit Mix-columns, and two register banks.
 These banks, known as the Key-Register and the State-Register, store keys and plaintext, respectively.
 They also hold intermediate results temporarily.
 The design incorporates a feedback path to store intermediate results in the State-Register bank.
@@ -432,11 +440,11 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
     \includegraphics[width=0.45\textwidth]{./fig/serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
-\subsection{Unrolled Architecture (A2)}\label{subsec3}
+\subsection{Unrolled Architecture (UA)}\label{subsec3}
 
-The architecture shown in Figure~\ref{fig4} includes two S-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
+The unrolled architecture shown in Figure~\ref{fig4} includes two S-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
-The unrolled architecture, based on the iterative architecture from \cite{Beierle2019}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
+The unrolled architecture, which is based on the iterative architecture from the work of Beierle et al. \cite{Beierle2019}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
 
 
 \begin{figure*}[h]%   
@@ -445,7 +453,7 @@ The unrolled architecture, based on the iterative architecture from \cite{Beierl
     \caption{Unrolled architecture of CRAFT}\label{fig4}
 \end{figure*}
 
-\subsection{Iterative Architecture (A3)}\label{iterative_architecture}
+\subsection{Iterative Architecture (IA)}\label{iterative_architecture}
 
 The architecture proposed by Bharathi et al. \cite{Bharathi2022} operates on a round-based architecture.
 It employs a single round function to encrypt a block, incorporating a S-Box, a Permute, and an Add-Key operation.
@@ -465,9 +473,9 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
         \hline
         Architecture & Cipher  & Description & Reference           \\
         \hline
-        A1           & CRAFT   & Serial      & This work           \\
-        A2           & CRAFT   & Unrolled    & This work           \\
-        A3           & PRESENT & Iterative   & \cite{Bharathi2022} \\
+        SA           & CRAFT   & Serial      & This work           \\
+        UA           & CRAFT   & Unrolled    & This work           \\
+        IA           & PRESENT & Iterative   & \cite{Bharathi2022} \\
         \hline
     \end{tabular}
 \end{table}
@@ -475,9 +483,9 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 
 \section{Experimental Evaluation}\label{sec4}
 
-In ASIC implementations, the gate equivalent (GE) is often used to evaluate the area consumption of a design.
-One Gate Equivalent (GE) corresponds to the area of a two-input NAND gate. The area, in terms of GEs, is computed by dividing the total area (measured in $\mu m^2$) by the area of a two-input NAND gate (also measured in $\mu m^2$).
-However, the number of Gate Equivalents (GEs) can vary depending on the specific technology used, as Turan et al. discuss in their work \cite{Turan}.
+In ASIC implementations, the Gate Equivalent (GE) is often used to evaluate the area consumption of a design.
+One GE corresponds to the area of a two-input NAND gate. The area, in terms of GEs, is computed by dividing the total area (measured in $\mu m^2$) by the area of a two-input NAND gate (also measured in $\mu m^2$).
+However, the number of GEs can vary depending on the specific technology used, as Turan et al. discuss in their work \cite{Turan}.
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
 Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies.
 To provide a fair comparison, the area consumption of the proposed designs is assessed using FPGA implementations, a technique similarly employed in the study by Mohajerani et al. \cite{Mohajerani2020}.
@@ -501,9 +509,9 @@ The efficiency of the proposed designs is assessed using the Throughput metric.
 This metric uses three parameters: the maximum throughput rate, the throughput rate at 100MHz, and the throughput rate per slice.
 The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\ref{eq4}.
 The throughput rate at 100MHz shows the rate achievable when the clock frequency is set to 100MHz, calculated using Equation~\ref{eq5}.
-The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices (Equation~\ref{eq6}).
-In these computations, the Plaintext Size is set to 64-bit, Latency denotes the count of clock cycles needed to encrypt a single block, and Slices represent the quantity of Slices consumed by the design.
-
+The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices, as defined in Equation~\ref{eq6}.
+In these computations, the Plaintext Size is set to 64-bit. 
+Latency denotes the count of clock cycles needed to encrypt a single block, and Slices represent the quantity of Slices consumed by the design.
 \begin{equation}
     MaxThroughput(Thr) = \frac{MaxFrequency \times Block Size}{Latency}
     \label{eq4}
@@ -538,7 +546,7 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 \section{Results}\label{sec5}
 
 This section details the outcomes of the proposed designs, categorized into three aspects: area consumption, throughput performance, and power and energy metrics.
-The results are demonstrated across three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7. 
+The results are demonstrated across three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
 Table~\ref{area_compare} presents the area consumption of the designs, Table~\ref{throughput_compare} showcases the throughput results, and Table~\ref{power_energy_compare} provides the power and energy consumption details.
 
 
@@ -548,17 +556,17 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
         \hline
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
         \hline
-        \multirow{3}{*}{Artix-7}  & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
-        & A2 & 64 & 128 & 157 & 378 & 111 \\
-        & A3 & 64 & 128 & 201 & 243 & 70 \\
+        \multirow{3}{*}{Artix-7}  & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
+        & UA & 64 & 128 & 157 & 378 & 111 \\
+        & IA & 64 & 128 & 201 & 243 & 70 \\
         \hline
-        \multirow{3}{*}{Kintex-7} & A1 & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
-        & A2 & 64 & 128 & 157 & 377 & 115 \\
-        & A3 & 64 & 128 & 201 & 244 & 68 \\
+        \multirow{3}{*}{Kintex-7} & SA & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
+        & UA & 64 & 128 & 157 & 377 & 115 \\
+        & IA & 64 & 128 & 201 & 244 & 68 \\
         \hline
-        \multirow{3}{*}{Spartan-7} & A1 & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
-        & A2 & 64 & 128 & 157 & 381 & 118 \\
-        & A3 & 64 & 128 & 201 & 244 & 70 \\
+        \multirow{3}{*}{Spartan-7} & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
+        & UA & 64 & 128 & 157 & 381 & 118 \\
+        & IA & 64 & 128 & 201 & 244 & 70 \\
         \hline
     \end{tabular*}
 \end{table*}
@@ -570,17 +578,17 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
             \hline
             Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
             \hline
-            \multirow{3}{*}{Artix-7}  & A1 & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
-            & A2 & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
-            & A3 & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
+            \multirow{3}{*}{Artix-7}  & SA & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
+            & UA & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
+            & IA & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
             \hline
-            \multirow{3}{*}{Kintex-7} & A1 & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
-            & A2 & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
-            & A3 & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
+            \multirow{3}{*}{Kintex-7} & SA & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
+            & UA & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
+            & IA & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
             \hline
-            \multirow{3}{*}{Spartan-7} & A1 & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
-            & A2 & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
-            & A3 & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
+            \multirow{3}{*}{Spartan-7} & SA & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
+            & UA & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
+            & IA & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
             \hline
         \end{tabular*}
         \begin{tablenotes}
@@ -596,17 +604,17 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
             \hline
             Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $E/bit(nJ/bit)$ \\
             \hline
-            \multirow{3}{*}{Artix-7}  & A1 & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
-            & A2 & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
-            & A3 & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
+            \multirow{3}{*}{Artix-7}  & SA & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
+            & UA & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
+            & IA & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
             \hline
-            \multirow{3}{*}{Kintex-7} & A1 & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
-            & A2 & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
-            & A3 & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
+            \multirow{3}{*}{Kintex-7} & SA & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
+            & UA & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
+            & IA & 3.00 & 145.00 & 148.00 & 0.05 & 0.74 \\
             \hline
-            \multirow{3}{*}{Spartan-7} & A1 & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
-            & A2 & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
-            & A3 & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
+            \multirow{3}{*}{Spartan-7} & SA & 2.00 & 140.00 & 142.00 & 1.73 & 26.96 \\
+            & UA & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
+            & IA & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
             \hline
         \end{tabular*}
         \begin{tabular}{llll}
@@ -615,9 +623,9 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
     \end{threeparttable}
 \end{table*}
 
-The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT (A3) , as described in \cite{Bharathi2022}. The results indicate that the proposed designs consume 15.72\% less area than the iterative architecture of PRESENT.
+The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of PRESENT, as detailed in the work of Bharathi et al. \cite{Bharathi2022}. The results indicate that the proposed serial architecture consume 15.72\% less area than the iterative architecture of PRESENT.
 
-Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as shown in \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
+Regarding the FF, the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as demonstrated in the study by Beierle et al. \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
 \begin{figure}
     \centering
@@ -625,7 +633,7 @@ Regarding the Flip-Flops (FF), the key schedule of the CRAFT cipher is implement
     \caption{Comparison of Flip-Flop in three Architectures}\label{compare_ff}
 \end{figure}
 
-As illustrated in Figure~\ref{compare_lut}, when it comes to Look-Up Tables (LUT), the proposed designs (A1) require fewer LUTs than the iterative architecture of PRESENT (A3). This is attributed to the fact that the proposed designs utilize a single S-Box, in contrast to the 16 S-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 S-Boxes, compared to just one in the proposed designs.
+As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed serial architecture require fewer LUTs than the iterative architecture of PRESENT. This is attributed to the fact that the proposed designs utilize a single S-Box, in contrast to the 16 S-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 S-Boxes, compared to just one in the proposed designs.
 
 \begin{figure}
     \centering
@@ -633,7 +641,7 @@ As illustrated in Figure~\ref{compare_lut}, when it comes to Look-Up Tables (LUT
     \caption{Comparison of Look-Up Tables in three Architectures}\label{compare_lut}
 \end{figure}
 
-The serial architecture (A1) has a lower Slices cost compared to the iterative architecture of PRESENT (A3), thanks to the reduction in FF and LUT usage. 
+The serial architecture has a lower Slices cost compared to the iterative architecture of PRESENT, thanks to the reduction in FF and LUT usage.
 In terms of Slices efficiency, Spartan-7 outperforms both Artix-7 and Kintex-7 platforms.
 These results are illustrated in Figure~\ref{compare-slices}. However, the lower Max Frequency of Spartan-7 will be considered in the Throughput comparison.
 
@@ -643,7 +651,7 @@ These results are illustrated in Figure~\ref{compare-slices}. However, the lower
     \caption{Comparison of Slices in three Architectures}\label{compare-slices}
 \end{figure}
 
-Figure~\ref{compare-maxF} illustrates that the proposed designs (A1) have a higher Max Frequency than the iterative architecture of PRESENT (A3). This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture (A2) reduces the latency to 16, which doubles the Throughput rate at 100MHz compared to the iterative architecture of PRESENT (A3). This data is presented in Table~\ref{throughput_compare}.
+Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of PRESENT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture reduces the latency to 16, which doubles the Throughput rate at 100MHz compared to the iterative architecture of PRESENT. This data is presented in Table~\ref{throughput_compare}.
 
 \begin{figure}
     \centering
@@ -651,7 +659,7 @@ Figure~\ref{compare-maxF} illustrates that the proposed designs (A1) have a high
     \caption{Comparison of Max Frequency in three Architectures}\label{compare-maxF}
 \end{figure}
 
-The serial architecture (A1) has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture (A2) has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of PRESENT (A3) falls between that of the serial architecture (A1) and the unrolled architecture (A2). Compared to the iterative architecture of PRESENT (A3), the unrolled architecture (A2) reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
+The serial architecture has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of PRESENT falls between that of the serial architecture and the unrolled architecture. Compared to the iterative architecture of PRESENT, the unrolled architecture reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
 
 \begin{figure}
     \centering
@@ -665,9 +673,9 @@ The serial architecture (A1) has the highest energy per bit due to its higher la
 Given the diverse performance requirements arising from the use of IoT devices in various contexts, achieving optimal security without compromising performance presents a significant challenge. Implementing effective solutions is one way to attain this balance between security and performance.
 
 This research presents two unique designs for the CRAFT Lightweight cipher - Serial and Unrolled - both aimed at boosting performance.
-The Serial architecture reduces the area consumption by 15.72\% compared to the iterative architecture of PRESENT. 
-The Unrolled architecture, on the other hand, reduces the latency to 16, effectively doubling the throughput rate at 100MHz compared to the iterative architecture of PRESENT. 
-Additionally, the Unrolled architecture reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT. 
+The Serial architecture reduces the area consumption by 15.72\% compared to the iterative architecture of PRESENT.
+The Unrolled architecture, on the other hand, reduces the latency to 16, effectively doubling the throughput rate at 100MHz compared to the iterative architecture of PRESENT.
+Additionally, the Unrolled architecture reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT.
 To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block and 128-bit key. These proposed architectures are therefore highly suitable for environments with IoT devices.
 
 Future work could involve investigating the application of these proposed architectures in real-world IoT devices and measuring their performance. Additionally, implementing these architectures on ASICs could further reduce area consumption.
