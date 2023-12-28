@@ -71,7 +71,7 @@
         The novel Serial and Unrolled architectures are introduced to achieve low area usage and high throughput, respectively.
         Specifically, the Serial architecture reduces the datapath from 64-bit to 4-bit, significantly decreasing the area.
         The Unrolled architecture, on the other hand, minimizes latency from 32 to 16.
-        Additionally, Boolean satisfiability (SAT) solvers are employed to identify a lower-cost area implementation of the S-box.
+        Additionally, Boolean satisfiability (SAT) solvers are employed to identify a lower-cost area implementation of the S-Box.
         The proposed designs underwent evaluation on three distinct FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
         The results suggest that the low area design reduces area usage by 15.82\% compared to the PRESENT cipher.
         On the other hand, the unrolled design doubles the throughput rate at 100MHz and significantly reduces energy consumption per bit by 47.89\% compared to the PRESENT cipher.
@@ -157,7 +157,7 @@ The decryption process mirrors the encryption process, with the only difference 
         $TK_i$   & tweakeys used in the $i^{th}$ round   \\
         $RC_i$   & round constant for the $i^{th}$ round \\
         $R_i$    & Function for the $i^{th}$ round       \\
-        $SB$     & S-Box                                 \\
+        $SB$     & Sub-Box                                 \\
         $MC$     & Mix-Columns                           \\
         $PN$     & PermuteNibbles                        \\
         $PK$     & Permutation used in key schedule      \\
@@ -198,7 +198,7 @@ The decryption process mirrors the encryption process, with the only difference 
     \end{algorithmic}
 \end{algorithm}
 
-The round function is composed of three distinct operations: Mix-Columns, PermuteNibbles, and S-Box.
+The round function is composed of three distinct operations: Mix-Columns, PermuteNibbles, and Sub-Box.
 The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~\ref{mix_molumns_eq}.
 
 
@@ -225,7 +225,7 @@ The PermuteNibbles operation, an involutory permutation, operates on 4-bit nibbl
     \label{key_schedule_eq}
 \end{equation}
 
-The S-Box operation, a nonlinear transformation, introduces confusion into the cipher.
+The Sub-Box operation, a nonlinear transformation, introduces confusion into the cipher. 
 This operation is performed using a 4-bit S-Box, as shown in Table~\ref{tab4}, with values represented in hexadecimal notation.
 
 \begin{table}[h]
@@ -260,7 +260,7 @@ Compared to round-based architectures, serial architectures can significantly re
 For example, the quantity of S-Boxes is diminished from 16 to 1.
 The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption.
 
-The architecture, depicted in Figure~\ref{fig3}, comprises a single S-Box, a 4-bit Mix-columns, and two register banks.
+The architecture, depicted in Figure~\ref{fig3}, comprises a single Sub-Box, a 4-bit Mix-columns, and two register banks.
 These banks, known as the Key-Register and the State-Register, store keys and plaintext, respectively.
 They also hold intermediate results temporarily.
 The design incorporates a feedback path to store intermediate results in the State-Register bank.
@@ -328,7 +328,7 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
 
 
 \begin{table}[h]
-    \caption{Encoding of different types of logical gate}\label{tab3}%
+    \caption{Encoding of different types of logical gates}\label{tab3}%
     \begin{tabular}{|c|c|c|}
         \hline
         logical expression                                   & $GT_i$[0:7]     & gate type \\
@@ -419,8 +419,8 @@ As depicted in Figure~\ref{serial_fsm_fig}, the finite-state machine (FSM) of th
 During the Key-Schedule phase, the key is expanded while the gate clocks of the Mix-Columns and State-Register are turned off.
 Next, the Mix-Columns phase begins, where one column of the State-Register is stored in the Mix-Columns registers. This phase takes five clock cycles to execute the Mix-Columns operation on one column.
 Once this phase is finished, the gate clocks for the State-Register and Key-Register are turned off.
-Following this, the S-Box phase commences. During this phase, the data from the Mix-Columns registers is transferred back to the State-Register and XORed with the keys. This process requires an additional four clock cycles.
-This cycle between the Mix-Columns and S-Box phases is repeated four times for the four columns of the State-Register.
+Following this, the Sub-Box phase commences. During this phase, the data from the Mix-Columns registers is transferred back to the State-Register and XORed with the keys. This process requires an additional four clock cycles.
+This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
 Subsequently, the Permute operation is carried out within the State-Register, requiring a single clock cycle.
 The encryption process concludes when the Round counter reaches 31, at which point the ciphertext is stored in the State-Register.
 
@@ -442,7 +442,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
 \end{figure}
 \subsection{Unrolled Architecture (UA)}\label{subsec3}
 
-The unrolled architecture shown in Figure~\ref{fig4} includes two S-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
+The unrolled architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
 The unrolled architecture, which is based on the iterative architecture from the work of Beierle et al. \cite{Beierle2019}, completes the encryption process in only 16 cycles, compared to the 32 cycles needed by the iterative architecture. Here, a cycle includes two round functions of CRAFT. While this approach might use more area, it provides higher throughput at the same frequency.
 
@@ -456,7 +456,7 @@ The unrolled architecture, which is based on the iterative architecture from the
 \subsection{Iterative Architecture (IA)}\label{iterative_architecture}
 
 The architecture proposed by Bharathi et al. \cite{Bharathi2022} operates on a round-based architecture.
-It employs a single round function to encrypt a block, incorporating a S-Box, a Permute, and an Add-Key operation.
+It employs a single round function to encrypt a block, incorporating a Sub-Box, a Permute, and an Add-Key operation.
 This round function is executed 32 times to encrypt a single block. Simultaneously, the Key Schedule operates in parallel with the round function. This architecture is illustrated in Figure~\ref{fig5}.
 For comparison, different architectures are listed in Table~\ref{tab2}.
 
@@ -468,7 +468,7 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 
 \begin{table}[h]
     \centering
-    \caption{Different architectures description}\label{tab2}%
+    \caption{Description of Different Architectures}\label{tab2}%
     \begin{tabular}{|c|c|c|c|}
         \hline
         Architecture & Cipher  & Description & Reference           \\
@@ -551,7 +551,7 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
 
 
 \begin{table*}[h]
-    \caption{Area used for the three Architectures}\label{area_compare}%
+    \caption{Area Used in Three Architectures}\label{area_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
         \hline
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
@@ -573,7 +573,7 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
 
 \begin{table*}
     \begin{threeparttable}
-        \caption{Throughput results for the three Architectures}\label{throughput_compare}%
+        \caption{Throughput Results in Three Architectures}\label{throughput_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
             \hline
             Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
@@ -599,7 +599,7 @@ Table~\ref{area_compare} presents the area consumption of the designs, Table~\re
 
 \begin{table*}
     \begin{threeparttable}
-        \caption{Power and Energy consumption for the three Architectures}\label{power_energy_compare}%
+        \caption{Power and Energy Consumption in Three Architectures}\label{power_energy_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
             \hline
             Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $E/bit(nJ/bit)$ \\
@@ -630,7 +630,7 @@ Regarding the FF, the key schedule of the CRAFT cipher is implemented using mult
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{./fig/compare-ff.pdf}
-    \caption{Comparison of Flip-Flop in three Architectures}\label{compare_ff}
+    \caption{Comparison of Flip-Flop in Three Architectures}\label{compare_ff}
 \end{figure}
 
 As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed serial architecture require fewer LUTs than the iterative architecture of PRESENT. This is attributed to the fact that the proposed designs utilize a single S-Box, in contrast to the 16 S-Boxes used by the iterative architecture of PRESENT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 S-Boxes, compared to just one in the proposed designs.
@@ -638,7 +638,7 @@ As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed s
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{./fig/compare-lut.pdf}
-    \caption{Comparison of Look-Up Tables in three Architectures}\label{compare_lut}
+    \caption{Comparison of Look-Up Tables in Three Architectures}\label{compare_lut}
 \end{figure}
 
 The serial architecture has a lower Slices cost compared to the iterative architecture of PRESENT, thanks to the reduction in FF and LUT usage.
@@ -648,7 +648,7 @@ These results are illustrated in Figure~\ref{compare-slices}. However, the lower
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{./fig/compare-slices.pdf}
-    \caption{Comparison of Slices in three Architectures}\label{compare-slices}
+    \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
 \end{figure}
 
 Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of PRESENT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture reduces the latency to 16, which doubles the Throughput rate at 100MHz compared to the iterative architecture of PRESENT. This data is presented in Table~\ref{throughput_compare}.
@@ -656,7 +656,7 @@ Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{./fig/compare-maxf.pdf}
-    \caption{Comparison of Max Frequency in three Architectures}\label{compare-maxF}
+    \caption{Comparison of Max Frequency in Three Architectures}\label{compare-maxF}
 \end{figure}
 
 The serial architecture has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of PRESENT falls between that of the serial architecture and the unrolled architecture. Compared to the iterative architecture of PRESENT, the unrolled architecture reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
@@ -664,7 +664,7 @@ The serial architecture has the highest energy per bit due to its higher latency
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{./fig/compare-energy.pdf}
-    \caption{Comparison of Energy per bit in three Architectures}\label{compare-energy}
+    \caption{Comparison of Energy Per Bit in Three Architectures}\label{compare-energy}
 \end{figure}
 
 
