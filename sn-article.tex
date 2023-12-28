@@ -20,6 +20,7 @@
 \usepackage{threeparttable}%
 \usepackage{caption}
 \usepackage{url}
+\usepackage{tabularx}
 
 \captionsetup{font=normalsize}
 
@@ -75,7 +76,7 @@
         The proposed designs underwent evaluation on three distinct FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
         The results suggest that the low area design reduces area usage by 15.82\% compared to the PRESENT cipher.
         On the other hand, the unrolled design doubles the throughput rate at 100MHz and significantly reduces energy consumption per bit by 47.89\% compared to the PRESENT cipher.
-        To the best of our knowledge, the low area design sets a new area record on the FPGA configured with a 64-bit block and 128-bit key.
+        To the best of our knowledge, the low area design sets a new area record on the FPGA configured with a 64-bit block size and 128-bit key size.
         Therefore, the proposed designs could offer enhanced performance while maintaining security for IoT devices.
     \end{abstract}
 
@@ -98,7 +99,8 @@
 
 \section{Introduction}\label{sec1}
 
-The Internet of Things (IoT) is making rapid strides into various sectors such as smart health, smart homes, smart mobility, and smart cities. With this advancement, a growing number of security issues are emerging.
+The Internet of Things (IoT) is rapidly integrating into various aspects of everyday life.
+With this advancement, a growing number of security issues are emerging.
 These security concerns are extensively discussed in \cite{Meneghello2019a}.
 To ensure data protection, the cryptography techniques outlined in \cite{Swessi2022} are recommended.
 
@@ -134,17 +136,17 @@ The main contributions of this article are as follows.
 \end{itemize}
 
 
-The rest of this article is organized as follows: Section~\ref{sec2} details the specifications of CRAFT. The two proposed architectures for CRAFT are discussed in Section~\ref{sec3}. Section~\ref{sec4} outlines the experimental evaluation metrics and environment. Section~\ref{sec5} provides a detailed performance analysis of all the architectures. Finally, Section~\ref{sec6} provides a summary of the work done and discusses potential directions for future research.
+The remainder of this article unfolds as follows: Section~\ref{sec2} delves into the specifics of CRAFT. The duo of proposed architectures for CRAFT are explored in Section~\ref{sec3}. Section~\ref{sec4} lays out the metrics and environment used for experimental evaluation. An in-depth performance analysis of all the architectures is presented in Section~\ref{sec5}. Lastly, Section~\ref{sec6} encapsulates the work done and points towards potential avenues for future research.
 
 \section{Specification of CRAFT}\label{sec2}
 
-Table~\ref{tab1} outlines the main notations used throughout this paper.
-CRAFT is a lightweight tweakable block cipher constructed from involutory building blocks.
-It processes a 64-bit block and employs a 128-bit key, in addition to a 64-bit tweak.
-This means that a 64-bit plaintext input is converted into a 64-bit ciphertext output using a 128-bit key and a 64-bit tweak.
-The architecture of CRAFT is depicted in Figure~\ref{fig1}.
+CRAFT is a lightweight tweakable block cipher that operates on a 64-bit plaintext size, a 128-bit key size, and a 64-bit tweak size.
+It outputs a 64-bit ciphertext.
+The confusion and diffusion properties of CRAFT ensure that the distribution of probabilities between the plaintext and ciphertext is independent.
+For more details on CRAFT, refer to Figure~\ref{fig1} which depicts its architecture.
 The encryption process of CRAFT is outlined in Algorithm~\ref{alg1}.
-The decryption process mirrors the encryption process, with the only difference being that the round keys are applied in reverse order.
+The decryption process is similar to the encryption process, with the only difference being that the round keys are applied in reverse order.
+The main notations used throughout this paper are outlined in Table~\ref{tab1}.
 
 
 \begin{table}[h]
@@ -157,7 +159,7 @@ The decryption process mirrors the encryption process, with the only difference 
         $TK_i$   & tweakeys used in the $i^{th}$ round   \\
         $RC_i$   & round constant for the $i^{th}$ round \\
         $R_i$    & Function for the $i^{th}$ round       \\
-        $SB$     & Sub-Box                                 \\
+        $SB$     & Sub-Box                               \\
         $MC$     & Mix-Columns                           \\
         $PN$     & PermuteNibbles                        \\
         $PK$     & Permutation used in key schedule      \\
@@ -225,8 +227,8 @@ The PermuteNibbles operation, an involutory permutation, operates on 4-bit nibbl
     \label{key_schedule_eq}
 \end{equation}
 
-The Sub-Box operation, a nonlinear transformation, introduces confusion into the cipher. 
-This operation is performed using a 4-bit S-Box, as shown in Table~\ref{tab4}, with values represented in hexadecimal notation.
+The Sub-Box operation, a nonlinear transformation, introduces confusion into the cipher.
+This operation is performed using a 4-bit S-Box. The values are represented in hexadecimal notation, as shown in Table~\ref{tab4}.
 
 \begin{table}[h]
     \centering
@@ -261,14 +263,11 @@ For example, the quantity of S-Boxes is diminished from 16 to 1.
 The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption.
 
 The architecture, depicted in Figure~\ref{fig3}, comprises a single Sub-Box, a 4-bit Mix-columns, and two register banks.
-These banks, known as the Key-Register and the State-Register, store keys and plaintext, respectively.
+The Key-Register is used to store keys. The State-Register, on the other hand, is used to store plaintext.
 They also hold intermediate results temporarily.
 The design incorporates a feedback path to store intermediate results in the State-Register bank.
 Additionally, the PermuteNibbles function is integrated into the State-Register bank.
 
-It's important to note that the permute operation requires 64 bits.
-To allow for the reuse of the State-Register block, the order of execution for the S-Box and Permute operations is changed.
-Furthermore, The first round of the encryption process omits the Permute operation, controlled by a specific signal, to ensure the correct operation of the encryption algorithm.
 
 \begin{figure*}[h]%   
     \centering
@@ -280,11 +279,26 @@ Furthermore, The first round of the encryption process omits the Permute operati
 \subsubsection{S-Box Optimization }\label{subsubsec1}
 
 
-The S-Box is a crucial component of the encryption algorithm, adding to its complexity. However, it also demands a significant amount of area. There are several ways to implement the S-Box. One common method is to use a lookup table (LUT), a technique described by Lara-Nino et al. \cite{LaraNino2017}. This approach, while effective, requires many flip-flops, which can lead to a substantial increase in area consumption. An alternative method is to use the logical equivalent expression of the S-Box. This method, suggested by Bao et al. \cite{bao2019peigen} and Feng et al. \cite{Feng2023}, can help reduce area consumption.
+The S-Box is a crucial component of the encryption algorithm, adding to its complexity.
+However, it also demands a significant amount of area.
+There are several ways to implement the S-Box.
+One prevalent approach is to use a lookup table (LUT), a technique described by Lara-Nino et al. \cite{LaraNino2017}.
+This approach, while effective, requires many flip-flops, which can lead to a substantial increase in area consumption.
+An alternative method is to use the logical equivalent expression of the S-Box.
+This method, suggested by Bao et al. \cite{bao2019peigen} and Feng et al. \cite{Feng2023}, can help reduce area consumption.
 
-Boolean satisfiability (SAT) solvers can be used to find S-Boxes that meet specific implementation requirements, such as meet to certain software or hardware implementation requirements. To elaborate, the S-Box implementation can be encoded as Boolean constraints. This is done by representing the S-Box as a truth table and using Boolean variables to denote the input and output bits of the S-Box. The constraints are then formulated based on the desired properties of the S-Box. Once the S-Box properties are encoded as Boolean constraints, a SAT solver can find a satisfying assignment to these constraints. This assignment corresponds to an S-Box that fulfills the desired properties.
+Boolean satisfiability (SAT) solvers can be used to find S-Boxes that meet specific implementation requirements, such as meet to certain software or hardware implementation requirements.
+To elaborate, the S-Box implementation can be encoded as Boolean constraints.
+This is done by representing the S-Box as a truth table and using Boolean variables to denote the input and output bits of the S-Box.
+The constraints are then formulated based on the desired properties of the S-Box.
+Once the S-Box properties are encoded as Boolean constraints, these constraints can be satisfied by a SAT solver.
+This assignment corresponds to an S-Box that fulfills the desired properties.
 
-The Gate Equivalent Complexity (GEC) is a measure of the number of logical gates required to implement the Boolean formula that represents a SAT instance. To calculate the GEC, the Boolean formula is converted into a circuit of logical gates, such as AND, OR, and NOT gates. The total count of these gates in the circuit gives the GEC of the instance. In this design, the GEC encoding scheme from Feng et al. \cite{Feng2023} is optimized and used to implement the S-Box. The encoding scheme is detailed in Equations~\ref{eq1}:
+A measure of the number of logical gates required to implement the Boolean formula that represents a SAT instance is the Gate Equivalent Complexity (GEC).
+To calculate the GEC, the Boolean formula is converted into a circuit of logical gates, such as AND, OR, and NOT gates.
+The total count of these gates in the circuit gives the GEC of the instance.
+In this design, the GEC encoding scheme from Feng et al. \cite{Feng2023} is optimized and used to implement the S-Box.
+The encoding scheme is detailed in Equations~\ref{eq1}:
 
 
 
@@ -293,19 +307,19 @@ The Gate Equivalent Complexity (GEC) is a measure of the number of logical gates
 
 \begin{flalign}
     \forall i \in & \{0,1,\ldots ,K-1\}: \nonumber                                                                        \\
-    T_i =         & F_{if} (GT_i[0], \thicksim (Q_{4i} \cdot Q_{4i+1}) \cdot \thicksim Q_{4i+2} \cdot Q_{4i+3}) \nonumber \\
-                  & + F_{if} (GT_i[1], Q_{4i+2} \cdot (Q_{4i} + Q_{4i+1})) \nonumber                                      \\
-                  & + F_{if} (GT_i[2], Q_{4i} \cdot Q_{4i+1} \cdot Q_{4i+2})  \label{eq1}                                 \\
-                  & + F_{if} (GT_i[3], Q_{4i+2}) + F_{if} (GT_i[4], Q_{4i}) \nonumber                                     \\
-                  & + F_{if} (GT_i[5], Q_{4i} \cdot Q_{4i+1}) \nonumber                                                   \\
-                  & + F_{if} (GT_i[6], Q_{4i} + Q_{4i+1}) + F_{if} (GT_i[7], max) \nonumber
+    T_i =         & F_{if} (GT_i[0], \thicksim (X_{4i} \cdot X_{4i+1}) \cdot \thicksim X_{4i+2} \cdot X_{4i+3}) \nonumber \\
+                  & + F_{if} (GT_i[1], X_{4i+2} \cdot (X_{4i} + X_{4i+1})) \nonumber                                      \\
+                  & + F_{if} (GT_i[2], X_{4i} \cdot X_{4i+1} \cdot X_{4i+2})  \label{eq1}                                 \\
+                  & + F_{if} (GT_i[3], X_{4i+2}) + F_{if} (GT_i[4], X_{4i}) \nonumber                                     \\
+                  & + F_{if} (GT_i[5], X_{4i} \cdot X_{4i+1}) \nonumber                                                   \\
+                  & + F_{if} (GT_i[6], X_{4i} + X_{4i+1}) + F_{if} (GT_i[7], max) \nonumber
 \end{flalign}
 
 
 
-where $K$ is numbers of the logical gates, $Q_{4i}-Q_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
+where $K$ is numbers of the logical gates, $X_{4i}-X_{4i+3}$ is the input of the $i^{th}$ logical gate, $T_i$ is the output of the $i^{th}$ logical gate, and $F_{if}$ is a function that returns the value of the second argument if the first argument is true and returns the value of zero otherwise.
 The value of $max$ is all one's in the binary expression, which is represented logically as an inverse.
-$GT_i$ represents the type of the $i^{th}$ logical gate, which is a 8-bit binary number.
+$GT_i$ denotes the type of the $i^{th}$ logical gate, represented as an 8-bit binary number. The least significant bit of $GT_i$ is indexed at seven.
 Table~\ref{tab3} enumerates the various types of logical gates employed in this encoding scheme.
 
 
@@ -331,25 +345,25 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
     \caption{Encoding of different types of logical gates}\label{tab3}%
     \begin{tabular}{|c|c|c|}
         \hline
-        logical expression                                   & $GT_i$[0:7]     & gate type \\
+        logical expression                                   & $GT_i$ & gate type \\
         \hline
-        $Q_0 \oplus Q_1$                                     & 0 0 0 0 0 0 1 0 & XOR       \\
-        $\sim (Q_0 \oplus Q_1)$                              & 0 0 0 0 0 0 1 1 & XNOR      \\
-        $Q_0 \land Q_1$                                      & 0 0 0 0 0 1 0 0 & AND       \\
-        $\sim (Q_0 \land Q_1)$                               & 0 0 0 0 0 1 0 1 & NAND      \\
-        $Q_0 \lor Q_1$                                       & 0 0 0 0 0 1 1 0 & OR        \\
-        $\sim (Q_0 \lor Q_1)$                                & 0 0 0 0 0 1 1 1 & NOR       \\
-        $\sim Q_0$                                           & 0 0 0 0 1 0 0 1 & NOT       \\
-        $\sim Q_1$                                           & 0 0 0 0 1 0 1 1 & NOT       \\
-        $\sim Q_2$                                           & 0 0 0 1 0 0 0 1 & NOT       \\
-        $Q_0 \oplus Q_1 \oplus Q_2$                          & 0 0 0 1 0 0 1 0 & XOR3      \\
-        $\sim (Q_0 \oplus Q_1 \oplus Q_2)$                   & 0 0 0 1 0 0 1 1 & XNOR3     \\
-        $Q_0 \land Q_1 \land Q_2$                            & 0 0 1 0 0 0 0 0 & AND3      \\
-        $\sim (Q_0 \land Q_1 \land Q_2)$                     & 0 0 1 0 0 0 0 1 & NAND3     \\
-        $Q_0 \lor Q_1 \lor Q_2$                              & 0 1 1 1 0 1 1 0 & OR3       \\
-        $\sim (Q_0 \lor Q_1 \lor Q_2)$                       & 0 1 1 1 0 1 1 1 & NOR3      \\
-        $\sim ((Q_0 \land Q_1) \lor (\sim (Q_2 \lor Q_3)))$  & 1 0 1 1 0 0 0 0 & MAOI1     \\
-        $\sim (\sim (Q_0 \land Q_1) \land ((Q_2 \lor Q_3)))$ & 1 0 1 1 0 0 0 1 & MOAI1     \\
+        $X_0 \oplus X_1$                                     & 2      & XOR       \\
+        $\sim (X_0 \oplus X_1)$                              & 3      & XNOR      \\
+        $X_0 \land X_1$                                      & 4      & AND       \\
+        $\sim (X_0 \land X_1)$                               & 5      & NAND      \\
+        $X_0 \lor X_1$                                       & 6      & OR        \\
+        $\sim (X_0 \lor X_1)$                                & 7      & NOR       \\
+        $\sim X_0$                                           & 9      & NOT       \\
+        $\sim X_1$                                           & 11     & NOT       \\
+        $\sim X_2$                                           & 17     & NOT       \\
+        $X_0 \oplus X_1 \oplus X_2$                          & 18     & XOR3      \\
+        $\sim (X_0 \oplus X_1 \oplus X_2)$                   & 19     & XNOR3     \\
+        $X_0 \land X_1 \land X_2$                            & 32     & AND3      \\
+        $\sim (X_0 \land X_1 \land X_2)$                     & 33     & NAND3     \\
+        $X_0 \lor X_1 \lor X_2$                              & 118    & OR3       \\
+        $\sim (X_0 \lor X_1 \lor X_2)$                       & 119    & NOR3      \\
+        $\sim ((X_0 \land X_1) \lor (\sim (X_2 \lor X_3)))$  & 176    & MAOI1     \\
+        $\sim (\sim (X_0 \land X_1) \land ((X_2 \lor X_3)))$ & 177    & MOAI1     \\
         \hline
     \end{tabular}
 \end{table}
@@ -415,11 +429,14 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \subsubsection{Control Units}\label{subsubsec3}
 
-As depicted in Figure~\ref{serial_fsm_fig}, the finite-state machine (FSM) of the serial architecture initiates the encryption process by loading the initial key into the Key-Register and the plaintext into the State-Register.
+As depicted in Figure~\ref{serial_fsm_fig}, the finite-state machine (FSM) initiates the encryption process by loading the initial key into the Key-Register and the plaintext into the State-Register.
 During the Key-Schedule phase, the key is expanded while the gate clocks of the Mix-Columns and State-Register are turned off.
-Next, the Mix-Columns phase begins, where one column of the State-Register is stored in the Mix-Columns registers. This phase takes five clock cycles to execute the Mix-Columns operation on one column.
+Next, the Mix-Columns phase begins, where one column of the State-Register is stored in the Mix-Columns registers. 
+The Mix-Columns operation on one column takes five clock cycles to execute in this phase.
 Once this phase is finished, the gate clocks for the State-Register and Key-Register are turned off.
-Following this, the Sub-Box phase commences. During this phase, the data from the Mix-Columns registers is transferred back to the State-Register and XORed with the keys. This process requires an additional four clock cycles.
+Following this, the Sub-Box phase commences. 
+During this phase, the data from the Mix-Columns registers is transferred again to the State-Register and XORed with the keys.
+This process requires an additional four clock cycles.
 This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
 Subsequently, the Permute operation is carried out within the State-Register, requiring a single clock cycle.
 The encryption process concludes when the Round counter reaches 31, at which point the ciphertext is stored in the State-Register.
@@ -430,9 +447,9 @@ The encryption process concludes when the Round counter reaches 31, at which poi
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
-The dynamic power consumption of the encryption process can be mitigated through the use of clock gating, a technique discussed in the work of Shahbazi et al. \cite{Shahbazi2021}.
+In the work of Shahbazi et al. \cite{Shahbazi2021}, it is discussed that the dynamic power consumption of the encryption process can be mitigated through the use of clock gating.
 The clock gating technique is independently applied to the State-Register, Key-Register, and Mix-Columns.
-For instance, in the Key-Schedule phase, the gate clocks of the State-Register and Mix-Columns are disabled as these components are not in use.
+For instance, in the Permute phase, the gate clocks of the Key-Register and Mix-Columns are disabled as these components are not in use.
 This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} shows the timing diagram of a design that uses the clock gating technique.
 
 \begin{figure}[h]%   
@@ -484,11 +501,14 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 \section{Experimental Evaluation}\label{sec4}
 
 In ASIC implementations, the Gate Equivalent (GE) is often used to evaluate the area consumption of a design.
-One GE corresponds to the area of a two-input NAND gate. The area, in terms of GEs, is computed by dividing the total area (measured in $\mu m^2$) by the area of a two-input NAND gate (also measured in $\mu m^2$).
+One GE corresponds to the area of a two-input NAND gate. 
+The area is computed in terms of GEs. 
+This is done by dividing the total area (measured in $\mu m^2$) by the area of a two-input NAND gate (also measured in $\mu m^2$).
 However, the number of GEs can vary depending on the specific technology used, as Turan et al. discuss in their work \cite{Turan}.
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
 Therefore, GE is not suitable for comparing the area consumption of different designs on different technologies.
-To provide a fair comparison, the area consumption of the proposed designs is assessed using FPGA implementations, a technique similarly employed in the study by Mohajerani et al. \cite{Mohajerani2020}.
+For a fair comparison, the area consumption of the proposed designs is assessed using FPGA implementations.
+This is a technique similarly employed in the study by Mohajerani et al. \cite{Mohajerani2020}.
 
 \subsection{Platform}\label{subsec4}
 
@@ -501,7 +521,7 @@ Artix-7 offers high performance in resource-limited situations. Spartan-7 is des
 
 The area consumed by the proposed designs is quantified using the Area metric, which encompasses components such as Flip-Flops, LUTs, and Slices.
 For a balanced comparison, the embedded memory blocks of the FPGA were not utilized.
-This was achieved by disabling the relevant settings in the VHDL, as recommended in the UltraFast Design Methodology Guide for the Vivado Design Suite by Xilinx \cite{xilinx2022ultrafast}.
+This was achieved by disabling the relevant settings in the VHDL, as recommended in the design guidelines provided by Xilinx \cite{xilinx2022ultrafast}.
 Also, all designs were synthesized and implemented using the same settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
@@ -510,7 +530,7 @@ This metric uses three parameters: the maximum throughput rate, the throughput r
 The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\ref{eq4}.
 The throughput rate at 100MHz shows the rate achievable when the clock frequency is set to 100MHz, calculated using Equation~\ref{eq5}.
 The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices, as defined in Equation~\ref{eq6}.
-In these computations, the Plaintext Size is set to 64-bit. 
+In these computations, the Plaintext Size is set to 64-bit.
 Latency denotes the count of clock cycles needed to encrypt a single block, and Slices represent the quantity of Slices consumed by the design.
 \begin{equation}
     MaxThroughput(Thr) = \frac{MaxFrequency \times Block Size}{Latency}
@@ -547,7 +567,7 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 
 This section details the outcomes of the proposed designs, categorized into three aspects: area consumption, throughput performance, and power and energy metrics.
 The results are demonstrated across three different FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
-Table~\ref{area_compare} presents the area consumption of the designs, Table~\ref{throughput_compare} showcases the throughput results, and Table~\ref{power_energy_compare} provides the power and energy consumption details.
+The area consumption of the designs is presented in Table~\ref{area_compare}. The throughput results can be found in Table~\ref{throughput_compare}, and the details of power and energy consumption are provided in Table~\ref{power_energy_compare}.
 
 
 \begin{table*}[h]
@@ -641,7 +661,7 @@ As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed s
     \caption{Comparison of Look-Up Tables in Three Architectures}\label{compare_lut}
 \end{figure}
 
-The serial architecture has a lower Slices cost compared to the iterative architecture of PRESENT, thanks to the reduction in FF and LUT usage.
+Thanks to the reduction in Flip-Flop (FF) and Look-Up Table (LUT) usage, the serial architecture has fewer slices compared to the iterative architecture of PRESENT.
 In terms of Slices efficiency, Spartan-7 outperforms both Artix-7 and Kintex-7 platforms.
 These results are illustrated in Figure~\ref{compare-slices}. However, the lower Max Frequency of Spartan-7 will be considered in the Throughput comparison.
 
@@ -676,7 +696,8 @@ This research presents two unique designs for the CRAFT Lightweight cipher - Ser
 The Serial architecture reduces the area consumption by 15.72\% compared to the iterative architecture of PRESENT.
 The Unrolled architecture, on the other hand, reduces the latency to 16, effectively doubling the throughput rate at 100MHz compared to the iterative architecture of PRESENT.
 Additionally, the Unrolled architecture reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT.
-To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block and 128-bit key. These proposed architectures are therefore highly suitable for environments with IoT devices.
+To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block size and 128-bit key size. 
+These proposed architectures are therefore highly suitable for environments with IoT devices.
 
 Future work could involve investigating the application of these proposed architectures in real-world IoT devices and measuring their performance. Additionally, implementing these architectures on ASICs could further reduce area consumption.
 
