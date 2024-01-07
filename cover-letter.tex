@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage{charter} % Use the Charter font
+
+\usepackage[
+	a4paper, % Paper size
+	top=1in, % Top margin
+	bottom=1in, % Bottom margin
+	left=1in, % Left margin
+	right=1in, % Right margin
+	%showframe % Uncomment to show frames around the margins for debugging purposes
+]{geometry}
+
+\setlength{\parindent}{0pt} % Paragraph indentation
+\setlength{\parskip}{1em} % Vertical space between paragraphs
+
+\usepackage{graphicx} % Required for including images
+
+\usepackage{fancyhdr} % Required for customizing headers and footers
+
+\fancypagestyle{firstpage}{%
+	\fancyhf{} % Clear default headers/footers
+	\renewcommand{\headrulewidth}{0pt} % No header rule
+	\renewcommand{\footrulewidth}{1pt} % Footer rule thickness
+}
+
+\fancypagestyle{subsequentpages}{%
+	\fancyhf{} % Clear default headers/footers
+	\renewcommand{\headrulewidth}{1pt} % Header rule thickness
+	\renewcommand{\footrulewidth}{1pt} % Footer rule thickness
+}
+
+\AtBeginDocument{\thispagestyle{firstpage}} % Use the first page headers/footers style on the first page
+\pagestyle{subsequentpages} % Use the subsequent pages headers/footers style on subsequent pages
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	FIRST PAGE HEADER
+%----------------------------------------------------------------------------------------
+
+% \includegraphics[width=0.4\textwidth]{neu.png} % Logo
+
+% \vspace{-1em} % Pull the rule closer to the logo
+
+\rule{\linewidth}{1pt} % Horizontal rule
+
+\bigskip\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	YOUR NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\hfill
+\begin{tabular}{l @{}}
+\hfill \today \bigskip\\ % Date
+\hfill Lang Li \\
+\hfill Email: lilang911@126.com \\
+\hfill Hengyang, Hunan Province, China, 421002 \\ % Address
+\end{tabular}
+
+\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	ADDRESSEE AND GREETING
+%----------------------------------------------------------------------------------------
+
+% \begin{tabular}{@{} l}
+% 	[Title of Editor]\ [Name of Editor] \\
+% 	Editor-in-chief \\
+% 	\textit{Computers and Electrical Engineering}
+% \end{tabular}
+
+\bigskip % Vertical whitespace
+
+Dear Editor,
+
+\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	LETTER CONTENT
+%----------------------------------------------------------------------------------------
+
+I am writing to submit my manuscript titled "Efficient Implementations of CRAFT Cipher For Internet of Things" for consideration as a Research Paper in Computers and Electrical Engineering. All co-authors have read the manuscript and agreed to submit it in your journal.
+
+This manuscript delves into original research on lightweight cryptography's hardware implementation for Field Programmable Gate Arrays. It provides fresh insights into lightweight cryptography's application for Internet of Things devices. The study demonstrates efficiency surpassing the standard ISO/IEC 29192-2 for Information Security - Lightweight Cryptography. The findings, we believe, will captivate the readers of Computers and Electrical Engineering and propel the progress of Internet of Things Security.
+
+Our manuscript is written in accordance with the guidelines provided by Computers and Electrical Engineering. We have carefully checked the manuscript for grammar and spelling errors, and we have ensured that all necessary ethical approvals have been obtained and that all data and materials are available upon request.
+
+We are grateful for the opportunity to submit our work to Computers and Electrical Engineering, and we appreciate the time and effort that the editorial team and peer reviewers will invest in evaluating our manuscript. We are confident that our study will receive a fair and thorough review, and we are committed to working with the editorial team to address any concerns or suggestions for improvement.
+
+Thank you for reviewing our manuscript. If you require any further information or have any questions, please do not hesitate to contact us.
+
+\bigskip % Vertical whitespace
+
+Sincerely yours,
+
+\vspace{20pt} % Vertical whitespace
+
+
+Lang Li, Ph.D. candidate \\
+College of Computer Science and Engineering\\
+Hengyang Normal University, China \\
+
+
+\end{document}
+
+% To PIZZA, a famous fat-ass cat who lived in Dorm 12.
