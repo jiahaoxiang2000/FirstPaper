@@ -1,12 +1,12 @@
 \section{Response to Reviewer \#3}
 \subsection*{Overall Comments}
 \begin{mdframed}
-\begin{quote}
-	 Reviewer \# 3 - This work implemented the CRAFT block cipher with two architectures proposed, the Serial architecture and the Unrolled architecture. Then, the efficiency of the implementations is tested on three FPGA platforms. The implementations proposed in this paper are interesting for the practical applications of CRAFT in IoT.
-\end{quote}
+	\begin{quote}
+		Reviewer \# 3 - This work implemented the CRAFT block cipher with two architectures proposed, the Serial architecture and the Unrolled architecture. Then, the efficiency of the implementations is tested on three FPGA platforms. The implementations proposed in this paper are interesting for the practical applications of CRAFT in IoT.
+	\end{quote}
 \end{mdframed}
 
-\subsection{Response} 
+\subsection{Response}
 
 We sincerely appreciate the time and effort you've invested in reviewing our paper. Your valuable suggestions are greatly appreciated and will undoubtedly enhance the quality of our work. In the subsequent section, we will address each of your comments individually.
 
@@ -15,16 +15,27 @@ We sincerely appreciate the time and effort you've invested in reviewing our pap
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Reviewer Comment}
 \begin{mdframed}
-\begin{quote}
-	Reviewer \# 3.1 - First Comment here
-\end{quote}
+	\begin{quote}
+		Reviewer \# 3.1 - First Comment here
+	\end{quote}
 \end{mdframed}
 
-\subsection{Response} 
+\subsection{Response}
 Your Response here. We modified the introduction as
 
 \begin{quote}
-	``We further performed simulations in which the topology changes are based on the robots' proximity. Since performance was similar to the results presented here, we do not report the results.
+	1. The reference format should be consistent with equations, such as, 'as shown in Equation 1' $->$ 'as shown in Equation (1)'.
+
+	2. The description of IA is not necessary to occupy a single subsection (Subsection 3.3). It is better to move it to Preliminaries. Meanwhile, the comparison between the IA, SA, and UA is not sufficient.
+
+	3. The definitions of SA and UA are not explicit, especially the implementation under UA. It is necessary to highlight their innovativeness in relation to previous architectures.
+
+	4. Can CRAFT be implemented under the Iterative architecture? If so, do implementations under UA or SA still have advantages over IA? On the other hand, can UA or SA be applied to other ciphers, such as PRESENT, and bring efficiency improvements?
+
+	5. It is better to combine the Section 4 with Section 5 in my opinion.
+
+	6. The data in Figure 9-13 is also demonstrated in Table 5-7, one approach is enough to compare the results.
+
 \end{quote}
 
 \noindent\rule{\linewidth}{6.0pt}
