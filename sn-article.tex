@@ -43,7 +43,7 @@
     % \author[]{Jiahao Xiang}
     % \author[]{Lang Li\corref{cor1}}
     % \author[]{Xiantong Huang}
-    
+
     % \author[a,b]{Jiahao Xiang}
     % \ead{simple.xjh@qq.com}
 
@@ -112,17 +112,21 @@ However, the resource constraints of many IoT devices pose challenges for the im
 
 The field of lightweight cryptography has received considerable attention in recent years. Examples of this include PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022}, IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023}, and LELBC \cite{Song2024}. More ciphers can be found in \cite{Zakaria2023}. \textcolor{blue}{Concurrently, there has been significant research into side channel attacks on lightweight ciphers. This research can provide valuable insights into the physical security of IoT devices.}
 
-\textcolor{blue}{Differential fault analysis, a type of side channel attack, was first proposed by \cite{Biham1997} and further discussed in \cite{Kermani}. To counter these fault attacks, various schemes have been proposed. For instance, \cite{Kermani2019} proposed a fault diagnosis scheme, while \cite{Kaur2024} introduced an error detection scheme. Additionally, \cite{CintasCanto2022} and \cite{Canto2023} have suggested error detection methods specifically for Post-Quantum Cryptography.}
+\textcolor{blue}{Differential fault analysis, a type of side channel attack, was first proposed by \cite{Biham1997} and further discussed in \cite{Kermani}. To counter these fault attacks, various schemes have been proposed. For instance, \cite{Kermani2019} proposed a fault diagnosis scheme, while \cite{Kaur2024} introduced an error detection scheme. Additionally, \cite{CintasCanto2022} and \cite{Canto2023} have suggested error detection methods specifically for Post-Quantum Cryptography. This method does add additional hardware to the cipher system. The CRAFT cipher, during its design phase, was considered to be resistant to fault attacks. Despite this, it lacks efficient implementations. For it to be used in more constrained environments, more efficient implementations are needed.}
 
 
 Efficient implementation allows lightweight ciphers to be used in various settings.
 A hardware implementation can enhance the performance of these ciphers in resource-limited environments.
-Several researchers have proposed different architectures and optimizations for various ciphers.
-Lara-Nino et al. \cite{LaraNino2017} introduced a 16-bit datapath architecture for the PRESENT cipher, reducing both the area and power consumption.
-Pandey et al. \cite{Pandey2019} suggested an optimized key schedule of PRESENT, which resulted in a smaller area.
-Shahbazi et al. \cite{Shahbazi2021} proposed an 8-bit serial architecture for AES, also reducing the area and power consumption.
-Li et al. \cite{Li2021} presented unrolled architectures and a low-cost architecture for PRINCE, separately optimizing the throughput and area.
-Bharathi et al. \cite{Bharathi2022} enhanced the performance of the PRESENT cipher by expanding the key length.
+Several researchers have proposed optimized architectures for various ciphers.
+Lara-Nino et al. \cite{LaraNino2017} introduced a 16-bit datapath architecture for the PRESENT cipher, which resulted in reduced area and power consumption. 
+Similarly, Pandey et al. \cite{Pandey2019} suggested an optimized key schedule for the same cipher, leading to a smaller area.
+\color{blue}
+In the context of other ciphers, Bisheh Niasar et al. \cite{BishehNiasar2020} proposed a design for Curve448. 
+Shahbazi et al. \cite{Shahbazi2021} put forth an 8-bit serial architecture for AES, which also reduces area and power consumption. 
+Li et al. \cite{Li2021} presented unrolled architectures and a low-cost architecture for PRINCE, optimizing both throughput and area separately. 
+Cintas Canto et al. \cite{CintasCanto2023} discussed finite field multipliers using cyclic codes, a technique that can be optimized as all ciphers need finite field multipliers.
+\color{black}
+Further enhancements have been made by Bharathi et al. \cite{Bharathi2022}, who improved the performance of the PRESENT cipher by expanding the key length. 
 Lastly, Yang et al. \cite{Yang2023} shared components in the cipher process for LILLIPUT, resulting in a smaller area.
 
 
@@ -438,10 +442,10 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 As depicted in Figure~\ref{serial_fsm_fig}, the finite-state machine (FSM) initiates the encryption process by loading the initial key into the Key-Register and the plaintext into the State-Register.
 During the Key-Schedule phase, the key is expanded while the gate clocks of the Mix-Columns and State-Register are turned off.
-Next, the Mix-Columns phase begins, where one column of the State-Register is stored in the Mix-Columns registers. 
+Next, the Mix-Columns phase begins, where one column of the State-Register is stored in the Mix-Columns registers.
 The Mix-Columns operation on one column takes five clock cycles to execute in this phase.
 Once this phase is finished, the gate clocks for the State-Register and Key-Register are turned off.
-Following this, the Sub-Box phase commences. 
+Following this, the Sub-Box phase commences.
 During this phase, the data from the Mix-Columns registers is transferred again to the State-Register and XORed with the keys.
 This process requires an additional four clock cycles.
 This cycle between the Mix-Columns and Sub-Box phases is repeated four times for the four columns of the State-Register.
@@ -508,8 +512,8 @@ For comparison, different architectures are listed in Table~\ref{tab2}.
 \section{Experimental Evaluation}\label{sec4}
 
 In ASIC implementations, the Gate Equivalent (GE) is often used to evaluate the area consumption of a design.
-One GE corresponds to the area of a two-input NAND gate. 
-The area is computed in terms of GEs. 
+One GE corresponds to the area of a two-input NAND gate.
+The area is computed in terms of GEs.
 This is done by dividing the total area (measured in $\mu m^2$) by the area of a two-input NAND gate (also measured in $\mu m^2$).
 However, the number of GEs can vary depending on the specific technology used, as Turan et al. discuss in their work \cite{Turan}.
 For instance, the number of GEs for the same design will differ between UMC 180nm technology and TSMC 180nm technology.
@@ -703,7 +707,7 @@ This research presents two unique designs for the CRAFT Lightweight cipher - Ser
 The Serial architecture reduces the area consumption by 15.72\% compared to the iterative architecture of PRESENT.
 The Unrolled architecture, on the other hand, reduces the latency to 16, effectively doubling the throughput rate at 100MHz compared to the iterative architecture of PRESENT.
 Additionally, the Unrolled architecture reduces energy per bit by 47.89\% compared to the iterative architecture of PRESENT.
-To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block size and 128-bit key size. 
+To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block size and 128-bit key size.
 These proposed architectures are therefore highly suitable for environments with IoT devices.
 
 Future work could involve investigating the application of these proposed architectures in real-world IoT devices and measuring their performance. Additionally, implementing these architectures on ASICs could further reduce area consumption.
