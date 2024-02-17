@@ -39,7 +39,7 @@ todo for Response to Reviewer \# 3.2
 
 1. remove subsection 3.3 IA ?
 
-2. add the discussion of the comparison between the IA, SA, and UA on discussion section 
+2. add the discussion of the comparison between the IA, SA, and UA on discussion section
 
 \noindent\rule{\linewidth}{2.0pt}
 
@@ -52,9 +52,13 @@ todo for Response to Reviewer \# 3.2
 
 \subsection{Response}
 
-todo for Response to Reviewer \# 3.3
+We appreciate your suggestion. To clarify, we have added the definitions of SA and UA in the headers of Subsections 3.1 and 3.2, respectively. Additionally, we have emphasized their innovative aspects compared to the architectures proposed in the original CRAFT article. The details are as follows:
 
-in the 3.1 and 3.2 header, we will add the definition of SA and UA, and highlight their innovativeness in relation to previous architectures.
+\color{blue}
+The purpose of the serial architecture is to reduce the datapath, which represents the number of bits dealt with in one cycle. For instance, the CRAFT cipher has a 64-bit block size, meaning it can process 64-bit data in one cycle when using the iterative architecture. In contrast, the serial architecture reduces the datapath from 64-bit to 4-bit, meaning it can only process 4-bit data in one cycle. Despite this limitation, serial architectures can significantly reduce area usage by reusing components, making them a viable alternative to iterative architectures.
+
+The unrolled architecture allows for the execution of more than one round function in a single cycle. In contrast, the iterative architecture of the CRAFT cipher only runs one round function per cycle. This approach can significantly reduce the latency of the encryption process. It does this by reducing the number of cycles needed to encrypt one block size plaintext, thereby improving the throughput rate.
+\color{black}
 
 \noindent\rule{\linewidth}{2.0pt}
 

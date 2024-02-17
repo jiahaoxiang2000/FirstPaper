@@ -264,7 +264,7 @@ For the first time, the components of CRAFT have been optimized to achieve effic
 
 
 \subsection{Serial Architecture (SA)}\label{subsec2}
-Compared to round-based architectures, serial architectures can significantly reduce area usage by reusing components.
+\textcolor{blue}{The purpose of the serial architecture is to reduce the datapath, which represents the number of bits dealt with in one cycle. For instance, the CRAFT cipher has a 64-bit block size, meaning it can process 64-bit data in one cycle when using the iterative architecture. In contrast, the serial architecture reduces the datapath from 64-bit to 4-bit, meaning it can only process 4-bit data in one cycle. Despite this limitation, serial architectures can significantly reduce area usage by reusing components, making them a viable alternative to iterative architectures.}
 For example, the quantity of S-Boxes is diminished from 16 to 1.
 The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption.
 
@@ -464,6 +464,8 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 \subsection{Unrolled Architecture (UA)}\label{subsec3}
+
+\textcolor{blue}{The unrolled architecture allows for the execution of more than one round function in a single cycle. In contrast, the iterative architecture of the CRAFT cipher only runs one round function per cycle. This approach can significantly reduce the latency of the encryption process. It does this by reducing the number of cycles needed to encrypt one block size plaintext, thereby improving the throughput rate.}
 
 The unrolled architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
