@@ -112,20 +112,15 @@ However, the resource constraints of many IoT devices pose challenges for the im
 
 The field of lightweight cryptography has received considerable attention in recent years. Examples of this include PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022}, IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023}, and LELBC \cite{Song2024}. More ciphers can be found in \cite{Zakaria2023}. \textcolor{blue}{Concurrently, there has been significant research into side channel attacks on lightweight ciphers. This research can provide valuable insights into the physical security of IoT devices.}
 
-\textcolor{blue}{Differential fault analysis, a type of side channel attack, was first proposed by \cite{Biham1997} and further discussed in \cite{Kermani}. To counter these fault attacks, various schemes have been proposed. For instance, \cite{Kermani2019} proposed a fault diagnosis scheme, while \cite{Kaur2024} introduced an error detection scheme. Additionally, \cite{CintasCanto2022} and \cite{Canto2023} have suggested error detection methods specifically for Post-Quantum Cryptography. This method does add additional hardware to the cipher system. The CRAFT cipher, during its design phase, was considered to be resistant to fault attacks. Despite this, it lacks efficient implementations. For it to be used in more constrained environments, more efficient implementations are needed.}
-
+\textcolor{blue}{Differential fault analysis, which is a type of side channel attack, was first introduced by \cite{Biham1997}. This concept was later elaborated in more detail by \cite{Kermani}. In response to these fault attacks, several countermeasures have been suggested. For example, \cite{Kaur2024} introduced a scheme for error detection. In the realm of Post-Quantum Cryptography, \cite{Canto2023} proposed specific error detection methods. It's important to note that these methods do increase the hardware consumption of the cipher system. The CRAFT cipher was designed with resistance to fault attacks in mind. However, it currently lacks efficient implementations. To make it suitable for use in more constrained environments, development of more efficient implementations is necessary.}
 
 Efficient implementation allows lightweight ciphers to be used in various settings.
 A hardware implementation can enhance the performance of these ciphers in resource-limited environments.
 Several researchers have proposed optimized architectures for various ciphers.
 Lara-Nino et al. \cite{LaraNino2017} introduced a 16-bit datapath architecture for the PRESENT cipher, which resulted in reduced area and power consumption. 
 Similarly, Pandey et al. \cite{Pandey2019} suggested an optimized key schedule for the same cipher, leading to a smaller area.
-\color{blue}
-In the context of other ciphers, Bisheh Niasar et al. \cite{BishehNiasar2020} proposed a design for Curve448. 
 Shahbazi et al. \cite{Shahbazi2021} put forth an 8-bit serial architecture for AES, which also reduces area and power consumption. 
 Li et al. \cite{Li2021} presented unrolled architectures and a low-cost architecture for PRINCE, optimizing both throughput and area separately. 
-Cintas Canto et al. \cite{CintasCanto2023} discussed finite field multipliers using cyclic codes, a technique that can be optimized as all ciphers need finite field multipliers.
-\color{black}
 Further enhancements have been made by Bharathi et al. \cite{Bharathi2022}, who improved the performance of the PRESENT cipher by expanding the key length. 
 Lastly, Yang et al. \cite{Yang2023} shared components in the cipher process for LILLIPUT, resulting in a smaller area.
 
