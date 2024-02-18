@@ -35,11 +35,17 @@ Thank you for your suggestion. We have revised the manuscript to ensure that the
 
 \subsection{Response}
 
-todo for Response to Reviewer \# 3.2
+We appreciate your expert suggestions. We remove the subsection 3.3 IA and remove it to the Preliminaries (Section 2). We also add the discussion of the comparison between the IA, SA, and UA on the discussion section. The details are as follows:
 
-1. remove subsection 3.3 IA ?
+\color{blue}
+This section discusses the performance of three different architectures of CRAFT: the serial architecture, the unrolled architecture, and the iterative architecture. These architectures are compared and analyzed to determine which one is best suited for different environments.
 
-2. add the discussion of the comparison between the IA, SA, and UA on discussion section
+The serial architecture of CRAFT is designed to minimize area consumption. It has the lowest area consumption among the three architectures, which results in it having the lowest dynamic power. Additionally, it boasts the highest frequency among the three architectures. However, it has a high latency, leading to the lowest maximum throughput among the three architectures. The serial architecture is suitable for resource-limited environments where high throughput is not a requirement.
+
+The unrolled architecture of CRAFT aims to maximize throughput. It boasts the lowest latency among the three architectures, which contributes to its highest maximum throughput, despite having the lowest maximum frequency. This architecture is also energy-efficient, offering the lowest energy per bit among the three architectures. However, it does have the highest area consumption. The unrolled architecture is best suited for environments where high throughput and low energy are priorities, and low area is not a requirement.
+
+The iterative architecture of CRAFT is designed to strike a balance between area consumption and throughput. While it doesn't have the lowest area consumption, the highest frequency, the lowest latency, the highest maximum throughput, or the lowest energy per bit among the three architectures, it does have the highest throughput per slice. The iterative architecture is suitable for environments where moderate throughput is required at the lowest possible area cost.
+\color{black}
 
 \noindent\rule{\linewidth}{2.0pt}
 
