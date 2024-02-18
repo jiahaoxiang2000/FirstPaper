@@ -117,11 +117,11 @@ The field of lightweight cryptography has received considerable attention in rec
 Efficient implementation allows lightweight ciphers to be used in various settings.
 A hardware implementation can enhance the performance of these ciphers in resource-limited environments.
 Several researchers have proposed optimized architectures for various ciphers.
-Lara-Nino et al. \cite{LaraNino2017} introduced a 16-bit datapath architecture for the PRESENT cipher, which resulted in reduced area and power consumption. 
+Lara-Nino et al. \cite{LaraNino2017} introduced a 16-bit datapath architecture for the PRESENT cipher, which resulted in reduced area and power consumption.
 Similarly, Pandey et al. \cite{Pandey2019} suggested an optimized key schedule for the same cipher, leading to a smaller area.
-Shahbazi et al. \cite{Shahbazi2021} put forth an 8-bit serial architecture for AES, which also reduces area and power consumption. 
-Li et al. \cite{Li2021} presented unrolled architectures and a low-cost architecture for PRINCE, optimizing both throughput and area separately. 
-Further enhancements have been made by Bharathi et al. \cite{Bharathi2022}, who improved the performance of the PRESENT cipher by expanding the key length. 
+Shahbazi et al. \cite{Shahbazi2021} put forth an 8-bit serial architecture for AES, which also reduces area and power consumption.
+Li et al. \cite{Li2021} presented unrolled architectures and a low-cost architecture for PRINCE, optimizing both throughput and area separately.
+Further enhancements have been made by Bharathi et al. \cite{Bharathi2022}, who improved the performance of the PRESENT cipher by expanding the key length.
 Lastly, Yang et al. \cite{Yang2023} shared components in the cipher process for LILLIPUT, resulting in a smaller area.
 
 
@@ -579,6 +579,7 @@ The area consumption of the designs is presented in Table~\ref{area_compare}. Th
 
 
 \begin{table*}[h]
+    \color{blue}
     \caption{Area Used in Three Architectures}\label{area_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
         \hline
@@ -586,20 +587,21 @@ The area consumption of the designs is presented in Table~\ref{area_compare}. Th
         \hline
         \multirow{3}{*}{Artix-7}  & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
         & UA & 64 & 128 & 157 & 378 & 111 \\
-        & IA & 64 & 128 & 201 & 243 & 70 \\
+        & IA & 64 & 128 & 159 & 201 & 65 \\
         \hline
         \multirow{3}{*}{Kintex-7} & SA & 64 & 128 & \textbf{144} & \textbf{178} & \textbf{58}\\
         & UA & 64 & 128 & 157 & 377 & 115 \\
-        & IA & 64 & 128 & 201 & 244 & 68 \\
+        & IA & 64 & 128 & 159 & 205 & 66 \\
         \hline
         \multirow{3}{*}{Spartan-7} & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
         & UA & 64 & 128 & 157 & 381 & 118 \\
-        & IA & 64 & 128 & 201 & 244 & 70 \\
+        & IA & 64 & 128 & 158 & 200 & 64 \\
         \hline
     \end{tabular*}
 \end{table*}
 
 \begin{table*}
+    \color{blue}
     \begin{threeparttable}
         \caption{Throughput Results in Three Architectures}\label{throughput_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
@@ -607,16 +609,16 @@ The area consumption of the designs is presented in Table~\ref{area_compare}. Th
             Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
             \hline
             \multirow{3}{*}{Artix-7}  & SA & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
-            & UA & \textbf{16} & 142.38 & 569.52 & \textbf{400.00} & 5130.81 \\
-            & IA & 32 & 274.04 & 548.08 & 200.00 & 7829.71 \\
+            & UA & \textbf{16} & 142.38 & \textbf{569.52} & 400.00 & 5130.81 \\
+            & IA & 32 & 202.63 & 405.26 & 200.00 & \textbf{6234.77} \\
             \hline
             \multirow{3}{*}{Kintex-7} & SA & 1215 & \textbf{853.97} & 44.98 & 5.27 & 775.57 \\
-            & UA & \textbf{16} & 175.25 & 701.00 & \textbf{400.00} & 6095.65 \\
-            & IA & 32 & 357.78 & 715.56 & 200.00 & 10522.94 \\
+            & UA & \textbf{16} & 175.25 & \textbf{701.00} & 400.00 & 6095.65 \\
+            & IA & 32 & 301.38 & 602.76 & 200.00 & \textbf{9132.73} \\
             \hline
             \multirow{3}{*}{Spartan-7} & SA & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
-            & UA & \textbf{16} & 138.86 & 555.44 & \textbf{400.00} & 4707.12 \\
-            & IA & 32 & 296.29 & 592.58 & 200.00 & 8465.43 \\
+            & UA & \textbf{16} & 138.86 & \textbf{555.44} & 400.00 & 4707.12 \\
+            & IA & 32 & 186.98 & 373.96 & 200.00 & \textbf{5843.13} \\
             \hline
         \end{tabular*}
         \begin{tablenotes}
@@ -626,6 +628,7 @@ The area consumption of the designs is presented in Table~\ref{area_compare}. Th
 \end{table*}
 
 \begin{table*}
+    \color{blue}
     \begin{threeparttable}
         \caption{Power and Energy Consumption in Three Architectures}\label{power_energy_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
@@ -634,7 +637,7 @@ The area consumption of the designs is presented in Table~\ref{area_compare}. Th
             \hline
             \multirow{3}{*}{Artix-7}  & SA & 2.00 & 139.00 & 141.00 & 1.71 & 26.77 \\
             & UA & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
-            & IA & 2.00 & 139.00 & 141.00 & 0.05 & 0.71 \\
+            & IA & 3.00 & 139.00 & 142.00 & 0.05 & 0.71 \\
             \hline
             \multirow{3}{*}{Kintex-7} & SA & 2.00 & 145.00 & 147.00 & 1.79 & 27.91 \\
             & UA & 8.00 & 145.00 & 153.00 & \textbf{0.02} & \textbf{0.38} \\
