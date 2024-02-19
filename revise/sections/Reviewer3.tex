@@ -77,11 +77,16 @@ The unrolled architecture allows for the execution of more than one round functi
 
 \subsection{Response}
 
-todo for Response to Reviewer \# 3.4, it want a fair compare, give it a reason.
+We appreciate your insightful questions and have addressed them individually. 
 
-logic answer:
+1. Regarding the implementation of CRAFT under the Iterative architecture: The Iterative architecture can indeed be implemented under the CRAFT cipher as proposed by the original CRAFT paper. However, it does not provide performance data on FPGA platforms. We have added the Iterative architecture to our experiment results and compared it with the SA and UA.
 
-The CRAFT can be implemented under the Iterative architecture, but the UA and SA still have advantages over IA. The UA and SA can also be applied to other ciphers, such as PRESENT, to bring efficiency improvements. However, since different ciphers have different linear and non-linear operations, enabling the new components to work together poses a challenge under a common strategy.
+2. On the advantages of the SA and UA over the IA on the CRAFT cipher: The SA and UA still maintain advantages over the IA on the CRAFT cipher.
+
+3. On whether SA and UA can be applied to other ciphers, such as PRESENT, for efficiency improvements: Yes, the SA and UA can be applied to the PRESENT cipher to enhance efficiency. The challenge lies in implementing the architecture within the cipher. For instance, we optimized the Mix-Columns component of CRAFT for the SA, but PRESENT does not have this component. This means the same method cannot be used for PRESENT with the SA. The task ahead of us is to determine how to make the new component of the cipher work with the SA or UA. This includes the non-linear component (e.g., S-box) and the linear component (e.g., Mix-Columns, PermuteNibbles).
+
+We apologize for any misunderstanding. We have conducted a fair comparison of the three architectures on the CRAFT cipher and updated the online repository on GitHub. We have also added a discussion of the comparison between the IA, SA, and UA in the new Section 5: Discussion. We hope this response is satisfactory.
+
 
 \noindent\rule{\linewidth}{2.0pt}
 
@@ -109,4 +114,4 @@ Thank you for your suggestion. To enhance the readability of the manuscript, we 
 
 We appreciate your suggestion. While the data from Figures 9-13 is also presented in Tables 5-7, we believe that the graphical representation in the figures provides a more intuitive understanding. Therefore, we have decided to retain both the figures and the tables in our manuscript.
 
-\noindent\rule{\linewidth}{6.0pt}
+% \noindent\rule{\linewidth}{6.0pt}
