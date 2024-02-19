@@ -79,7 +79,7 @@
         Additionally, Boolean satisfiability (SAT) solvers are employed to identify a lower-cost area implementation of the S-Box.
         The proposed designs underwent evaluation on three distinct FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
         \textcolor{blue}{
-        The results show that the low area design reduces area usage by 10.16\% compared to the previous design. Additionally, the S-Box implementation achieves a significant area reduction of 28.9\%. On the other hand, the unrolled design enhances the maximum throughput by 40.53\% compared to the previous design.}
+            The results show that the low area design reduces area usage by 10.16\% compared to the previous design. Additionally, the S-Box implementation achieves a significant area reduction of 28.9\%. On the other hand, the unrolled design enhances the maximum throughput by 40.53\% compared to the previous design.}
         To the best of our knowledge, the low area design sets a new area record on the FPGA configured with a 64-bit block size and 128-bit key size.
         Therefore, the proposed designs could offer enhanced performance while maintaining security for IoT devices.
     \end{abstract}
@@ -716,12 +716,15 @@ Given the diverse performance requirements arising from the use of IoT devices i
 
 This research presents two unique designs for the CRAFT Lightweight cipher - Serial and Unrolled - both aimed at boosting performance.
 \textcolor{blue}{
-The Serial architecture reduces the area consumption by 10.16\% compared to the iterative architecture of CRAFT.
-The Unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz compared to the iterative architecture of CRAFT, resulting in a 40.53\% improvement in maximum throughput. Furthermore, the Unrolled architecture also reduces the energy per bit by 47.89\% when compared to the iterative architecture of CRAFT.}
+    The Serial architecture reduces the area consumption by 10.16\% compared to the iterative architecture of CRAFT.
+    The Unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz compared to the iterative architecture of CRAFT, resulting in a 40.53\% improvement in maximum throughput. Furthermore, the Unrolled architecture also reduces the energy per bit by 47.89\% when compared to the iterative architecture of CRAFT.}
 To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block size and 128-bit key size.
 These proposed architectures are therefore highly suitable for environments with IoT devices.
 
-Future work could involve investigating the application of these proposed architectures in real-world IoT devices and measuring their performance. Additionally, implementing these architectures on ASICs could further reduce area consumption.
+\textcolor{blue}{
+Future work could extend the proposed architectures to other lightweight ciphers and examine their performance. Additionally, these lightweight ciphers could be implemented in a way that makes them resistant to side channel attacks.
+}
+
 
 \bibliographystyle{elsarticle-num}
 \bibliography{bibliography}
