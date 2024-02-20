@@ -2,26 +2,26 @@
 \subsection*{Overall Comments}
 This work implemented the CRAFT block cipher with two architectures proposed, the Serial architecture and the Unrolled architecture. Then, the efficiency of the implementations is tested on three FPGA platforms. The implementations proposed in this paper are interesting for the practical applications of CRAFT in IoT.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 We sincerely appreciate the time and effort you've invested in reviewing our paper. Your valuable suggestions are greatly appreciated and will undoubtedly enhance the quality of our work. In the subsequent section, we will address each of your comments individually.
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 1. The reference format should be consistent with equations, such as, 'as shown in Equation 1' $->$ 'as shown in Equation (1)'.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 We have revised the manuscript to ensure that the reference format is consistent with the equations.
 
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 2. The description of IA is not necessary to occupy a single subsection (Subsection 3.3). It is better to move it to Preliminaries. Meanwhile, the comparison between the IA, SA, and UA is not sufficient.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 We remove the subsection 3.3 IA and remove it to the Preliminaries (Section 2). We also add the discussion of the comparison between the IA, SA, and UA on the discussion section. The details are as follows:
 
@@ -35,12 +35,12 @@ The unrolled architecture of CRAFT aims to maximize throughput. It boasts the lo
 The iterative architecture of CRAFT is designed to strike a balance between area consumption and throughput. While it doesn't have the lowest area consumption, the highest frequency, the lowest latency, the highest maximum throughput, or the lowest energy per bit among the three architectures, it does have the highest throughput per slice. The iterative architecture is suitable for environments where moderate throughput is required at the lowest possible area cost.
 \color{black}
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 3. The definitions of SA and UA are not explicit, especially the implementation under UA. It is necessary to highlight their innovativeness in relation to previous architectures.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 To clarify, we have added the definitions of SA and UA in the headers of Subsections 3.1 and 3.2, respectively. Additionally, we have emphasized their innovative aspects compared to the architectures proposed in the original CRAFT article. The details are as follows:
 
@@ -50,12 +50,12 @@ The purpose of the serial architecture is to reduce the datapath, which represen
 The unrolled architecture allows for the execution of more than one round function in a single cycle. In contrast, the iterative architecture of the CRAFT cipher only runs one round function per cycle. This approach can significantly reduce the latency of the encryption process. It does this by reducing the number of cycles needed to encrypt one block size plaintext, thereby improving the throughput rate.
 \color{black}
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 4. Can CRAFT be implemented under the Iterative architecture? If so, do implementations under UA or SA still have advantages over IA? On the other hand, can UA or SA be applied to other ciphers, such as PRESENT, and bring efficiency improvements?
 
-\subsection{Response}
+\subsection{Authors Response}
 
 We have addressed them individually. 
 
@@ -68,21 +68,21 @@ We have addressed them individually.
 We apologize for any misunderstanding. We have conducted a fair comparison of the three architectures on the CRAFT cipher and updated the online repository on GitHub. We have also added a discussion of the comparison between the IA, SA, and UA in the new Section 5: Discussion. We hope this response is satisfactory.
 
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 5. It is better to combine the Section 4 with Section 5 in my opinion.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 To enhance the readability of the manuscript, we have merged Sections 4 and 5 into a new Section 4 titled "Experiment Results". The previous Section 5 has been transformed into Subsection 4.5.
 
-\noindent\rule{\linewidth}{2.0pt}
+
 
 \subsection{Reviewer Comment}
 6. The data in Figure 9-13 is also demonstrated in Table 5-7, one approach is enough to compare the results.
 
-\subsection{Response}
+\subsection{Authors Response}
 
 The data from Figures 9-13 is also presented in Tables 5-7. The graphical representation in the figures is considered to provide an intuitive understanding. As a result, both the figures and tables are retained in the manuscript.
 
