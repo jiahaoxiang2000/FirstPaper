@@ -1,10 +1,6 @@
 \section{Response to Reviewer \#3}
 \subsection*{Overall Comments}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3 - This work implemented the CRAFT block cipher with two architectures proposed, the Serial architecture and the Unrolled architecture. Then, the efficiency of the implementations is tested on three FPGA platforms. The implementations proposed in this paper are interesting for the practical applications of CRAFT in IoT.
-	\end{quote}
-\end{mdframed}
+This work implemented the CRAFT block cipher with two architectures proposed, the Serial architecture and the Unrolled architecture. Then, the efficiency of the implementations is tested on three FPGA platforms. The implementations proposed in this paper are interesting for the practical applications of CRAFT in IoT.
 
 \subsection{Response}
 
@@ -13,29 +9,21 @@ We sincerely appreciate the time and effort you've invested in reviewing our pap
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.1 - The reference format should be consistent with equations, such as, 'as shown in Equation 1' $->$ 'as shown in Equation (1)'.
-	\end{quote}
-\end{mdframed}
+1. The reference format should be consistent with equations, such as, 'as shown in Equation 1' $->$ 'as shown in Equation (1)'.
 
 \subsection{Response}
 
-Thank you for your suggestion. We have revised the manuscript to ensure that the reference format is consistent with the equations.
+We have revised the manuscript to ensure that the reference format is consistent with the equations.
 
 
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.2 - The description of IA is not necessary to occupy a single subsection (Subsection 3.3). It is better to move it to Preliminaries. Meanwhile, the comparison between the IA, SA, and UA is not sufficient.
-	\end{quote}
-\end{mdframed}
+2. The description of IA is not necessary to occupy a single subsection (Subsection 3.3). It is better to move it to Preliminaries. Meanwhile, the comparison between the IA, SA, and UA is not sufficient.
 
 \subsection{Response}
 
-We appreciate your expert suggestions. We remove the subsection 3.3 IA and remove it to the Preliminaries (Section 2). We also add the discussion of the comparison between the IA, SA, and UA on the discussion section. The details are as follows:
+We remove the subsection 3.3 IA and remove it to the Preliminaries (Section 2). We also add the discussion of the comparison between the IA, SA, and UA on the discussion section. The details are as follows:
 
 \color{blue}
 This section discusses the performance of three different architectures of CRAFT: the serial architecture, the unrolled architecture, and the iterative architecture. These architectures are compared and analyzed to determine which one is best suited for different environments.
@@ -50,15 +38,11 @@ The iterative architecture of CRAFT is designed to strike a balance between area
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.3 - The definitions of SA and UA are not explicit, especially the implementation under UA. It is necessary to highlight their innovativeness in relation to previous architectures.
-	\end{quote}
-\end{mdframed}
+3. The definitions of SA and UA are not explicit, especially the implementation under UA. It is necessary to highlight their innovativeness in relation to previous architectures.
 
 \subsection{Response}
 
-We appreciate your suggestion. To clarify, we have added the definitions of SA and UA in the headers of Subsections 3.1 and 3.2, respectively. Additionally, we have emphasized their innovative aspects compared to the architectures proposed in the original CRAFT article. The details are as follows:
+To clarify, we have added the definitions of SA and UA in the headers of Subsections 3.1 and 3.2, respectively. Additionally, we have emphasized their innovative aspects compared to the architectures proposed in the original CRAFT article. The details are as follows:
 
 \color{blue}
 The purpose of the serial architecture is to reduce the datapath, which represents the number of bits dealt with in one cycle. For instance, the CRAFT cipher has a 64-bit block size, meaning it can process 64-bit data in one cycle when using the iterative architecture. In contrast, the serial architecture reduces the datapath from 64-bit to 4-bit, meaning it can only process 4-bit data in one cycle. Despite this limitation, serial architectures can significantly reduce area usage by reusing components, making them a viable alternative to iterative architectures.
@@ -69,15 +53,11 @@ The unrolled architecture allows for the execution of more than one round functi
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.4 - Can CRAFT be implemented under the Iterative architecture? If so, do implementations under UA or SA still have advantages over IA? On the other hand, can UA or SA be applied to other ciphers, such as PRESENT, and bring efficiency improvements?
-	\end{quote}
-\end{mdframed}
+4. Can CRAFT be implemented under the Iterative architecture? If so, do implementations under UA or SA still have advantages over IA? On the other hand, can UA or SA be applied to other ciphers, such as PRESENT, and bring efficiency improvements?
 
 \subsection{Response}
 
-We appreciate your insightful questions and have addressed them individually. 
+We have addressed them individually. 
 
 1. In response to your query about implementing CRAFT under the Iterative architecture: Yes, the Iterative architecture can indeed be applied to the CRAFT cipher, as suggested in the original CRAFT paper. However, the paper does not provide performance data for FPGA platforms. To address this, we have included the Iterative architecture in our experimental setup, obtained results, and compared these with the SA and UA.
 
@@ -91,27 +71,19 @@ We apologize for any misunderstanding. We have conducted a fair comparison of th
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.5 - It is better to combine the Section 4 with Section 5 in my opinion.
-	\end{quote}
-\end{mdframed}
+5. It is better to combine the Section 4 with Section 5 in my opinion.
 
 \subsection{Response}
 
-Thank you for your suggestion. To enhance the readability of the manuscript, we have merged Sections 4 and 5 into a new Section 4 titled "Experiment Results". The previous Section 5 has been transformed into Subsection 4.5.
+To enhance the readability of the manuscript, we have merged Sections 4 and 5 into a new Section 4 titled "Experiment Results". The previous Section 5 has been transformed into Subsection 4.5.
 
 \noindent\rule{\linewidth}{2.0pt}
 
 \subsection{Reviewer Comment}
-\begin{mdframed}
-	\begin{quote}
-		Reviewer \# 3.6 - The data in Figure 9-13 is also demonstrated in Table 5-7, one approach is enough to compare the results.
-	\end{quote}
-\end{mdframed}
+6. The data in Figure 9-13 is also demonstrated in Table 5-7, one approach is enough to compare the results.
 
 \subsection{Response}
 
-We appreciate your suggestion. While the data from Figures 9-13 is also presented in Tables 5-7, we believe that the graphical representation in the figures provides a more intuitive understanding. Therefore, we have decided to retain both the figures and the tables in our manuscript.
+While the data from Figures 9-13 is also presented in Tables 5-7, we believe that the graphical representation in the figures provides a more intuitive understanding. Therefore, we have decided to retain both the figures and the tables in our manuscript.
 
 % \noindent\rule{\linewidth}{6.0pt}
