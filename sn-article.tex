@@ -78,8 +78,7 @@
         The Unrolled architecture, on the other hand, minimizes latency from 32 to 16.
         Additionally, Boolean satisfiability (SAT) solvers are employed to identify a lower-cost area implementation of the S-Box.
         The proposed designs underwent evaluation on three distinct FPGA platforms: Artix-7, Kintex-7, and Spartan-7.
-        \textcolor{blue}{
-            The results show that the low area design reduces area usage by 10.16\% compared to the previous design. Additionally, the S-Box implementation achieves a significant area reduction of 28.9\%. On the other hand, the unrolled design enhances the maximum throughput by 40.53\% compared to the previous design.}
+        The results show that the low area design reduces area usage by 10.16\% compared to the previous design. Additionally, the S-Box implementation achieves a significant area reduction of 28.9\%. On the other hand, the unrolled design enhances the maximum throughput by 40.53\% compared to the previous design.
         To the best of our knowledge, the low area design sets a new area record on the FPGA configured with a 64-bit block size and 128-bit key size.
         Therefore, the proposed designs could offer enhanced performance while maintaining security for IoT devices.
     \end{abstract}
@@ -110,9 +109,9 @@ To ensure data protection, the cryptography techniques outlined in \cite{Swessi2
 
 However, the resource constraints of many IoT devices pose challenges for the implementation of robust security measures. These devices often have limited memory, processing power, and energy. Therefore, the security measures need to be lightweight to ensure they do not overburden the resources. Lightweight cryptography, a subset of cryptography, provides solutions specifically designed for these resource-limited devices, as discussed in \cite{Mohajerani2020}.
 
-The field of lightweight cryptography has received considerable attention in recent years. Examples of this include PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022}, IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023}, and LELBC \cite{Song2024}. More ciphers can be found in \cite{Zakaria2023}. \textcolor{blue}{Concurrently, there has been significant research into side channel attacks on lightweight ciphers. This research can provide valuable insights into the physical security of IoT devices.}
+The field of lightweight cryptography has received considerable attention in recent years. Examples of this include PRESENT \cite{Bogdanov2007}, LED \cite{Guo2011}, Midori \cite{Banik2015a}, QTL \cite{Li2016}, GIFT \cite{Banik2017}, CRAFT \cite{Beierle2019}, Shadow \cite{Guo2021}, DULBC \cite{Yang2022}, IVLBC \cite{Huang2023}, BipBip \cite{Belkheyar2023}, and LELBC \cite{Song2024}. More ciphers can be found in \cite{Zakaria2023}. Concurrently, there has been significant research into side channel attacks on lightweight ciphers. This research can provide valuable insights into the physical security of IoT devices.
 
-\textcolor{blue}{Differential fault analysis, which is a type of side channel attack, was first introduced by \cite{Biham1997}. This concept was later elaborated in more detail by \cite{Kermani}. In response to these fault attacks, several countermeasures have been suggested. For example, \cite{Kaur2024} introduced a scheme for error detection. In the realm of Post-Quantum Cryptography, \cite{Canto2023} proposed specific error detection methods. It's important to note that these methods do increase the hardware consumption of the cipher system. The CRAFT cipher was designed with resistance to fault attacks in mind. However, it currently lacks efficient implementations. To make it suitable for use in more constrained environments, development of more efficient implementations is necessary.}
+Differential fault analysis, which is a type of side channel attack, was first introduced by \cite{Biham1997}. This concept was later elaborated in more detail by \cite{Kermani}. In response to these fault attacks, several countermeasures have been suggested. For example, \cite{Kaur2024} introduced a scheme for error detection. In the realm of Post-Quantum Cryptography, \cite{Canto2023} proposed specific error detection methods. It's important to note that these methods do increase the hardware consumption of the cipher system. The CRAFT cipher was designed with resistance to fault attacks in mind. However, it currently lacks efficient implementations. To make it suitable for use in more constrained environments, development of more efficient implementations is necessary.
 
 Efficient implementation allows lightweight ciphers to be used in various settings.
 A hardware implementation can enhance the performance of these ciphers in resource-limited environments.
@@ -142,7 +141,7 @@ The main contributions of this article are as follows.
 \end{itemize}
 
 
-The remainder of this article unfolds as follows: Section~\ref{sec2} delves into the specifics of CRAFT. The duo of proposed architectures for CRAFT are explored in Section~\ref{sec3}. \textcolor{blue}{Section~\ref{sec4} details the metrics and environment used for the experimental evaluation and comprehensive performance analysis. A thorough discussion of all the architectures is provided in Section~\ref{discussion_sec}.} Lastly, Section~\ref{sec6} encapsulates the work done and points towards potential avenues for future research.
+The remainder of this article unfolds as follows: Section~\ref{sec2} delves into the specifics of CRAFT. The duo of proposed architectures for CRAFT are explored in Section~\ref{sec3}. Section~\ref{sec4} details the metrics and environment used for the experimental evaluation and comprehensive performance analysis. A thorough discussion of all the architectures is provided in Section~\ref{discussion_sec}. Lastly, Section~\ref{sec6} encapsulates the work done and points towards potential avenues for future research.
 
 \section{Specification of CRAFT}\label{sec2}
 
@@ -207,7 +206,7 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
 \end{algorithm}
 
 The round function is composed of three distinct operations: Mix-Columns, PermuteNibbles, and Sub-Box.
-The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~\textcolor{blue}{(\ref{mix_molumns_eq})}.
+The Mix-Columns operation is a linear transformation that multiplies the input column by a constant matrix, $M$, to generate the output column. Notably, $M$ is an involutory matrix, as shown in Equation~(\ref{mix_molumns_eq}).
 
 
 \begin{equation}
@@ -221,7 +220,7 @@ The Mix-Columns operation is a linear transformation that multiplies the input c
     \label{mix_molumns_eq}
 \end{equation}
 
-The PermuteNibbles operation, an involutory permutation, operates on 4-bit nibbles. This operation triggers additional S-Boxes, thereby bolstering the cipher's security. The illustration of the PermuteNibbles operation is provided in Equation~\textcolor{blue}{(\ref{permute_nibb_eq})}. The permutation $PK$ is utilized in the key schedule, as depicted in Equation~\textcolor{blue}{(\ref{key_schedule_eq})}.
+The PermuteNibbles operation, an involutory permutation, operates on 4-bit nibbles. This operation triggers additional S-Boxes, thereby bolstering the cipher's security. The illustration of the PermuteNibbles operation is provided in Equation~(\ref{permute_nibb_eq}). The permutation $PK$ is utilized in the key schedule, as depicted in Equation~(\ref{key_schedule_eq}).
 
 \begin{equation}
     PN=[15,12,13,14,10,9,8,11,6,5,4,7,1,2,3,0]
@@ -258,9 +257,9 @@ This operation is performed using a 4-bit S-Box. The values are represented in h
 Two Linear Shift Feedback Registers (LSFRs), $a$ and $b$, are used to concatenate the round constants.
 The round constants is defined as $RC=(a_3,a_2,a_1,a_0,0,b_2,b_1,b_0)$. The initial round constant, $RC_0$, is set to 0x11.
 
-\textcolor{blue}{
-    The iterative architecture, often referred to as the round-based architecture, was first introduced in the original CRAFT paper \cite{Beierle2019}. This architecture works by executing one round function per cycle. It employs a single round function to encrypt a block. This function includes operations such as Mix-Columns, PermuteNibbles, Sub-Box, AddConstant, and AddTweakey. To encrypt a single block, this round function is run over 32 cycles. In the meantime, the Key Schedule runs concurrently with the round function.
-}
+
+The iterative architecture, often referred to as the round-based architecture, was first introduced in the original CRAFT paper \cite{Beierle2019}. This architecture works by executing one round function per cycle. It employs a single round function to encrypt a block. This function includes operations such as Mix-Columns, PermuteNibbles, Sub-Box, AddConstant, and AddTweakey. To encrypt a single block, this round function is run over 32 cycles. In the meantime, the Key Schedule runs concurrently with the round function.
+
 
 \section{Implementations}\label{sec3}
 
@@ -268,7 +267,7 @@ For the first time, the components of CRAFT have been optimized to achieve effic
 
 
 \subsection{Serial Architecture (SA)}\label{subsec2}
-\textcolor{blue}{The purpose of the serial architecture is to reduce the datapath, which represents the number of bits dealt with in one cycle. For instance, the CRAFT cipher has a 64-bit block size, meaning it can process 64-bit data in one cycle when using the iterative architecture. In contrast, the serial architecture reduces the datapath from 64-bit to 4-bit, meaning it can only process 4-bit data in one cycle. Despite this limitation, serial architectures can significantly reduce area usage by reusing components, making them a viable alternative to iterative architectures.}
+The purpose of the serial architecture is to reduce the datapath, which represents the number of bits dealt with in one cycle. For instance, the CRAFT cipher has a 64-bit block size, meaning it can process 64-bit data in one cycle when using the iterative architecture. In contrast, the serial architecture reduces the datapath from 64-bit to 4-bit, meaning it can only process 4-bit data in one cycle. Despite this limitation, serial architectures can significantly reduce area usage by reusing components, making them a viable alternative to iterative architectures.
 For example, the quantity of S-Boxes is diminished from 16 to 1.
 The clock gating technique is also employed to enable each component and minimize the energy consumption of encryption.
 
@@ -308,7 +307,7 @@ A measure of the number of logical gates required to implement the Boolean formu
 To calculate the GEC, the Boolean formula is converted into a circuit of logical gates, such as AND, OR, and NOT gates.
 The total count of these gates in the circuit gives the GEC of the instance.
 In this design, the GEC encoding scheme from Feng et al. \cite{Feng2023} is optimized and used to implement the S-Box.
-The encoding scheme is detailed in Equations~\textcolor{blue}{(\ref{eq1})}:
+The encoding scheme is detailed in Equations~(\ref{eq1}):
 
 
 
@@ -333,7 +332,7 @@ $GT_i$ denotes the type of the $i^{th}$ logical gate, represented as an 8-bit bi
 Table~\ref{tab3} enumerates the various types of logical gates employed in this encoding scheme.
 
 
-Equations~\textcolor{blue}{(\ref{eq2})} display the optimized scheme of the S-Box, where $X_3-X_0$ represents the input and $Y_3-Y_0$ represents the output.
+Equations~(\ref{eq2}) display the optimized scheme of the S-Box, where $X_3-X_0$ represents the input and $Y_3-Y_0$ represents the output.
 The proposed S-Box scheme is implemented using four MOAI1 gates, three MAOI1 gates, and one AND3 gate.
 This configuration of the S-Box module results in a 28.9\% reduction in area compared to the method proposed by Bao et al. \cite{bao2019peigen}, based on gate equivalent (GE) estimation using the UMC 180nm library.
 
@@ -384,7 +383,7 @@ The Mix-Columns component is a linear transformation of the input column.
 The output column is generated by multiplying the input column with a constant matrix $M$.
 $M$ is a involutory matrix, which means $M^2 = E$, where $E$ is the identity matrix.
 It is easy to decrypt the ciphertext by multiplying the ciphertext with $M$ again.
-Equation~\textcolor{blue}{(\ref{eq3})} illustrates the Mix-columns component.
+Equation~(\ref{eq3}) illustrates the Mix-columns component.
 Here, $I_{3,j}$, $I_{2,j}$, $I_{1,j}$, and $I_{0,j}$ represent the input column, while $I'_{3,j}$, $I'_{2,j}$, $I'_{1,j}$, and $I'_{0,j}$ denote the output column.
 The column index is given by $j$, where $j$ ranges from 0 to 3.
 
@@ -417,7 +416,7 @@ The serial architecture of Mix-Columns requires four 4-bit registers, two multip
 The operation of Mix-Columns involves three distinct stages: freeze, shift, and add.
 During the freeze stage, the register values are kept unchanged by setting both $CM_0$ and $CM_1$ to 0.
 In the shift stage, a shift in the register values from $RM_0$ to $RM_4$ is induced by setting both $CM_0$ and $CM_1$ to 1.
-Finally, in the add stage, an addition operation on the column values is executed according to Equation~\textcolor{blue}{(\ref{eq3})}. This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
+Finally, in the add stage, an addition operation on the column values is executed according to Equation~(\ref{eq3}). This is achieved by setting $CM_0$ and $CM_1$ to 0 and 1, respectively.
 
 Figure~\ref{serial_time_diagrm_mix_colunms} presents the timing diagram for the serial architecture of the Mix-Columns operation.
 It requires five clock cycles to compute the next columns from the previous ones, and an additional four clock cycles to transfer data from the internal register of Mix-Columns to the State-Register.
@@ -469,7 +468,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
 \end{figure}
 \subsection{Unrolled Architecture (UA)}\label{subsec3}
 
-\textcolor{blue}{The unrolled architecture allows for the execution of more than one round function in a single cycle. In contrast, the iterative architecture of the CRAFT cipher only runs one round function per cycle. This approach can significantly reduce the latency of the encryption process. It does this by reducing the number of cycles needed to encrypt one block size plaintext, thereby improving the throughput rate.}
+The unrolled architecture allows for the execution of more than one round function in a single cycle. In contrast, the iterative architecture of the CRAFT cipher only runs one round function per cycle. This approach can significantly reduce the latency of the encryption process. It does this by reducing the number of cycles needed to encrypt one block size plaintext, thereby improving the throughput rate.
 
 The unrolled architecture shown in Figure~\ref{fig4} includes two Sub-Boxes, two Mix-Columns, a Key, a State-Register, two PermuteNibbles, and one feedback path. It's designed to perform a 30-round encryption process in just 15 cycles. Only the Mix-Columns and Add-Key operations are carried out in the final cycle, finishing the encryption process in a total of 16 cycles.
 
@@ -487,7 +486,7 @@ The unrolled architecture, which is based on the iterative architecture from the
 
 
 
-\section{\textcolor{blue}{Experimental Results}}\label{sec4}
+\section{Experimental Results}\label{sec4}
 
 In ASIC implementations, the Gate Equivalent (GE) is often used to evaluate the area consumption of a design.
 One GE corresponds to the area of a two-input NAND gate.
@@ -516,9 +515,9 @@ Also, all designs were synthesized and implemented using the same settings, spec
 \subsection{Throughput}\label{subsec6}
 The efficiency of the proposed designs is assessed using the Throughput metric.
 This metric uses three parameters: the maximum throughput rate, the throughput rate at 100MHz, and the throughput rate per slice.
-The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~\textcolor{blue}{(\ref{eq4})}.
-The throughput rate at 100MHz shows the rate achievable when the clock frequency is set to 100MHz, calculated using Equation~\textcolor{blue}{(\ref{eq5})}.
-The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices, as defined in Equation~\textcolor{blue}{(\ref{eq6})}.
+The maximum throughput rate is the highest rate that our designs can achieve, calculated using Equation~(\ref{eq4}).
+The throughput rate at 100MHz shows the rate achievable when the clock frequency is set to 100MHz, calculated using Equation~(\ref{eq5}).
+The throughput rate per slice is a measure of efficiency, calculated by dividing the throughput rate by the number of Slices, as defined in Equation~(\ref{eq6}).
 In these computations, the Plaintext Size is set to 64-bit.
 Latency denotes the count of clock cycles needed to encrypt a single block, and Slices represent the quantity of Slices consumed by the design.
 \begin{equation}
@@ -538,8 +537,8 @@ Latency denotes the count of clock cycles needed to encrypt a single block, and 
 
 \subsection{Power and Energy}\label{power_energy}
 
-The Power metric, which includes both dynamic and static power consumption, is used to evaluate the power consumption of the proposed designs, as defined in Equation~\textcolor{blue}{(\ref{eq7})}.
-On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~\textcolor{blue}{(\ref{enery_eqation})}.
+The Power metric, which includes both dynamic and static power consumption, is used to evaluate the power consumption of the proposed designs, as defined in Equation~(\ref{eq7}).
+On the other hand, the Energy metric measures the energy consumption of the designs. It's calculated by multiplying the power consumption by the time needed to encrypt a single block. This time is determined by dividing the latency by the frequency, as explained in Equation~(\ref{enery_eqation}).
 
 \begin{align}
     \text{Total Power} (TP) & = \text{Dynamic Power} (DP) \nonumber \\
@@ -552,16 +551,15 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 \end{equation}
 
 
-\subsection{\textcolor{blue}{Results}}\label{sec5}
+\subsection{Results}\label{sec5}
 
 
-\textcolor{blue}{
-    This section presents the results of the proposed designs, focusing on three key aspects: area consumption, throughput performance, and power and energy metrics. These results are demonstrated across three different FPGA platforms, namely Artix-7, Kintex-7, and Spartan-7. The various architectures used in this study are described in Table~\ref{arch_descrip}. For a comparison of area consumption across these designs, refer to Table~\ref{area_compare}. Throughput results are provided in Table~\ref{throughput_compare}, while Table~\ref{power_energy_compare} contains information on power and energy consumption.
-}
+
+This section presents the results of the proposed designs, focusing on three key aspects: area consumption, throughput performance, and power and energy metrics. These results are demonstrated across three different FPGA platforms, namely Artix-7, Kintex-7, and Spartan-7. The various architectures used in this study are described in Table~\ref{arch_descrip}. For a comparison of area consumption across these designs, refer to Table~\ref{area_compare}. Throughput results are provided in Table~\ref{throughput_compare}, while Table~\ref{power_energy_compare} contains information on power and energy consumption.
+
 
 
 \begin{table}[h]
-    \color{blue}
     \centering
     \caption{Description of Different Architectures}\label{arch_descrip}%
     \begin{tabular}{|c|c|c|c|}
@@ -577,7 +575,6 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 
 
 \begin{table*}[h]
-    \color{blue}
     \caption{Area Used in Three Architectures}\label{area_compare}%
     \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
         \hline
@@ -599,7 +596,6 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 \end{table*}
 
 \begin{table*}
-    \color{blue}
     \begin{threeparttable}
         \caption{Throughput Results in Three Architectures}\label{throughput_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
@@ -626,7 +622,6 @@ On the other hand, the Energy metric measures the energy consumption of the desi
 \end{table*}
 
 \begin{table*}
-    \color{blue}
     \begin{threeparttable}
         \caption{Power and Energy Consumption in Three Architectures}\label{power_energy_compare}%
         \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
@@ -652,9 +647,9 @@ On the other hand, the Energy metric measures the energy consumption of the desi
     \end{threeparttable}
 \end{table*}
 
-\color{blue}
+
 The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of CRAFT, as detailed in the work of Beierle et al. \cite{Beierle2019}. The results indicate that the proposed serial architecture consume 10.16\% less area than the iterative architecture of CRAFT.
-\color{black}
+
 
 Regarding the FF, the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as demonstrated in the study by Beierle et al. \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
@@ -682,7 +677,7 @@ These results are illustrated in Figure~\ref{compare-slices}. However, the lower
     \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
 \end{figure}
 
-Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of CRAFT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. \textcolor{blue}{The unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz when compared to the iterative architecture of CRAFT. Additionally, the unrolled architecture improves the maximum throughput by 40.53\% on the Artix-7 platform.} This data is presented in Table~\ref{throughput_compare}.
+Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of CRAFT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz when compared to the iterative architecture of CRAFT. Additionally, the unrolled architecture improves the maximum throughput by 40.53\% on the Artix-7 platform. This data is presented in Table~\ref{throughput_compare}.
 
 \begin{figure}
     \centering
@@ -699,7 +694,7 @@ The serial architecture has the highest energy per bit due to its higher latency
 \end{figure}
 
 \section{Discussion}\label{discussion_sec}
-\color{blue}
+
 This section discusses the performance of three different architectures of CRAFT: the serial architecture, the unrolled architecture, and the iterative architecture. These architectures are compared and analyzed to determine which one is best suited for different environments.
 
 The serial architecture of CRAFT is designed to minimize area consumption. It has the lowest area consumption among the three architectures, which results in it having the lowest dynamic power. Additionally, it boasts the highest frequency among the three architectures. However, it has a high latency, leading to the lowest maximum throughput among the three architectures. The serial architecture is suitable for resource-limited environments where high throughput is not a requirement.
@@ -708,22 +703,21 @@ The unrolled architecture of CRAFT aims to maximize throughput. It boasts the lo
 
 The iterative architecture of CRAFT is designed to strike a balance between area consumption and throughput. While it doesn't have the lowest area consumption, the highest frequency, the lowest latency, the highest maximum throughput, or the lowest energy per bit among the three architectures, it does have the highest throughput per slice. The iterative architecture is suitable for environments where moderate throughput is required at the lowest possible area cost.
 
-\color{black}
 
 \section{Conclusion}\label{sec6}
 
 Given the diverse performance requirements arising from the use of IoT devices in various contexts, achieving optimal security without compromising performance presents a significant challenge. Implementing effective solutions is one way to attain this balance between security and performance.
 
 This research presents two unique designs for the CRAFT Lightweight cipher - Serial and Unrolled - both aimed at boosting performance.
-\textcolor{blue}{
-    The Serial architecture reduces the area consumption by 10.16\% compared to the iterative architecture of CRAFT.
-    The Unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz compared to the iterative architecture of CRAFT, resulting in a 40.53\% improvement in maximum throughput. Furthermore, the Unrolled architecture also reduces the energy per bit by 47.89\% when compared to the iterative architecture of CRAFT.}
+
+The Serial architecture reduces the area consumption by 10.16\% compared to the iterative architecture of CRAFT.
+The Unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz compared to the iterative architecture of CRAFT, resulting in a 40.53\% improvement in maximum throughput. Furthermore, the Unrolled architecture also reduces the energy per bit by 47.89\% when compared to the iterative architecture of CRAFT.
 To the best of our knowledge, the Serial architecture establishes a new record for area efficiency on an FPGA configured with a 64-bit block size and 128-bit key size.
 These proposed architectures are therefore highly suitable for environments with IoT devices.
 
-\textcolor{blue}{
+
 Future work could extend the proposed architectures to other lightweight ciphers and examine their performance. Additionally, these lightweight ciphers could be implemented in a way that makes them resistant to side channel attacks.
-}
+
 
 
 \bibliographystyle{elsarticle-num}
