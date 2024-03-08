@@ -145,8 +145,8 @@ The remainder of this article unfolds as follows: Section~\ref{sec2} delves into
 
 CRAFT is a lightweight tweakable block cipher that operates on a 64-bit plaintext size, a 128-bit key size, and a 64-bit tweak size.
 It outputs a 64-bit ciphertext.
+\textcolor{blue}{Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's noteworthy that the probabilistic algorithm based on quantum computing, proposed by Grover et al. \cite{Grover1996}, could reduce the key space from 128-bit to 64-bit. However, this reduction is not sufficient to brute force attack the CRAFT cipher with current computational capabilities.}
 The confusion and diffusion properties of CRAFT ensure that the distribution of probabilities between the plaintext and ciphertext is independent.
-\textcolor{blue}{Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's worth noting that the CRAFT cipher demonstrates resistance to the probabilistic algorithm, based on quantum computing, proposed by Grover et al. \cite{Grover1996}.}
 For more details on CRAFT, refer to Figure~\ref{fig1} which depicts its architecture.
 The encryption process of CRAFT is outlined in Algorithm~\ref{alg1}.
 The decryption process is similar to the encryption process, with the only difference being that the round keys are applied in reverse order.
