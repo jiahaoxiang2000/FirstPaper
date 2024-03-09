@@ -40,32 +40,28 @@
 
     \title{Efficient Implementations of CRAFT Cipher For Internet of Things }
 
-    % \author[]{Jiahao Xiang}
-    % \author[]{Lang Li\corref{cor1}}
-    % \author[]{Xiantong Huang}
+    \author[a,b]{Jiahao Xiang}
+    \ead{simple.xjh@qq.com}
 
-    % \author[a,b]{Jiahao Xiang}
-    % \ead{simple.xjh@qq.com}
+    \author[a,b]{Lang Li\corref{cor1}}
 
-    % \author[a,b]{Lang Li\corref{cor1}}
+    \ead{lilang911@126.com}
 
-    % \ead{lilang911@126.com}
+    \cortext[cor1]{Corresponding author}
 
-    % \cortext[cor1]{Corresponding author}
+    \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
 
-    % \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
-    %     addressline={Hengyang Normal University},
-    %     city={Hengyang},
-    %     postcode={421002},
-    %     state={},
-    %     country={China}}
-
-    % \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
-    %     addressline={Hengyang Normal University},
-    %     city={Hengyang},
-    %     postcode={421002},
-    %     state={},
-    %     country={China}}
+    \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
 
 
 
@@ -145,7 +141,7 @@ The remainder of this article unfolds as follows: Section~\ref{sec2} delves into
 
 CRAFT is a lightweight tweakable block cipher that operates on a 64-bit plaintext size, a 128-bit key size, and a 64-bit tweak size.
 It outputs a 64-bit ciphertext.
-\textcolor{blue}{Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's noteworthy that the probabilistic algorithm based on quantum computing, proposed by Grover et al. \cite{Grover1996}, could reduce the key space from 128-bit to 64-bit. However, this reduction is not sufficient to brute force attack the CRAFT cipher with current computational capabilities.}
+Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's noteworthy that the probabilistic algorithm based on quantum computing, proposed by Grover et al. \cite{Grover1996}, could reduce the key space from 128-bit to 64-bit. However, this reduction is not sufficient to brute force attack the CRAFT cipher with current computational capabilities.
 The confusion and diffusion properties of CRAFT ensure that the distribution of probabilities between the plaintext and ciphertext is independent.
 For more details on CRAFT, refer to Figure~\ref{fig1} which depicts its architecture.
 The encryption process of CRAFT is outlined in Algorithm~\ref{alg1}.
