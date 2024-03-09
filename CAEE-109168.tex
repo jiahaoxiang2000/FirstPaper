@@ -46,7 +46,7 @@
 
     \ead{lilang911@126.com}
 
-    \cortext[cor1]{Corresponding author}
+    \cortext[cor1]{Corresponding author at: Hengyang Normal University of China, Hengyang, 421002, China.}
 
     \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
         addressline={Hengyang Normal University},
@@ -173,7 +173,7 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=0.45\textwidth]{./struct-craft.pdf}
+    \includegraphics[width=0.6\textwidth]{./struct-craft.pdf}
     \caption{Architecture of CRAFT}\label{fig1}
 \end{figure}
 
@@ -649,43 +649,56 @@ The area consumption of the proposed designs is evaluated based on three factors
 
 Regarding the FF, the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as demonstrated in the study by Beierle et al. \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{./compare-ff.pdf}
-    \caption{Comparison of Flip-Flop in Three Architectures}\label{compare_ff}
-\end{figure}
+
+
+
 
 As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed serial architecture require fewer LUTs than the iterative architecture of CRAFT. This is attributed to the fact that the proposed designs utilize a single S-Box, in contrast to the 16 S-Boxes used by the iterative architecture of CRAFT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 S-Boxes, compared to just one in the proposed designs.
 
-\begin{figure}
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\textwidth]{./compare-lut.pdf}
-    \caption{Comparison of Look-Up Tables in Three Architectures}\label{compare_lut}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-ff.pdf}
+        \caption{Comparison of Flip-Flop in Three Architectures}
+        \label{compare_ff}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-lut.pdf}
+        \caption{Comparison of Look-Up Tables in Three Architectures}
+        \label{compare_lut}
+    \end{minipage}
 \end{figure}
+
 
 Thanks to the reduction in Flip-Flop (FF) and Look-Up Table (LUT) usage, the serial architecture has fewer slices compared to the iterative architecture of CRAFT.
 In terms of Slices efficiency, Spartan-7 outperforms both Artix-7 and Kintex-7 platforms.
 These results are illustrated in Figure~\ref{compare-slices}. However, the lower Max Frequency of Spartan-7 will be considered in the Throughput comparison.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{./compare-slices.pdf}
-    \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
-\end{figure}
 
 Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of CRAFT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz when compared to the iterative architecture of CRAFT. Additionally, the unrolled architecture improves the maximum throughput by 40.53\% on the Artix-7 platform. This data is presented in Table~\ref{throughput_compare}.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\textwidth]{./compare-maxf.pdf}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-slices.pdf}
+        \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-maxf.pdf}
     \caption{Comparison of Max Frequency in Three Architectures}\label{compare-maxF}
+    \end{minipage}
 \end{figure}
+
+
 
 The serial architecture has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of CRAFT falls between that of the serial architecture and the unrolled architecture. Compared to the iterative architecture of CRAFT, the unrolled architecture reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{./compare-energy.pdf}
+    \includegraphics[width=0.45\textwidth]{./compare-energy.pdf}
     \caption{Comparison of Energy Per Bit in Three Architectures}\label{compare-energy}
 \end{figure}
 
@@ -711,6 +724,15 @@ These proposed architectures are therefore highly suitable for environments with
 
 
 Future work could extend the proposed architectures to other lightweight ciphers and examine their performance. Additionally, these lightweight ciphers could be implemented in a way that makes them resistant to side channel attacks.
+\section*{CRediT authorship contribution statement}
+
+\textbf{Jiahao Xiang:} Conceptualization, Methodology, Software, Data curation, Writing - Original draft preparation, Visualization, Investigation. \textbf{Lang Li:} Software, Validation, Supervision, Writing - Reviewing and Editing. 
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Data availability}
+The source code is publicly available.
 
 \section*{Acknowledgements}
 This research is supported by the Hunan Provincial Natural Science Foundation of China ( 2022JJ30103 ), "the 14th Five Year Plan" Key Disciplines and Application-oriented Special Disciplines of Hunan Province ( Xiangjiaotong [2022] 351 ), the Science and Technology Innovation Program of Hunan Province ( 2016TP1020 ). 
