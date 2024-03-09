@@ -151,10 +151,10 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
 \begin{table}[h]
     \centering
     \caption{Main Notations}\label{tab1}%
-    \begin{tabular}{|c|l|}
-        \hline
+    \begin{tabular}{cl}
+        \toprule
         Notation & Description                           \\
-        \hline
+        \midrule
         $TK_i$   & tweakeys used in the $i^{th}$ round   \\
         $RC_i$   & round constant for the $i^{th}$ round \\
         $R_i$    & Function for the $i^{th}$ round       \\
@@ -167,13 +167,13 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
         $\sim$   & Inverse operation                     \\
         $\land$  & And operation                         \\
         $\lor$   & Or operation                          \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=0.9\textwidth]{./struct-craft.pdf}
+    \includegraphics[width=0.45\textwidth]{./struct-craft.pdf}
     \caption{Architecture of CRAFT}\label{fig1}
 \end{figure}
 
@@ -232,10 +232,10 @@ This operation is performed using a 4-bit S-Box. The values are represented in h
 \begin{table}[h]
     \centering
     \caption{S-Box of CRAFT}\label{tab4}%
-    \begin{tabular}{|c|c|c|c|}
-        \hline
+    \begin{tabular}{cc|cc}
+        \toprule
         Input & Output & Input & Output \\
-        \hline
+        \midrule
         0     & c      & 8     & 8      \\
         1     & a      & 9     & 9      \\
         2     & d      & a     & 1      \\
@@ -244,7 +244,7 @@ This operation is performed using a 4-bit S-Box. The values are represented in h
         5     & b      & d     & 2      \\
         6     & f      & e     & 4      \\
         7     & 7      & f     & 6      \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
@@ -274,7 +274,7 @@ Additionally, the PermuteNibbles function is integrated into the State-Register 
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.9\textwidth]{./serial-archticture.pdf}
+    \includegraphics[width=0.8\textwidth]{./serial-archticture.pdf}
     \caption{Serial architecture of CRAFT}\label{fig3}
 \end{figure*}
 
@@ -345,11 +345,12 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
 
 
 \begin{table}[h]
+    \centering
     \caption{Encoding of different types of logical gates}\label{tab3}%
-    \begin{tabular}{|c|c|c|}
-        \hline
+    \begin{tabular}{ccc}
+        \toprule
         logical expression                                   & $GT_i$ & gate type \\
-        \hline
+        \midrule
         $X_0 \oplus X_1$                                     & 2      & XOR       \\
         $\sim (X_0 \oplus X_1)$                              & 3      & XNOR      \\
         $X_0 \land X_1$                                      & 4      & AND       \\
@@ -367,7 +368,7 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
         $\sim (X_0 \lor X_1 \lor X_2)$                       & 119    & NOR3      \\
         $\sim ((X_0 \land X_1) \lor (\sim (X_2 \lor X_3)))$  & 176    & MAOI1     \\
         $\sim (\sim (X_0 \land X_1) \land ((X_2 \lor X_3)))$ & 177    & MOAI1     \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
@@ -419,13 +420,13 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{./Mix-Columns.pdf}
+    \includegraphics[width=0.6\textwidth]{./Mix-Columns.pdf}
     \caption{Serial Architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
 \end{figure}
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{./Mix-Columns-Times.pdf}
+    \includegraphics[width=0.6\textwidth]{./Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }
     \label{serial_time_diagrm_mix_colunms}
 \end{figure}
@@ -471,7 +472,7 @@ The unrolled architecture, which is based on the iterative architecture from the
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{./unrolled-archticture.pdf}
+    \includegraphics[width=0.9\textwidth]{./unrolled-archticture.pdf}
     \caption{Unrolled architecture of CRAFT}\label{fig4}
 \end{figure*}
 
@@ -556,24 +557,25 @@ This section presents the results of the proposed designs, focusing on three key
 \begin{table}[h]
     \centering
     \caption{Description of Different Architectures}\label{arch_descrip}%
-    \begin{tabular}{|c|c|c|c|}
-        \hline
+    \begin{tabular}{clc}
+        \toprule
         Architecture & Description            & Reference          \\
-        \hline
+        \midrule
         SA           & Serial   Architecture  & This work          \\
         UA           & Unrolled Architecture  & This work          \\
         IA           & Iterative Architecture & \cite{Beierle2019} \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
 
-\begin{table*}[h]
+
+\begin{table}[h]
     \caption{Area Used in Three Architectures}\label{area_compare}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-        \hline
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+        \toprule
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
-        \hline
+        \midrule
         \multirow{3}{*}{Artix-7}  & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
         & UA & 64 & 128 & 157 & 378 & 111 \\
         & IA & 64 & 128 & 159 & 201 & 65 \\
@@ -585,17 +587,17 @@ This section presents the results of the proposed designs, focusing on three key
         \multirow{3}{*}{Spartan-7} & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
         & UA & 64 & 128 & 157 & 381 & 118 \\
         & IA & 64 & 128 & 158 & 200 & 64 \\
-        \hline
+        \bottomrule
     \end{tabular*}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
     \begin{threeparttable}
         \caption{Throughput Results in Three Architectures}\label{throughput_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-            \hline
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+            \toprule
             Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
-            \hline
+            \midrule
             \multirow{3}{*}{Artix-7}  & SA & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
             & UA & \textbf{16} & 142.38 & \textbf{569.52} & \textbf{400.00} & 5130.81 \\
             & IA & 32 & 202.63 & 405.26 & 200.00 & \textbf{6234.77} \\
@@ -607,21 +609,21 @@ This section presents the results of the proposed designs, focusing on three key
             \multirow{3}{*}{Spartan-7} & SA & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
             & UA & \textbf{16} & 138.86 & \textbf{555.44} & \textbf{400.00} & 4707.12 \\
             & IA & 32 & 186.98 & 373.96 & 200.00 & \textbf{5843.13} \\
-            \hline
+            \bottomrule
         \end{tabular*}
         \begin{tablenotes}
             \item[a] Throughput rate at 100MHz
         \end{tablenotes}
     \end{threeparttable}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
     \begin{threeparttable}
         \caption{Power and Energy Consumption in Three Architectures}\label{power_energy_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-            \hline
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+            \toprule
             Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $E/bit(nJ/bit)$ \\
-            \hline
+            \midrule
             \multirow{3}{*}{Artix-7}  & SA & \textbf{2.00} & 139.00 & \textbf{141.00} & 1.71 & 26.77 \\
             & UA & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
             & IA & 3.00 & 139.00 & 142.00 & 0.05 & 0.71 \\
@@ -633,13 +635,13 @@ This section presents the results of the proposed designs, focusing on three key
             \multirow{3}{*}{Spartan-7} & SA & \textbf{2.00} & 140.00 & \textbf{142.00} & 1.73 & 26.96 \\
             & UA & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
             & IA & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-            \hline
+            \bottomrule
         \end{tabular*}
         \begin{tabular}{llll}
             DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
         \end{tabular}
     \end{threeparttable}
-\end{table*}
+\end{table}
 
 
 The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of CRAFT, as detailed in the work of Beierle et al. \cite{Beierle2019}. The results indicate that the proposed serial architecture consume 10.16\% less area than the iterative architecture of CRAFT.
@@ -649,7 +651,7 @@ Regarding the FF, the key schedule of the CRAFT cipher is implemented using mult
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{./compare-ff.pdf}
+    \includegraphics[width=0.6\textwidth]{./compare-ff.pdf}
     \caption{Comparison of Flip-Flop in Three Architectures}\label{compare_ff}
 \end{figure}
 
@@ -657,7 +659,7 @@ As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed s
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{./compare-lut.pdf}
+    \includegraphics[width=0.6\textwidth]{./compare-lut.pdf}
     \caption{Comparison of Look-Up Tables in Three Architectures}\label{compare_lut}
 \end{figure}
 
@@ -667,7 +669,7 @@ These results are illustrated in Figure~\ref{compare-slices}. However, the lower
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{./compare-slices.pdf}
+    \includegraphics[width=0.6\textwidth]{./compare-slices.pdf}
     \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
 \end{figure}
 
@@ -675,7 +677,7 @@ Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{./compare-maxf.pdf}
+    \includegraphics[width=0.6\textwidth]{./compare-maxf.pdf}
     \caption{Comparison of Max Frequency in Three Architectures}\label{compare-maxF}
 \end{figure}
 
@@ -683,7 +685,7 @@ The serial architecture has the highest energy per bit due to its higher latency
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{./compare-energy.pdf}
+    \includegraphics[width=0.6\textwidth]{./compare-energy.pdf}
     \caption{Comparison of Energy Per Bit in Three Architectures}\label{compare-energy}
 \end{figure}
 
