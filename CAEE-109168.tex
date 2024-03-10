@@ -1,6 +1,6 @@
-
+\documentclass[final,3p,times]{elsarticle}
 % \documentclass[final,5p,times]{elsarticle}
-\documentclass[final,5p,times,twocolumn]{elsarticle}
+% \documentclass[final,5p,times,twocolumn]{elsarticle}
 
 
 \usepackage{graphicx}%
@@ -20,7 +20,7 @@
 \usepackage{threeparttable}%
 \usepackage{caption}
 \usepackage{url}
-\usepackage{tabularx}
+% \usepackage{tabularx}
 
 \captionsetup{font=normalsize}
 
@@ -40,32 +40,27 @@
 
     \title{Efficient Implementations of CRAFT Cipher For Internet of Things }
 
-    % \author[]{Jiahao Xiang}
-    % \author[]{Lang Li\corref{cor1}}
-    % \author[]{Xiantong Huang}
+    \author[a,b]{Jiahao Xiang}
 
-    % \author[a,b]{Jiahao Xiang}
-    % \ead{simple.xjh@qq.com}
+    \author[a,b]{Lang Li\corref{cor1}}
 
-    % \author[a,b]{Lang Li\corref{cor1}}
+    \ead{lilang911@126.com}
 
-    % \ead{lilang911@126.com}
+    \cortext[cor1]{Corresponding author at: Hengyang Normal University, Hengyang, 421002, China.}
 
-    % \cortext[cor1]{Corresponding author}
+    \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
 
-    % \affiliation[a]{organization={College of Computer Science and Technology},%Department and Organization
-    %     addressline={Hengyang Normal University},
-    %     city={Hengyang},
-    %     postcode={421002},
-    %     state={},
-    %     country={China}}
-
-    % \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
-    %     addressline={Hengyang Normal University},
-    %     city={Hengyang},
-    %     postcode={421002},
-    %     state={},
-    %     country={China}}
+    \affiliation[b]{organization={Hunan Provincial Key Laboratory of Intelligent Information Processing and Application},%Department and Organization
+        addressline={Hengyang Normal University},
+        city={Hengyang},
+        postcode={421002},
+        state={},
+        country={China}}
 
 
 
@@ -145,7 +140,7 @@ The remainder of this article unfolds as follows: Section~\ref{sec2} delves into
 
 CRAFT is a lightweight tweakable block cipher that operates on a 64-bit plaintext size, a 128-bit key size, and a 64-bit tweak size.
 It outputs a 64-bit ciphertext.
-\textcolor{blue}{Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's noteworthy that the probabilistic algorithm based on quantum computing, proposed by Grover et al. \cite{Grover1996}, could reduce the key space from 128-bit to 64-bit. However, this reduction is not sufficient to brute force attack the CRAFT cipher with current computational capabilities.}
+Although quantum computing has enhanced capabilities to attack ciphers, as highlighted by Darzi et al. \cite{Darzi2023} and Canto et al. \cite{Canto2023a}, it's noteworthy that the probabilistic algorithm based on quantum computing, proposed by Grover et al. \cite{Grover1996}, could reduce the key space from 128-bit to 64-bit. However, this reduction is not sufficient to brute force attack the CRAFT cipher with current computational capabilities.
 The confusion and diffusion properties of CRAFT ensure that the distribution of probabilities between the plaintext and ciphertext is independent.
 For more details on CRAFT, refer to Figure~\ref{fig1} which depicts its architecture.
 The encryption process of CRAFT is outlined in Algorithm~\ref{alg1}.
@@ -156,10 +151,10 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
 \begin{table}[h]
     \centering
     \caption{Main Notations}\label{tab1}%
-    \begin{tabular}{|c|l|}
-        \hline
+    \begin{tabular}{cl}
+        \toprule
         Notation & Description                           \\
-        \hline
+        \midrule
         $TK_i$   & tweakeys used in the $i^{th}$ round   \\
         $RC_i$   & round constant for the $i^{th}$ round \\
         $R_i$    & Function for the $i^{th}$ round       \\
@@ -172,13 +167,13 @@ The main notations used throughout this paper are outlined in Table~\ref{tab1}.
         $\sim$   & Inverse operation                     \\
         $\land$  & And operation                         \\
         $\lor$   & Or operation                          \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{figure}[h]%
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/struct-craft.pdf}
+    \includegraphics[width=0.6\textwidth]{./struct-craft.pdf}
     \caption{Architecture of CRAFT}\label{fig1}
 \end{figure}
 
@@ -237,10 +232,10 @@ This operation is performed using a 4-bit S-Box. The values are represented in h
 \begin{table}[h]
     \centering
     \caption{S-Box of CRAFT}\label{tab4}%
-    \begin{tabular}{|c|c|c|c|}
-        \hline
+    \begin{tabular}{cc|cc}
+        \toprule
         Input & Output & Input & Output \\
-        \hline
+        \midrule
         0     & c      & 8     & 8      \\
         1     & a      & 9     & 9      \\
         2     & d      & a     & 1      \\
@@ -249,7 +244,7 @@ This operation is performed using a 4-bit S-Box. The values are represented in h
         5     & b      & d     & 2      \\
         6     & f      & e     & 4      \\
         7     & 7      & f     & 6      \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
@@ -279,7 +274,7 @@ Additionally, the PermuteNibbles function is integrated into the State-Register 
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{./fig/serial-archticture.pdf}
+    \includegraphics[width=0.8\textwidth]{./serial-archticture.pdf}
     \caption{Serial architecture of CRAFT}\label{fig3}
 \end{figure*}
 
@@ -350,11 +345,12 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
 
 
 \begin{table}[h]
+    \centering
     \caption{Encoding of different types of logical gates}\label{tab3}%
-    \begin{tabular}{|c|c|c|}
-        \hline
+    \begin{tabular}{ccc}
+        \toprule
         logical expression                                   & $GT_i$ & gate type \\
-        \hline
+        \midrule
         $X_0 \oplus X_1$                                     & 2      & XOR       \\
         $\sim (X_0 \oplus X_1)$                              & 3      & XNOR      \\
         $X_0 \land X_1$                                      & 4      & AND       \\
@@ -372,7 +368,7 @@ This configuration of the S-Box module results in a 28.9\% reduction in area com
         $\sim (X_0 \lor X_1 \lor X_2)$                       & 119    & NOR3      \\
         $\sim ((X_0 \land X_1) \lor (\sim (X_2 \lor X_3)))$  & 176    & MAOI1     \\
         $\sim (\sim (X_0 \land X_1) \land ((X_2 \lor X_3)))$ & 177    & MOAI1     \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
@@ -424,13 +420,13 @@ Therefore, a complete state round requires a total of 36 clock cycles.
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/Mix-Columns.pdf}
+    \includegraphics[width=0.6\textwidth]{./Mix-Columns.pdf}
     \caption{Serial Architecture of Mix-Columns with clock gating}\label{serial_mix_columns_fig}
 \end{figure}
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/Mix-Columns-Times.pdf}
+    \includegraphics[width=0.6\textwidth]{./Mix-Columns-Times.pdf}
     \caption{Timing Diagram for the Serial Architecture of Mix-Columns }
     \label{serial_time_diagrm_mix_colunms}
 \end{figure}
@@ -451,7 +447,7 @@ The encryption process concludes when the Round counter reaches 31, at which poi
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/serial-fsm.pdf}
+    \includegraphics[width=0.7\textwidth]{./serial-fsm.pdf}
     \caption{Finite-state machine for Serial Architecture}\label{serial_fsm_fig}
 \end{figure}
 
@@ -462,7 +458,7 @@ This helps save a significant amount of power. Figure~\ref{serial_time_diagrm} s
 
 \begin{figure}[h]%   
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/serial-time.pdf}
+    \includegraphics[width=0.7\textwidth]{./serial-time.pdf}
     \caption{Timing diagram for Serial Architecture}\label{serial_time_diagrm}
 \end{figure}
 \subsection{Unrolled Architecture (UA)}\label{subsec3}
@@ -476,7 +472,7 @@ The unrolled architecture, which is based on the iterative architecture from the
 
 \begin{figure*}[h]%   
     \centering
-    \includegraphics[width=0.7\textwidth]{./fig/unrolled-archticture.pdf}
+    \includegraphics[width=0.9\textwidth]{./unrolled-archticture.pdf}
     \caption{Unrolled architecture of CRAFT}\label{fig4}
 \end{figure*}
 
@@ -508,7 +504,7 @@ Artix-7 offers high performance in resource-limited situations. Spartan-7 is des
 
 The area consumed by the proposed designs is quantified using the Area metric, which encompasses components such as Flip-Flops, LUTs, and Slices.
 For a balanced comparison, the embedded memory blocks of the FPGA were not utilized.
-This was achieved by disabling the relevant settings in the VHDL, as recommended in the design guidelines provided by Xilinx \cite{xilinx2022ultrafast}.
+This was achieved by disabling the relevant settings in the VHDL, as recommended in the design guidelines.
 Also, all designs were synthesized and implemented using the same settings, specifically, the default settings of Vivado Synthesis and Implementation.
 
 \subsection{Throughput}\label{subsec6}
@@ -561,24 +557,25 @@ This section presents the results of the proposed designs, focusing on three key
 \begin{table}[h]
     \centering
     \caption{Description of Different Architectures}\label{arch_descrip}%
-    \begin{tabular}{|c|c|c|c|}
-        \hline
+    \begin{tabular}{clc}
+        \toprule
         Architecture & Description            & Reference          \\
-        \hline
+        \midrule
         SA           & Serial   Architecture  & This work          \\
         UA           & Unrolled Architecture  & This work          \\
         IA           & Iterative Architecture & \cite{Beierle2019} \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
 
-\begin{table*}[h]
+
+\begin{table}[h]
     \caption{Area Used in Three Architectures}\label{area_compare}%
-    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-        \hline
+    \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+        \toprule
         Platform & Design & $State(bit)$ & $Key(bit)$ & $FF$ & $LUT$ & $Slices$ \\
-        \hline
+        \midrule
         \multirow{3}{*}{Artix-7}  & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{59} \\
         & UA & 64 & 128 & 157 & 378 & 111 \\
         & IA & 64 & 128 & 159 & 201 & 65 \\
@@ -590,17 +587,17 @@ This section presents the results of the proposed designs, focusing on three key
         \multirow{3}{*}{Spartan-7} & SA & 64 & 128 & \textbf{144} & \textbf{177} & \textbf{57}\\
         & UA & 64 & 128 & 157 & 381 & 118 \\
         & IA & 64 & 128 & 158 & 200 & 64 \\
-        \hline
+        \bottomrule
     \end{tabular*}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
     \begin{threeparttable}
         \caption{Throughput Results in Three Architectures}\label{throughput_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-            \hline
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+            \toprule
             Platform & Design & $Latency$ & $MaxF(MHz)$ & $Thr(Mbps)$ & $Thr^*(Mbps)$\tnote{a} & $Thr/Slices$($Kbps/Slices$) \\
-            \hline
+            \midrule
             \multirow{3}{*}{Artix-7}  & SA & 1215 & \textbf{557.41} & 29.36 & 5.27 & 497.65 \\
             & UA & \textbf{16} & 142.38 & \textbf{569.52} & \textbf{400.00} & 5130.81 \\
             & IA & 32 & 202.63 & 405.26 & 200.00 & \textbf{6234.77} \\
@@ -612,21 +609,21 @@ This section presents the results of the proposed designs, focusing on three key
             \multirow{3}{*}{Spartan-7} & SA & 1215 & \textbf{525.76} & 27.69 & 5.27 & 485.87 \\
             & UA & \textbf{16} & 138.86 & \textbf{555.44} & \textbf{400.00} & 4707.12 \\
             & IA & 32 & 186.98 & 373.96 & 200.00 & \textbf{5843.13} \\
-            \hline
+            \bottomrule
         \end{tabular*}
         \begin{tablenotes}
             \item[a] Throughput rate at 100MHz
         \end{tablenotes}
     \end{threeparttable}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
     \begin{threeparttable}
         \caption{Power and Energy Consumption in Three Architectures}\label{power_energy_compare}%
-        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}|c|c|c|c|c|c|c|}
-            \hline
+        \begin{tabular*}{\textwidth}{@{\extracolsep\fill}ccccccc}
+            \toprule
             Platform & Design & $DP(mW)$ & $SP(mW)$ & $TP(mW)$ & $E(uJ)$ & $E/bit(nJ/bit)$ \\
-            \hline
+            \midrule
             \multirow{3}{*}{Artix-7}  & SA & \textbf{2.00} & 139.00 & \textbf{141.00} & 1.71 & 26.77 \\
             & UA & 7.00 & 139.00 & 146.00 & \textbf{0.02} & \textbf{0.37} \\
             & IA & 3.00 & 139.00 & 142.00 & 0.05 & 0.71 \\
@@ -638,13 +635,13 @@ This section presents the results of the proposed designs, focusing on three key
             \multirow{3}{*}{Spartan-7} & SA & \textbf{2.00} & 140.00 & \textbf{142.00} & 1.73 & 26.96 \\
             & UA & 7.00 & 140.00 & 147.00 & \textbf{0.02} & \textbf{0.37} \\
             & IA & 3.00 & 140.00 & 143.00 & 0.05 & 0.72 \\
-            \hline
+            \bottomrule
         \end{tabular*}
         \begin{tabular}{llll}
             DP: Dynamic Power & SP: Static Power & TP: Total Power & E: Energy
         \end{tabular}
     \end{threeparttable}
-\end{table*}
+\end{table}
 
 
 The area consumption of the proposed designs is evaluated based on three factors: Flip-Flops (FF), Look-Up Tables (LUT), and Slices. These designs are compared with the iterative architecture of CRAFT, as detailed in the work of Beierle et al. \cite{Beierle2019}. The results indicate that the proposed serial architecture consume 10.16\% less area than the iterative architecture of CRAFT.
@@ -652,43 +649,56 @@ The area consumption of the proposed designs is evaluated based on three factors
 
 Regarding the FF, the key schedule of the CRAFT cipher is implemented using multiplexers. This eliminates the need for FF to store the sub-key, resulting in a lower FF count compared to other ciphers. This is a significant factor contributing to the CRAFT cipher's requirement of less than 1000 GE, which is the lowest known requirement on the IBM 130 nm ASIC library, as demonstrated in the study by Beierle et al. \cite{Beierle2019}. A comparison of FF counts is provided in Figure~\ref{compare_ff}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.45\textwidth]{./fig/compare-ff.pdf}
-    \caption{Comparison of Flip-Flop in Three Architectures}\label{compare_ff}
-\end{figure}
+
+
+
 
 As illustrated in Figure~\ref{compare_lut}, when it comes to LUT, the proposed serial architecture require fewer LUTs than the iterative architecture of CRAFT. This is attributed to the fact that the proposed designs utilize a single S-Box, in contrast to the 16 S-Boxes used by the iterative architecture of CRAFT. Furthermore, the proposed designs also require fewer LUTs than the unrolled architecture of CRAFT, which uses 32 S-Boxes, compared to just one in the proposed designs.
 
-\begin{figure}
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/compare-lut.pdf}
-    \caption{Comparison of Look-Up Tables in Three Architectures}\label{compare_lut}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-ff.pdf}
+        \caption{Comparison of Flip-Flop in Three Architectures}
+        \label{compare_ff}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-lut.pdf}
+        \caption{Comparison of Look-Up Tables in Three Architectures}
+        \label{compare_lut}
+    \end{minipage}
 \end{figure}
+
 
 Thanks to the reduction in Flip-Flop (FF) and Look-Up Table (LUT) usage, the serial architecture has fewer slices compared to the iterative architecture of CRAFT.
 In terms of Slices efficiency, Spartan-7 outperforms both Artix-7 and Kintex-7 platforms.
 These results are illustrated in Figure~\ref{compare-slices}. However, the lower Max Frequency of Spartan-7 will be considered in the Throughput comparison.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.45\textwidth]{./fig/compare-slices.pdf}
-    \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
-\end{figure}
 
 Figure~\ref{compare-maxF} illustrates that the proposed serial architecture have a higher Max Frequency than the iterative architecture of CRAFT. This improvement is due to two key factors. First, the S-Box is optimized with the GEC encoding scheme, reducing its delay. Second, the serial architecture of the design further reduces the overall delay of the encryption process. However, among all platforms, Spartan-7 has the lowest Max Frequency, primarily because it has the fewest LUTs, as shown in Figure~\ref{compare_lut}. The unrolled architecture reduces the latency to 16. This effectively doubles the throughput rate at 100MHz when compared to the iterative architecture of CRAFT. Additionally, the unrolled architecture improves the maximum throughput by 40.53\% on the Artix-7 platform. This data is presented in Table~\ref{throughput_compare}.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/compare-maxf.pdf}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-slices.pdf}
+        \caption{Comparison of Slices in Three Architectures}\label{compare-slices}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./compare-maxf.pdf}
     \caption{Comparison of Max Frequency in Three Architectures}\label{compare-maxF}
+    \end{minipage}
 \end{figure}
+
+
 
 The serial architecture has the highest energy per bit due to its higher latency, which results in the smallest area. Conversely, the unrolled architecture has the lowest energy per bit because it has the lowest latency. The energy per bit of the iterative architecture of CRAFT falls between that of the serial architecture and the unrolled architecture. Compared to the iterative architecture of CRAFT, the unrolled architecture reduces energy per bit by 47.89\%. Figure~\ref{compare-energy} illustrates the energy per bit for the three architectures.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{./fig/compare-energy.pdf}
+    \includegraphics[width=0.45\textwidth]{./compare-energy.pdf}
     \caption{Comparison of Energy Per Bit in Three Architectures}\label{compare-energy}
 \end{figure}
 
@@ -714,6 +724,18 @@ These proposed architectures are therefore highly suitable for environments with
 
 
 Future work could extend the proposed architectures to other lightweight ciphers and examine their performance. Additionally, these lightweight ciphers could be implemented in a way that makes them resistant to side channel attacks.
+\section*{CRediT authorship contribution statement}
+
+\textbf{Jiahao Xiang:} Conceptualization, Methodology, Software, Data curation, Writing - Original draft preparation, Visualization, Investigation. \textbf{Lang Li:} Software, Validation, Supervision, Writing - Reviewing and Editing. 
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Data availability}
+The source code is publicly available.
+
+\section*{Acknowledgements}
+This research is supported by the Hunan Provincial Natural Science Foundation of China ( 2022JJ30103 ), "the 14th Five Year Plan" Key Disciplines and Application-oriented Special Disciplines of Hunan Province ( Xiangjiaotong [2022] 351 ), the Science and Technology Innovation Program of Hunan Province ( 2016TP1020 ). 
 
 
 
